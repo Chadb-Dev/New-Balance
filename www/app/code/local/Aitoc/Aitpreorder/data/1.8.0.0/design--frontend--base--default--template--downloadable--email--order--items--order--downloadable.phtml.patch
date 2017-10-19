@@ -1,0 +1,21 @@
+diff //dev2/sources/scraschuk/pre12ee/app/design/frontend/base/default/template/downloadable/email/order/items/order/downloadable.phtml //dev2/sources/scraschuk/pre12ee/app/design/frontend/base/default/template/aitpreorder/email/order/items/order/downloadable.phtml
+--- //dev2/sources/scraschuk/pre12ee/app/design/frontend/base/default/template/downloadable/email/order/items/order/downloadable.phtml	Thu Dec 05 15:48:46 2013
++++ //dev2/sources/scraschuk/pre12ee/app/design/frontend/base/default/template/aitpreorder/email/order/items/order/downloadable.phtml	Thu Dec 05 15:35:19 2013
+@@ -38,6 +12,7 @@
+         </dl>
+         <?php endif; ?>
+         <?php if ($links = $this->getLinks()->getPurchasedItems()): ?>
++        <?php if(Mage::helper('aitpreorder')->isAvailableForDownload($_item)) : ?>
+         <dl style="margin:0; padding:0;">
+             <dt><strong><em><?php echo $this->getLinksTitle() ?></em></strong></dt>
+             <?php foreach ($links as $link): ?>
+@@ -47,6 +22,9 @@
+                 </dd>
+             <?php endforeach; ?>
+         </dl>
++        <?php else : ?>
++            <dt><strong><em><?php echo $this->__('The product is Pre-Order. The link is unavailable.'); ?></em></strong></dt>
++        <?php endif; ?>
+         <?php endif; ?>
+         <?php echo $this->escapeHtml($_item->getDescription()) ?>
+         <?php if ($_item->getGiftMessageId() && $_giftMessage = $this->helper('giftmessage/message')->getGiftMessage($_item->getGiftMessageId())): ?>

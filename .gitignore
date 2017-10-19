@@ -480,6 +480,9 @@ www/js/prototype/*
 !www/app/design/adminhtml/default/default/template/aitinstall/
 !www/app/design/adminhtml/default/default/template/aitpreorder/
 !www/app/design/frontend/base/default/layout/aitpreorder.xml
+!www/app/design/frontend/default/default/layout/
+www/app/design/frontend/default/default/layout/*
+!www/app/design/frontend/default/default/layout/aitpreorder.xml
 !www/app/locale/de_DE/Aitoc_Aitpreorder.csv
 !www/app/locale/en_US/Aitoc_Aitpreorder.csv
 !www/app/locale/es_ES/Aitoc_Aitpreorder.csv
@@ -489,8 +492,22 @@ www/js/prototype/*
 !www/skin/adminhtml/default/default/aitoc/
 !www/skin/frontend/base/default/css/aitpreorder.css
 !www/skin/frontend/base/default/js/aitoc/
+!www/skin/frontend/default/default/
+www/skin/frontend/default/default/*
+!www/skin/frontend/default/default/css/
+www/skin/frontend/default/default/css/*
 !www/skin/frontend/default/default/css/aitpreorder.css
+!www/skin/frontend/default/default/js/
+www/skin/frontend/default/default/js/*
 !www/skin/frontend/default/default/js/aitoc/
+!www/skin/frontend/rwd/
+www/skin/frontend/rwd/*
+!www/skin/frontend/rwd/default/
+www/skin/frontend/rwd/default/*
+!www/skin/frontend/rwd/default/css/
+www/skin/frontend/rwd/default/css/*
+!www/skin/frontend/rwd/default/js/
+www/skin/frontend/rwd/default/js/*
 !www/skin/frontend/rwd/default/css/aitpreorder.css
 !www/skin/frontend/rwd/default/js/aitoc/
 #END: Aitoc Pre-Order module

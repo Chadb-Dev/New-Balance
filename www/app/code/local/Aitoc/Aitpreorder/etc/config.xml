@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Aitoc_Aitpreorder>
+            <version>1.2.15</version>
+            <platform>community</platform>
+        </Aitoc_Aitpreorder>
+    </modules>
+
+    <frontend>
+        <layout>
+            <updates>
+                <aitpreorder>
+                    <file>aitpreorder.xml</file>
+                </aitpreorder>
+            </updates>
+        </layout>
+    </frontend>
+        
+    <admin>
+        <routers>
+            <aitpreorder>
+                <use>admin</use>
+                <args>
+                    <module>Aitoc_Aitpreorder</module>
+                    <frontName>Aitpreorder</frontName>
+                </args>
+            </aitpreorder>
+        </routers>
+    </admin>
+    
+    <frontend>
+        <routers></routers>
+        <events>
+            <core_block_abstract_to_html_after>
+                <observers>
+                    <aitpreorder>
+                        <type>singleton</type>
+                        <class>aitpreorder/catalog_product_observer</class>
+                        <method>toHtmlAfter</method>
+                    </aitpreorder>
+                    <aitpreorder_front>
+                        <type>singleton</type>
+                        <class>aitpreorder/observer</class>
+                        <method>frontToHtmlAfter</method>
+                    </aitpreorder_front>
+                </observers>
+            </core_block_abstract_to_html_after>
+        </events>
+        <translate>
+            <modules>
+                <Aitoc_Aitpreorder>
+                    <files>
+                        <default>Aitoc_Aitpreorder.csv</default>
+                    </files>
+                </Aitoc_Aitpreorder>
+            </modules>
+        </translate>
+        <layout></layout>
+    </frontend>
+    
+    <default>
+        <config_vars></config_vars>
+    </default>
+    
+    <adminhtml>
+        <translate>
+            <modules>
+                <Aitoc_Aitpreorder>
+                    <files>
+                        <default>Aitoc_Aitpreorder.csv</default>
+                    </files>
+                </Aitoc_Aitpreorder>
+            </modules>
+        </translate>
+        <events>
+            <core_block_abstract_to_html_after>
+                <observers>
+                    <aitpreorder>
+                        <type>singleton</type>
+                        <class>aitpreorder/observer</class>
+                        <method>adminToHtmlAfter</method>
+                    </aitpreorder>
+                </observers>
+            </core_block_abstract_to_html_after>
+        </events>
+
+    </adminhtml>
+    <global>
+        <index>
+            <indexer>
+                <sales_preorder_status>
+                    <model>aitpreorder/sales_order_indexer_status</model>
+                </sales_preorder_status>
+            </indexer>
+        </index>
+        <models>
+            <aitpreorder>
+                <class>Aitoc_Aitpreorder_Model</class>
+                <resourceModel>aitpreorder_mysql4</resourceModel>
+            </aitpreorder>
+            <aitpreorder_mysql4>
+                <class>Aitoc_Aitpreorder_Model_Mysql4</class>
+            </aitpreorder_mysql4>
+            <cataloginventory>
+                <rewrite>
+                    <source_backorders>Aitoc_Aitpreorder_Model_Rewrite_SourceBackorders</source_backorders>
+                    <stock_item>Aitoc_Aitpreorder_Model_Rewrite_StockItem</stock_item>
+                </rewrite>
+            </cataloginventory>
+            <sales>
+                <rewrite>
+                    <order>Aitoc_Aitpreorder_Model_Rewrite_SalesOrder</order>
+                    <order_shipment>Aitoc_Aitpreorder_Model_Rewrite_SalesOrderShipment</order_shipment>
+                </rewrite>
+            </sales>
+            <sales_mysql4>
+                <rewrite>
+                    <report_order>Aitoc_Aitpreorder_Model_Rewrite_Mysql4SalesReportOrder</report_order>
+                    <report_refunded>Aitoc_Aitpreorder_Model_Rewrite_Mysql4SalesReportRefunded</report_refunded>
+                    <report_shipping>Aitoc_Aitpreorder_Model_Rewrite_Mysql4SalesReportShipping</report_shipping>
+                    <report_invoiced>Aitoc_Aitpreorder_Model_Rewrite_Mysql4SalesReportInvoiced</report_invoiced>
+                    <order>Aitoc_Aitpreorder_Model_Rewrite_Mysql4SalesOrder</order>
+                </rewrite>
+            </sales_mysql4>
+            <sales_resource>
+                <rewrite>
+                    <report_order_createdat>Aitoc_Aitpreorder_Model_Rewrite_ResourceSalesReportOrderCreatedat</report_order_createdat>
+                </rewrite>
+            </sales_resource>
+
+            <catalog>
+                <rewrite>
+                    <product>Aitoc_Aitpreorder_Model_Rewrite_CatalogProduct</product>
+                </rewrite>
+            </catalog>
+        </models>
+        <blocks>
+            <aitpreorder>
+                <class>Aitoc_Aitpreorder_Block</class>
+            </aitpreorder>
+            <bundle>
+                <rewrite>
+                    <catalog_product_view_type_bundle>Aitoc_Aitpreorder_Block_Rewrite_BundleCatalogProductViewTypeBundle</catalog_product_view_type_bundle>
+                </rewrite>
+            </bundle>
+        
+            <bundle>
+                <rewrite>
+                    <checkout_cart_item_renderer>Aitoc_Aitpreorder_Block_Rewrite_BundleCheckoutCartItemRenderer</checkout_cart_item_renderer>
+                    <catalog_product_view_type_bundle_option_select>Aitoc_Aitpreorder_Block_Rewrite_BundleCatalogProductViewTypeBundleOptionSelect</catalog_product_view_type_bundle_option_select>
+                    <catalog_product_view_type_bundle_option_checkbox>Aitoc_Aitpreorder_Block_Rewrite_BundleCatalogProductViewTypeBundleOptionCheckbox</catalog_product_view_type_bundle_option_checkbox>
+                    <catalog_product_view_type_bundle_option_radio>Aitoc_Aitpreorder_Block_Rewrite_BundleCatalogProductViewTypeBundleOptionRadio</catalog_product_view_type_bundle_option_radio>
+                    <catalog_product_view_type_bundle_option_multi>Aitoc_Aitpreorder_Block_Rewrite_BundleCatalogProductViewTypeBundleOptionMulti</catalog_product_view_type_bundle_option_multi>
+                </rewrite>
+            </bundle>
+            
+            <aiteditablecart>
+                <rewrite>
+                    <bundleCatalogProductViewTypeBundleOptionSelect>Aitoc_Aitpreorder_Block_Rewrite_AiteditablecartBundleCatalogProductViewTypeBundleOptionSelect</bundleCatalogProductViewTypeBundleOptionSelect>
+                    <bundleCatalogProductViewTypeBundleOptionCheckbox>Aitoc_Aitpreorder_Block_Rewrite_AiteditablecartBundleCatalogProductViewTypeBundleOptionCheckbox</bundleCatalogProductViewTypeBundleOptionCheckbox>
+                    <bundleCatalogProductViewTypeBundleOptionRadio>Aitoc_Aitpreorder_Block_Rewrite_AiteditablecartBundleCatalogProductViewTypeBundleOptionRadio</bundleCatalogProductViewTypeBundleOptionRadio>
+                    <bundleCatalogProductViewTypeBundleOptionMulti>Aitoc_Aitpreorder_Block_Rewrite_AiteditablecartBundleCatalogProductViewTypeBundleOptionMulti</bundleCatalogProductViewTypeBundleOptionMulti>
+
+                </rewrite>
+            </aiteditablecart>
+                       
+            <adminhtml>
+                <rewrite>
+                    <sales_order_grid>Aitoc_Aitpreorder_Block_Rewrite_AdminhtmlSalesOrderGrid</sales_order_grid>
+                    <sales_order_shipment_create_form>Aitoc_Aitpreorder_Block_Rewrite_AdminhtmlSalesOrderShipmentCreateForm</sales_order_shipment_create_form>
+                    <sales_order_invoice_create_form>Aitoc_Aitpreorder_Block_Rewrite_AdminhtmlSalesOrderInvoiceCreateForm</sales_order_invoice_create_form>
+                    <sales_items_renderer_default>Aitoc_Aitpreorder_Block_Rewrite_AdminhtmlSalesItemsRendererDefault</sales_items_renderer_default>
+                    <sales_order_view_items>Aitoc_Aitpreorder_Block_Rewrite_AdminhtmlSalesOrderViewItems</sales_order_view_items>
+                </rewrite>
+            </adminhtml>
+            
+            <bundle>
+                <rewrite>
+                    <adminhtml_sales_order_view_items_renderer>Aitoc_Aitpreorder_Block_Rewrite_BundleAdminhtmlSalesOrderViewItemsRenderer</adminhtml_sales_order_view_items_renderer>
+                    <adminhtml_sales_order_items_renderer>Aitoc_Aitpreorder_Block_Rewrite_BundleAdminhtmlSalesOrderItemsRenderer</adminhtml_sales_order_items_renderer>
+                </rewrite>
+            </bundle>
+            <downloadable>
+                <rewrite>
+                    <customer_products_list>Aitoc_Aitpreorder_Block_Rewrite_DownloadableCustomerProductsList</customer_products_list>
+                </rewrite>
+            </downloadable>
+ 
+        </blocks>
+      
+        <helpers>
+            <aitpreorder>
+                <class>Aitoc_Aitpreorder_Helper</class>
+            </aitpreorder>
+        </helpers>
+        
+        <resources>
+            <aitpreorder_setup>
+                <setup>
+                    <module>Aitoc_Aitpreorder</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </aitpreorder_setup>
+            <aitpreorder_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </aitpreorder_write>
+            <aitpreorder_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </aitpreorder_read>
+        </resources>
+        
+        <events>
+            <catalog_product_is_salable_after>
+                <observers>
+                    <aitpreorder>
+                        <type>singleton</type>
+                        <class>aitpreorder/catalog_product_observer</class>
+                        <method>onIsSalableAfter</method>
+                    </aitpreorder>
+                </observers>
+            </catalog_product_is_salable_after>
+
+            <bundle_product_view_config>
+                <observers>
+                    <aitpreorder>
+                        <type>singleton</type>
+                        <class>aitpreorder/observer</class>
+                        <method>onBundleProductViewConfig</method>
+                    </aitpreorder>
+                </observers>
+            </bundle_product_view_config>
+ 
+ 
+            <sales_quote_item_qty_set_after>
+                <observers>
+                    <aitpreorder>
+                        <type>singleton</type>
+                        <class>aitpreorder/observer</class>
+                        <method>onSalesQuoteItemQtySetAfter</method>
+                    </aitpreorder>
+                </observers>
+            </sales_quote_item_qty_set_after>
+            
+            <catalog_product_save_after>
+                <observers>
+                    <aitpreorder>
+                        <type>singleton</type>
+                        <class>aitpreorder/observer</class>
+                        <method>onCatalogProductSaveAfter</method>
+                    </aitpreorder>
+                </observers>
+            </catalog_product_save_after>
+            
+            <sales_order_load_after>
+                <observers>
+                    <aitpreorder>
+                        <type>singleton</type>
+                        <class>aitpreorder/observer</class>
+                        <method>onSalesOrderLoad</method>
+                    </aitpreorder>
+                </observers>
+            </sales_order_load_after>
+
+            <checkout_cart_product_add_after>
+                <observers>
+                    <aitpreorder>
+                        <type>singleton</type>
+                        <class>aitpreorder/observer</class>
+                        <method>checkQuoteProduct</method>
+                    </aitpreorder>
+                </observers>
+            </checkout_cart_product_add_after>
+
+            <sales_order_place_before>
+                <observers>
+                    <aitpreorder>
+                        <type>singleton</type>
+                        <class>aitpreorder/observer</class>
+                        <method>salesOrderPlaceBefore</method>
+                    </aitpreorder>
+                </observers>
+            </sales_order_place_before>
+            
+            <sales_order_save_after>
+                <observers>
+                    <aitpreorder>
+                        <type>singleton</type>
+                        <class>aitpreorder/observer</class>
+                        <method>onSalesOrderSaveAfter</method>
+                     </aitpreorder>
+                </observers>
+            </sales_order_save_after>
+            <sales_convert_quote_item_to_order_item>
+                <observers>
+                    <aitpreorder>
+                        <type>singleton</type>
+                        <class>aitpreorder/observer</class>
+                        <method>convertQuoteItemToOrderItem</method>
+                    </aitpreorder>
+                </observers>
+            </sales_convert_quote_item_to_order_item>
+        </events>
+        <sales>
+            <order>
+                <!-- /**
+                      * @depraceted after 1.4.2, statuses are saved into sales_order_status table
+                      */
+                -->
+                <statuses>
+                    <pendingpreorder translate="label">
+                        <label>Pending Pre-Order</label>
+                    </pendingpreorder>
+                </statuses>
+                <states>
+                    <pendingpreorder translate="label">
+                        <label>Pending Pre-Order</label>
+                        <statuses>
+                            <pendingpreorder default="1"/>
+                        </statuses>
+                    </pendingpreorder>
+                </states>
+                
+                <statuses>
+                    <processingpreorder translate="label">
+                        <label>Processing Pre-Order</label>
+                    </processingpreorder>
+                </statuses>
+                <states>
+                    <processingpreorder translate="label">
+                        <label>Processing Pre-Order</label>
+                        <statuses>
+                            <processingpreorder default="1"/>
+                        </statuses>
+                    </processingpreorder>
+                    
+                </states>
+            </order>
+            <quote>
+                <item>
+                    <product_attributes>
+                    <!-- Attributes that will be loaded on quote items -->
+                        <backstock_preorders />
+                        <preorderdescript />
+                    </product_attributes>
+                </item>
+            </quote>
+        </sales>
+    </global>
+    <default>
+        <cataloginventory>
+            <aitpreorder>
+                <send_email>0</send_email>
+                <status_change>0</status_change>
+                <deny_mixing_products>0</deny_mixing_products>
+                <product_list_regexp><![CDATA[!\<button([^\>]*)product\/{{product_id}}\/(.*)\<\/button\>!]]></product_list_regexp>
+            </aitpreorder>
+        </cataloginventory>
+    </default>
+</config>

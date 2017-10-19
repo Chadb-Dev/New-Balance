@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config>
+    <template>
+        <frontend>
+            <file path="design--frontend--base--default--template--downloadable--email--order--items--order--downloadable"></file>
+        </frontend>
+    </template>
+</config>

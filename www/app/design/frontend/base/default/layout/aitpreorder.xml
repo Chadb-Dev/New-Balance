@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head"> 
+<!--            <action method="addJs"><stylesheet>aitoc/aitpreorder/aitpreorder.js</stylesheet></action> -->
+            <action method="addItem"><type>skin_js</type><name>js/aitoc/aitpreorder/preorder.js</name><params/></action>
+            <action method="addCss"><stylesheet>css/aitpreorder.css</stylesheet></action> 
+
+        </reference>
+    </default>
+
+    <sales_email_order_items>
+        <reference name="items">
+            <action method="addItemRender"><type>downloadable</type><block>downloadable/sales_order_email_items_order_downloadable</block><template>aitcommonfiles/design--frontend--base--default--template--downloadable--email--order--items--order--downloadable.phtml</template></action>
+        </reference>
+    </sales_email_order_items>    
+</layout>

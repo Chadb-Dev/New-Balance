@@ -1,0 +1,33 @@
+<script type="text/javascript">
+	Event.observe(window,'load', function(){
+        Event.observe($('inventory_backorders'), 'change', function() {
+			var isPreorder = (<?php echo Aitoc_Aitpreorder_Model_Rewrite_SourceBackorders::BACKORDERS_YES_PREORDERS ?> == $('inventory_backorders').value);
+			if(!isPreorder) {
+                $('backstock_preorders').value = 0;
+            }
+            $('backstock_preorders').disabled = !isPreorder;
+			$('preorder').value = isPreorder ? 1 : 0;
+		});
+	});
+</script>
+
+<input type="hidden" name="product[preorder]" id="preorder" value="<?php echo $this->getIsPreorder();?>">
+<tr id="preorderdescript_tr1" >
+    <td class="label"><label for="preorderdescript">Pre-Order Note</label></td>
+    <td class="value"><input type="text" class=" input-text"  name="product[preorderdescript]" id="preorderdescript" value="<?php echo $this->getPreorderDescription(); ?>"></td>
+    <td class="scope-label"><span class="nobr"><?php echo $this->getDescriptionAttributeScope() ?></span></td>
+    <td><small>&nbsp;</small></td>
+</tr>
+<tr id="preorderdescript_tr2" >
+    <td class="label"><label for="backstock_preorders"><?php echo $this->__('Allow Out-Of-Stock product for Pre-Order') ?></label></td>
+    <td class="value">
+        <select name="product[backstock_preorders]" id="backstock_preorders">
+            <option value="0"><?php echo $this->__('Use Config');?></option>
+            <option value="1"<?php echo ($this->getBackstockPreorders()==1) ? ' selected="selected"' : ''; ?>><?php echo $this->__('Yes'); ?></option>
+            <option value="2"<?php echo ($this->getBackstockPreorders()==2) ? ' selected="selected"' : ''; ?>><?php echo $this->__('No'); ?></option>
+        </select>
+    </td>
+    <td class="scope-label"><span class="nobr"><?php echo $this->getBackstockPreorderScope() ?></span></td>
+    <td><small>&nbsp;</small></td>
+</tr>
+</table>
