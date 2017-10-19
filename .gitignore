@@ -434,7 +434,40 @@ www/js/prototype/*
 !www/app/design/frontend/base/default/layout/mgconnector.xml
 !www/app/design/frontend/base/default/template/mgconnector/
 !www/app/etc/modules/Remarkety_Mgconnector.xml
-#START: Remarkety Mgconnector module
+#END: Remarkety Mgconnector module
+
+#START: Mirasvit Advanced SEO module
+!www/app/code/local/Mirasvit/
+!www/app/etc/modules/Mirasvit_Seo.xml
+!www/app/etc/modules/ZMirasvit_Seo.xml
+!www/app/etc/modules/Mirasvit_MstCore.xml
+!www/app/etc/modules/Mirasvit_SeoAutolink.xml
+!www/app/etc/modules/Mirasvit_SeoFilter.xml
+!www/app/etc/modules/Mirasvit_SeoSitemap.xml
+!www/app/design/adminhtml/default/mirasvit/
+!www/app/design/adminhtml/default/default/layout/mstcore.xml
+!www/app/design/adminhtml/default/default/layout/mst_seo.xml
+!www/app/design/adminhtml/default/default/layout/mst_seoautolink.xml
+!www/app/design/adminhtml/default/default/layout/mst_seositemap.xml
+!www/app/design/adminhtml/default/default/template/mstcore/
+!www/app/design/adminhtml/default/default/template/seo/
+!www/app/design/frontend/base/default/layout/mst_seositemap.xml
+!www/app/design/frontend/base/default/layout/seo.xml
+!www/app/design/frontend/base/default/template/seo/
+!www/app/design/frontend/base/default/template/seositemap/
+!www/app/locale/en_US/Mirasvit_Seo.csv
+!www/js/mirasvit/
+!www/media/seo/
+!www/shell/check_duplicate_keys.php
+!www/shell/sitemap.php
+!www/skin/adminhtml/default/default/mstcore/
+!www/skin/adminhtml/default/default/mst_seo/
+!www/skin/adminhtml/default/default/mst_seoautolink/
+!www/skin/adminhtml/default/default/mst_seositemap/
+!www/skin/frontend/base/default/css/mirasvit/
+!www/skin/frontend/base/default/css/mirasvit_mstcore.css
+!www/skin/frontend/base/default/css/mirasvit_mstcore.less
+#END: Mirasvit Advanced SEO module
 
 #START: Aitoc Pre-Order module
 !www/app/code/community/Aitoc/
