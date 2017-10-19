@@ -1,0 +1,11 @@
+<config>
+    <modules>
+       <Customscripts_Mygate>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Payment />
+            </depends>
+        </Customscripts_Mygate>
+    </modules>
+</config>

@@ -1,0 +1,17 @@
+<?php
+/**
+ * form.phtml
+ * 
+ * @category   PayFast
+ * @package    PayFast_PayFast
+ * @copyright  Copyright (c) 2010 PayFast (Pty) Ltd (http://www.payfast.co.za)
+ */
+?>
+<fieldset class="form-list">
+    <?php $_code=$this->getMethodCode() ?>
+    <ul id="payment_form_<?php echo $_code ?>" style="display:none">
+        <li>
+            <?php echo $this->__('You will be redirected to the PayFast website when you place an order.') ?>
+        </li>
+    </ul>
+</fieldset>

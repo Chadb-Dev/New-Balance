@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Audere Commerce
+ *
+ * NOTICE OF LICENCE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * It is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customise this module for your
+ * needs please contact Audere Commerce (http://www.auderecommerce.com).
+ *
+ * @category    AudereCommerce
+ * @package     AudereCommerce_ProCategory
+ * @copyright   Copyright (c) 2013, 2014 Audere Commerce Limited. (http://www.auderecommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @author      James Withers <james.withers@auderecommerce.com>
+ */
+-->
+<config>
+    <modules>
+        <AudereCommerce_ProCategory>
+            <version>6.1.0</version>
+        </AudereCommerce_ProCategory>
+    </modules>
+    <global>
+        <helpers>
+            <auderecommerce_procategory>
+                <class>AudereCommerce_ProCategory_Helper</class>
+            </auderecommerce_procategory>
+        </helpers>        
+        <blocks>
+            <auderecommerce_procategory>
+                <class>AudereCommerce_ProCategory_Block</class>
+            </auderecommerce_procategory>
+        </blocks>
+        <models>
+            <catalog_resource>
+                <rewrite>
+                    <category_indexer_product>AudereCommerce_ProCategory_Model_Resource_Indexer</category_indexer_product>
+                </rewrite>
+            </catalog_resource>
+            <auderecommerce_procategory>
+                <class>AudereCommerce_ProCategory_Model</class>
+                <resourceModel>auderecommerce_procategory_resource</resourceModel>
+            </auderecommerce_procategory>
+            <auderecommerce_procategory_resource>
+                <class>AudereCommerce_ProCategory_Model_Resource</class>
+                <entities>
+                    <rule>
+                        <table>auderecommerce_procategory</table>
+                    </rule>
+                    <category_product>
+                        <table>auderecommerce_procategory_category_product</table>
+                    </category_product>
+                </entities>
+            </auderecommerce_procategory_resource>
+        </models>
+        <resources>
+            <auderecommerce_procategory_setup>
+                <setup>
+                    <module>AudereCommerce_ProCategory</module>
+                </setup>
+            </auderecommerce_procategory_setup>
+        </resources>            
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <auderecommerce_procategory before="Mage_Adminhtml">AudereCommerce_ProCategory_Adminhtml</auderecommerce_procategory>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <events>
+            <adminhtml_catalog_category_tabs>
+                <observers>
+                    <auderecommerce_procategory_adminhtml_catalog_category_tabs>
+                        <class>auderecommerce_procategory/observer_adminhtml</class>
+                        <method>adminhtmlCatalogCategoryTabs</method>
+                    </auderecommerce_procategory_adminhtml_catalog_category_tabs>
+                </observers>
+            </adminhtml_catalog_category_tabs>               
+        </events>
+        <layout>
+            <updates>
+                <auderecommerce_procategory>
+                    <file>auderecommerce/procategory.xml</file>
+                </auderecommerce_procategory>
+            </updates>
+        </layout>
+    </adminhtml>       
+</config>

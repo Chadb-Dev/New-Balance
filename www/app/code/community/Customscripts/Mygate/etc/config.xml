@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+
+<!--
+/*
+ * Copyright (C) 2015 CustomScripts - All Rights Reserved
+ *
+ * Unauthorized copying, modifying or distribution of this file,
+ * via any medium is strictly prohibited.
+ *
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from CustomScripts.
+ *
+ * Written by Pierre du Plessis <info@customscripts.co.za>, January 2015
+ */
+ -->
+
+<config>
+    <modules>
+        <Customscripts_Mygate>
+            <version>1.0.0</version>
+        </Customscripts_Mygate>
+    </modules>
+    <global>
+        <models>
+            <mygate>
+                <class>Customscripts_Mygate_Model</class>
+            </mygate>
+        </models>
+        <blocks>
+            <mygate>
+                <class>Customscripts_Mygate_Block</class>
+            </mygate>
+        </blocks>
+        <helpers>
+            <mygate>
+                <class>Customscripts_Mygate_Helper</class>
+            </mygate>
+        </helpers>
+    </global>
+    <frontend>
+        <secure_url>
+            <mygate_standard>/mygate/standard</mygate_standard>
+        </secure_url>
+        <routers>
+            <mygate>
+                <use>standard</use>
+                <args>
+                    <module>Customscripts_Mygate</module>
+                    <frontName>mygate</frontName>
+                </args>
+            </mygate>
+        </routers>
+    </frontend>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <mygate>
+                                            <title>MyGate</title>
+                                        </mygate>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+    <default>
+        <payment>
+            <mygate_standard>
+                <model>mygate/standard</model>
+                <title>Credit Card (Mygate)</title>
+                <allowspecific>0</allowspecific>
+                <mygate_url>https://www.mygate.co.za/virtual/5x0x0/dsp_details.cfm</mygate_url>
+                <mode>1</mode>
+                <mygate_merchant_id>merchant id</mygate_merchant_id>
+                <mygate_application_id>application id</mygate_application_id>
+            </mygate_standard>
+        </payment>
+    </default>
+</config>

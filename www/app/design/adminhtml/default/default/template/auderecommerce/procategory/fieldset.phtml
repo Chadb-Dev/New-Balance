@@ -1,0 +1,43 @@
+<?php
+/**
+ * Audere Commerce
+ *
+ * NOTICE OF LICENCE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * It is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customise this module for your
+ * needs please contact Audere Commerce (http://www.auderecommerce.com).
+ *
+ * @category    AudereCommerce
+ * @package     AudereCommerce_ProCategory
+ * @copyright   Copyright (c) 2013 Audere Commerce Limited. (http://www.auderecommerce.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author      James Withers <james+procategory@auderecommerce.com>
+ */
+
+$_element = $this->getElement() 
+/* @var $_element Mage_Adminhtml_Block_Widget_Form_Renderer_Fieldset */
+?>
+<div class="rule-tree">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $_element->getLegend() ?></h4>
+    </div>
+    <fieldset id="<?php echo $_element->getHtmlId() ?>" <?php echo $_element->serialize(array('class')) ?>>
+    <?php if ($_element->getComment()): ?>
+        <p class="comment"><?php echo $this->escapeHtml($_element->getComment()) ?></p>
+    <?php endif; ?>
+    <?php echo $_element->getChildrenHtml() ?>
+    </fieldset>
+</div>
+<script type="text/javascript">
+var <?php echo $_element->getHtmlId() ?> = new VarienRulesForm('<?php echo $_element->getHtmlId() ?>', '<?php echo $this->getNewChildUrl() ?>');
+<?php if ($_element->getReadonly()): ?>
+    <?php echo $_element->getHtmlId() ?>.setReadonly(true);
+<?php endif; ?>
+</script>

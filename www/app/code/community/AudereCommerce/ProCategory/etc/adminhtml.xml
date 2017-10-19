@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Audere Commerce
+ *
+ * NOTICE OF LICENCE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * It is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customise this module for your
+ * needs please contact Audere Commerce (http://www.auderecommerce.com).
+ *
+ * @category    AudereCommerce
+ * @package     AudereCommerce_ProCategory
+ * @copyright   Copyright (c) 2013 Audere Commerce Limited. (http://www.auderecommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @author      James Withers <james.withers@auderecommerce.com>
+ */
+-->
+<config>
+    <menu>
+        <catalog translate="title" module="catalog">
+            <children>
+                <auderecommerce_procategory translate="title" module="auderecommerce_procategory">
+                    <title>ProCategory Rules</title>
+                    <action>adminhtml/auderecommerce_procategory/</action>
+                    <sort_order>11</sort_order>
+                </auderecommerce_procategory>
+            </children>
+        </catalog>      
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <catalog translate="title" module="catalog">
+                        <children>
+                            <auderecommerce_procategory translate="title" module="auderecommerce_procategory">
+                                <title>ProCategory Rules</title>
+                            </auderecommerce_procategory>
+                        </children>
+                    </catalog>
+                </children>
+            </admin>
+        </resources>
+     </acl>
+</config>

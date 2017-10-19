@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Audere Commerce
+ *
+ * NOTICE OF LICENCE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * It is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customise this module for your
+ * needs please contact Audere Commerce (http://www.auderecommerce.com).
+ *
+ * @category    AudereCommerce
+ * @package     AudereCommerce_ProCategory
+ * @copyright   Copyright (c) 2013 Audere Commerce Limited. (http://www.auderecommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @author      James Withers <james+procategory@auderecommerce.com>
+ */
+-->
+<layout>
+    <adminhtml_auderecommerce_procategory_index>
+        <reference name="content">
+            <block type="auderecommerce_procategory/rule" name="auderecommerce_procategory_rule_grid"/>
+        </reference>
+    </adminhtml_auderecommerce_procategory_index>
+    <adminhtml_auderecommerce_procategory_edit>
+        <reference name="head">
+            <action method="setCanLoadExtJs">
+                <flag>1</flag>
+            </action>
+            <action method="setCanLoadRulesJs">
+                <flag>1</flag>
+            </action>
+        </reference>
+        <reference name="left">
+            <block type="auderecommerce_procategory/rule_edit_tabs" name="auderecommerce_procategory_rule_edit_tabs">
+                <block type="auderecommerce_procategory/rule_edit_tab_main" name="auderecommerce_procategory_rule_edit_tab_main"/>
+                <block type="auderecommerce_procategory/rule_edit_tab_conditions" name="auderecommerce_procategory_rule_edit_tab_conditions"/>
+                <block type="auderecommerce_procategory/rule_edit_tab_categories" name="auderecommerce_procategory_rule_edit_tab_categories"/>
+                <action method="addTab">
+                    <name>main_section</name>
+                    <block>auderecommerce_procategory_rule_edit_tab_main</block>
+                </action>
+                <action method="addTab">
+                    <name>conditions_section</name>
+                    <block>auderecommerce_procategory_rule_edit_tab_conditions</block>
+                </action>
+                <action method="addTab">
+                    <name>actions_section</name>
+                    <block>auderecommerce_procategory_rule_edit_tab_categories</block>
+                </action>
+            </block>
+        </reference>
+        <reference name="content">
+            <block type="auderecommerce_procategory/rule_edit" name="auderecommerce_procategory_rule_edit"/>
+        </reference>
+        <reference name="js">
+            <block type="auderecommerce_procategory/rule_edit_js" template="auderecommerce/procategory/js.phtml" />
+        </reference>
+    </adminhtml_auderecommerce_procategory_edit>    
+</layout>

@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!-- 
+config.xml
+
+@category   PayFast
+@package    PayFast_PayFast
+@copyright  Copyright (c) 2010 PayFast (Pty) Ltd (http://www.payfast.co.za)
+ -->
+<config>
+	<modules>
+		<PayFast_PayFast>
+			<version>0.1.0</version>
+		</PayFast_PayFast>
+	</modules>
+	<global>
+		<blocks>
+			<payfast>
+				<class>PayFast_PayFast_Block</class>
+			</payfast>
+		</blocks>
+		<helpers>
+			<payfast>
+				<class>PayFast_PayFast_Helper</class>
+			</payfast>
+		</helpers>
+		<models>
+			<payfast>
+				<class>PayFast_PayFast_Model</class>
+			</payfast>
+		</models>
+		<resources>
+			<payfast_setup>
+				<setup>
+					<module>PayFast_PayFast</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</payfast_setup>
+			<newmodule_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</newmodule_write>
+			<newmodule_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</newmodule_read>
+		</resources>
+    </global>
+	
+	<frontend>
+		<routers>
+			<payfast> 
+				<use>standard</use>
+				<args>
+					<module>PayFast_PayFast</module>
+					<frontName>payfast</frontName>
+				</args>
+			</payfast>
+		</routers>
+	</frontend>
+ 
+	<default>
+		<payment>
+			<payfast>
+				<model>payfast/standard</model>
+				<active>0</active>
+				<title><![CDATA[PayFast]]></title>
+				<server>test</server>
+				<debugging>0</debugging>
+			</payfast>
+		</payment>
+	</default>
+</config>

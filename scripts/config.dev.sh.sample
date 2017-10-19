@@ -1,0 +1,32 @@
+#!/bin/bash
+
+CURRENT_DIR=`pwd`
+
+export CLIENT_NAME="clientname"
+export REPOS_NAME="magento_$CLIENT_NAME"
+export REPOS_WORKING_DIR="${CURRENT_DIR%/*}"
+export VHOST_FILE="/etc/apache2/sites-available/$REPOS_NAME.conf"
+#export SERVER_DESCRIPTION="Local Server"
+export SERVER_NAME=`hostname`
+
+export MYSQL_ROOT_PASSWORD="123456"
+export MYSQL_MAGENTO_DB="magento_$CLIENT_NAME"
+export MYSQL_MAGENTO_USER="magento"
+export MYSQL_MAGENTO_PASSWORD="indo2000"
+
+export MAGENTO_DUMP_PREFIX="magento20161102"
+export MAGENTO_EMAIL_RECIPIENT="developer@company.com"
+export MAGENTO_EMAIL_TRANS="developer@company.com"
+export MAGENTO_SES_ACCESS_KEY="NULL" #Set to 'NULL' if not present
+export MAGENTO_SES_PRIVATE_KEY="NULL" #Set to 'NULL' if not present
+export MAGENTO_SMTP_EMAIL="smtp@company.com"
+export MAGENTO_SMTP_PASS="nWWcssegGFTIeekGJcAAnntR+WeKmOtELV1OMxpng7Bs+5FQ5Rm7Rj8CnQxEejRU" #Hashed password
+export MAGENTO_SMTP_HOST="smtp.company.com"
+export MAGENTO_SMTP_PORT="25"
+export MAGENTO_SMTP_SSL="tls"
+export MAGENTO_BASE_DOMAIN="$CLIENT_NAME.dev"
+
+# DO NOT CHANGE ANYTHING FROM HERE
+export MAGENTO_VERSION="1.9.3.1"
+export MAGENTO_DOWNLOAD_URL="http://download.gomedia.co.za/magento-$MAGENTO_VERSION.tar.gz"
+export MAGENTO_DOWNLOAD_FILE="magento-$MAGENTO_VERSION.tar.gz"

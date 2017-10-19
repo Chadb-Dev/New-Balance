@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!-- 
+config.xml
+
+@category   PayFast
+@package    PayFast_PayFast
+@copyright  Copyright (c) 2010 PayFast (Pty) Ltd (http://www.payfast.co.za)
+ -->
+<config>
+	<modules>
+		<PayFast_PayFast>
+			<active>true</active>
+			<codePool>community</codePool>
+		</PayFast_PayFast>
+	</modules>
+</config>
