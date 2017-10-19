@@ -427,6 +427,15 @@ www/js/prototype/*
 !www/skin/frontend/base/default/onestepcheckout/
 #END: One Step Checkout module
 
+#START: Remarkety Mgconnector module
+!www/app/code/community/Remarkety/
+!www/app/design/adminhtml/default/default/layout/mgconnector.xml
+!www/app/design/adminhtml/default/default/template/mgconnector/
+!www/app/design/frontend/base/default/layout/mgconnector.xml
+!www/app/design/frontend/base/default/template/mgconnector/
+!www/app/etc/modules/Remarkety_Mgconnector.xml
+#START: Remarkety Mgconnector module
+
 #START: Aitoc Pre-Order module
 !www/app/code/community/Aitoc/
 !www/app/code/local/Aitoc/
