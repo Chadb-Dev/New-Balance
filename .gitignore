@@ -399,3 +399,56 @@ www/js/prototype/*
 !www/js/prototype/prototype-1.7.2.js
 !www/media/iwd/
 #END: IWD Store Locator module
+
+#START: One Step Checkout module
+!www/app/code/local/Idev/
+!www/app/design/adminhtml/default/default/template/onestepcheckout/
+!www/app/design/frontend/base/default/layout/onestepcheckout.xml
+!www/app/design/frontend/base/default/template/onestepcheckout/
+!www/app/etc/modules/01_Idev_OneStepCheckout.xml
+!www/app/locale/cs_CZ/Idev_OneStepCheckout.csv
+!www/app/locale/da_DK/Idev_OneStepCheckout.csv
+!www/app/locale/de_DE/Idev_OneStepCheckout.csv
+!www/app/locale/de_DE/Idev_OneStepCheckout_Admin.csv
+!www/app/locale/el_GR/Idev_OneStepCheckout.csv
+!www/app/locale/en_US/Idev_OneStepCheckout.csv
+!www/app/locale/es_ES/Idev_OneStepCheckout.csv
+!www/app/locale/fi_FI/Idev_OneStepCheckout.csv
+!www/app/locale/fr_FR/Idev_OneStepCheckout.csv
+!www/app/locale/hu_HU/Idev_OneStepCheckout.csv
+!www/app/locale/it_IT/Idev_OneStepCheckout.csv
+!www/app/locale/nb_NO/Idev_OneStepCheckout.csv
+!www/app/locale/nl_NL/Idev_OneStepCheckout.csv
+!www/app/locale/pl_PL/Idev_OneStepCheckout.csv
+!www/app/locale/pt_BR/Idev_OneStepCheckout.csv
+!www/app/locale/ro_RO/Idev_OneStepCheckout.csv
+!www/app/locale/sv_SE/Idev_OneStepCheckout.csv
+!www/skin/adminhtml/base/default/onestepcheckout/
+!www/skin/frontend/base/default/onestepcheckout/
+#END: One Step Checkout module
+
+#START: Aitoc Pre-Order module
+!www/app/code/community/Aitoc/
+!www/app/code/local/Aitoc/
+!www/app/etc/modules/Aitoc_Aitinstall.xml
+!www/app/etc/modules/Aitoc_Aitpreorder.xml
+!www/app/design/adminhtml/default/default/layout/aitcore.xml
+!www/app/design/adminhtml/default/default/layout/aitinstall.xml
+!www/app/design/adminhtml/default/default/template/aitcore/
+!www/app/design/adminhtml/default/default/template/aitinstall/
+!www/app/design/adminhtml/default/default/template/aitpreorder/
+!www/app/design/frontend/base/default/layout/aitpreorder.xml
+!www/app/locale/de_DE/Aitoc_Aitpreorder.csv
+!www/app/locale/en_US/Aitoc_Aitpreorder.csv
+!www/app/locale/es_ES/Aitoc_Aitpreorder.csv
+!www/app/locale/fr_FR/Aitoc_Aitpreorder.csv
+!www/app/locale/it_IT/Aitoc_Aitpreorder.csv
+!www/app/locale/nl_NL/Aitoc_Aitpreorder.csv
+!www/skin/adminhtml/default/default/aitoc/
+!www/skin/frontend/base/default/css/aitpreorder.css
+!www/skin/frontend/base/default/js/aitoc/
+!www/skin/frontend/default/default/css/aitpreorder.css
+!www/skin/frontend/default/default/js/aitoc/
+!www/skin/frontend/rwd/default/css/aitpreorder.css
+!www/skin/frontend/rwd/default/js/aitoc/
+#END: Aitoc Pre-Order module
