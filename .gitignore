@@ -511,3 +511,16 @@ www/skin/frontend/rwd/default/js/*
 !www/skin/frontend/rwd/default/css/aitpreorder.css
 !www/skin/frontend/rwd/default/js/aitoc/
 #END: Aitoc Pre-Order module
+
+#START: Mirasvit Search Autocomplete Pro module
+!www/app/etc/modules/Mirasvit_SearchAutocomplete.xml
+!www/app/design/frontend/base/default/layout/mst_searchautocomplete.xml
+!www/app/design/frontend/base/default/template/mst_searchautocomplete/
+!www/app/locale/en_US/Mirasvit_SearchAutocomplete.csv
+!www/app/locale/it_IT/
+www/app/locale/it_IT/*
+!www/app/locale/it_IT/Mirasvit_SearchAutocomplete.csv
+!www/app/locale/nl_NL/Mirasvit_SearchAutocomplete.csv
+!www/shell/searchautocomplete.php
+!www/skin/frontend/base/default/images/mirasvit/
+#END: Mirasvit Search Autocomplete Pro module

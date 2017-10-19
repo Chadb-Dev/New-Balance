@@ -8,9 +8,9 @@
  * Please refer to http://www.magentocommerce.com for more information.
  *
  * @category  Mirasvit
- * @package   Advanced SEO Suite
- * @version   1.3.22
- * @build     1454
+ * @package   Search AutoComplete & Suggest Pro
+ * @version   1.2.10
+ * @build     510
  * @copyright Copyright (C) 2017 Mirasvit (http://mirasvit.com/)
  */
 
