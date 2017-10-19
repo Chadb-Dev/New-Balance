@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<layout version="1.0.0">
+
+	<adminhtml_iwd_storelocator_list_index>
+		<reference name="content">
+			<block type="storelocator/adminhtml_list" name="list.stores" />
+		</reference>
+	</adminhtml_iwd_storelocator_list_index>
+	
+
+	<adminhtml_iwd_storelocator_list_new>
+        <update handle="storelocator_adminhtml_list_edit" />
+    </adminhtml_iwd_storelocator_list_new>
+    
+    
+	 <adminhtml_iwd_storelocator_list_edit>
+        <update handle="editor"/>
+        
+        <reference name="head">              
+                <action method="addItem"><type>skin_js</type><name>iwd/storelocator/adminhtml.js</name></action>
+        </reference>
+        
+        <reference name="content">
+           <block type="storelocator/adminhtml_list_edit" name="store.edit" />
+        </reference>
+        <reference name="left">
+            <block type="storelocator/adminhtml_list_edit_tabs" name="storelocator_store_edit_tabs">
+            
+                <block type="storelocator/adminhtml_list_edit_tab_main" name="storelocator_store_edit_tab_main" />
+                <block type="storelocator/adminhtml_list_edit_tab_maps" name="storelocator_store_edit_tab_maps" />
+                
+                <action method="addTab"><name>main_section</name><block>storelocator_store_edit_tab_main</block></action>                
+                <action method="addTab"><name>google_section</name><block>storelocator_store_edit_tab_maps</block></action>
+                
+            </block>
+        </reference>
+    </adminhtml_iwd_storelocator_list_edit>
+    
+    
+    
+    <adminhtml_iwd_storelocator_import_index>
+        <reference name="content">
+            <block type="adminhtml/template" template="storelocator/import/form/before.phtml" name="import.form.before" alias="form_before"/>
+            <block type="storelocator/adminhtml_import_edit" name="import.form.container.storelocator"/>
+            <block type="adminhtml/template" template="storelocator/import/form/after.phtml" name="import.form.after" alias="form_after"/>
+        </reference>
+    </adminhtml_iwd_storelocator_import_index>
+    
+    <adminhtml_iwd_storelocator_import_validate>
+        <block type="storelocator/adminhtml_import_frame_result" template="storelocator/import/frame/result.phtml" name="import.frame.result.storelocator" alias="import_frame_result_storelocator" output="toHtml"/>
+    </adminhtml_iwd_storelocator_import_validate>
+
+</layout>

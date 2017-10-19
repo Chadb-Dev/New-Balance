@@ -385,3 +385,17 @@ www/.htaccess
 www/lib/Net/
 www/lib/Unserialize/
 .idea
+
+#START: IWD Store Locator module
+!www/app/code/community/IWD/StoreLocator/
+!www/app/design/adminhtml/default/default/layout/iwd_storelocator.xml
+!www/app/design/adminhtml/default/default/template/storelocator/
+!www/app/design/frontend/base/default/layout/storelocator.xml
+!www/app/design/frontend/base/default/template/storelocator/
+!www/app/etc/modules/IWD_StoreLocator.xml
+!www/app/locale/en_US/IWD_StoreLocator.csv
+!www/js/prototype/
+www/js/prototype/*
+!www/js/prototype/prototype-1.7.2.js
+!www/media/iwd/
+#END: IWD Store Locator module

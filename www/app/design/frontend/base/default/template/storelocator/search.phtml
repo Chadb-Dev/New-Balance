@@ -1,0 +1,93 @@
+<div class="storelocator">
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $this->getApiKey()?>&v=3"></script>
+	<script type="text/javascript" src="<?php echo Mage::getDesign()->getSkinUrl('js/iwd/storelocator/infobox.js')?>"></script>
+	<div class="page-title">
+		<h1><?php echo  Mage::getStoreConfig('storelocator/global/pagetitle');?></h1>
+	</div>
+	<?php $blockId = Mage::getStoreConfig('storelocator/global/blockid');?>
+	<?php if (!empty($blockId)):?>
+		<?php $item = Mage::getModel('cms/block')->load($blockId);?>
+		<div class="cms-block"><?php echo Mage::helper('cms')->getBlockTemplateProcessor()->filter($item->getContent());?></div>
+	<?php endif;?>
+	<div class="clear"></div>
+	<div class="map-wrapper">
+	
+	<div class="filter" id="filter">
+		<form id="storelocator-search">
+		<ul class="form-list">
+			<li class="fields">
+				<?php $coutries = $this->getCountries();?>
+				
+				<div class="field country-input <?php if (count($coutries)==1):?>hidden<?php endif;?>">				
+						<div class="input-box">
+							<select title="<?php echo Mage::helper('storelocator')->__('Country') ?>" name="country" id="country" class="" data-placeholder="<?php echo Mage::helper('storelocator')->__('Country') ?>" >
+								<option value=""></option>
+	                        	<?php foreach($coutries as $country):?>
+	                        	<option value="<?php echo $country['value']?>" <?php if (count($coutries)==1):?>selected="selected"<?php endif;?>><?php echo $country['label']?></option>
+	                        	<?php endforeach;?>
+							</select>
+						</div>
+				</div>
+				
+				<div class="field addres-input">				
+						<div class="input-container">
+							<input name="address" id="address" title="<?php echo Mage::helper('storelocator')->__('Address') ?>" value="" class="input-text " type="text" placeholder="<?php echo Mage::helper('storelocator')->__('Enter City & State or Zip') ?>"/>
+						</div>
+				</div>
+				
+				<?php if (!Mage::helper('storelocator')->isHideRadius()):?>
+				<div class="field radius-input">
+					
+						<div class="input-box">
+							<?php 
+								$list = Mage::getStoreConfig('storelocator/gmaps/radiuslist');
+								$listRadius = explode(';', $list);
+								
+								$metric = $this->getMetric();
+								$defaultRadius = Mage::getStoreConfig('storelocator/gmaps/radius');
+							?>
+							<select name="radius" id="radius" data-placeholder="<?php echo Mage::helper('storelocator')->__('Radius') ?>">
+									<option value=""></option>
+									<?php foreach($listRadius as $item):?>
+									<?php $value = trim($item);?>
+									<option value="<?php echo $value?>" <?php if ($defaultRadius==$value):?>selected="selected"<?php endif;?>><?php echo $value?> <?php echo $metric?></option>
+									<?php endforeach;?>
+							</select>
+						</div>
+				</div>
+				<?php endif;?>
+				<button type="submit" title="<?php echo Mage::helper('storelocator')->__('Search') ?>" class="button"><span><span><?php echo Mage::helper('storelocator')->__('Search') ?></span></span></button>
+				<span class="loader-ajax hidden"></span>
+				<div style="display:none" class="current-location">
+					<p>-or use your current location-</p>
+					<a href="" class="btn-current-location"><span><span><?php echo Mage::helper('storelocator')->__('CURRENT LOCATION') ?></span></span></a>
+				</div>
+			</li>
+		</ul> 
+		</form>
+	</div>
+	<div class="clear"></div>
+	<div id="map-canvas"></div>
+	</div>
+	<div class="search-result" id="search-result"></div>
+	
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+    var form = new VarienForm('storelocator-search', false);   
+    var IWDStoreLocatorConfig = '<?php echo $this->getJsonConfig()?>'; 
+//]]>
+</script>
+<?php if (!Mage::helper('storelocator')->isDisabledFullWidth()):?>
+<style>
+/* 1280px <= width */
+@media only screen and (min-width: 1280px)  {
+	.storelocator .map-wrapper{left: 0;position: absolute !important;width: 99.9% !important;}
+	.storelocator .map-container{height:615px;}
+	.search-result{margin-top: 740px !important;}
+	.filter{background: url("<?php echo $this->getSkinUrl('css/iwd/storelocator/images/bkg_filter.png')?>") repeat scroll 0 0 transparent;border-bottom: 1px solid #B5B4AF;border-top: 1px solid #B5B4AF;height: 70px;left: 0;position: relative !important; margin: 0 auto; width: 80%;z-index: 1; top: 110px;}
+	.filter form{display: block;margin: 20px auto 0;width: 900px;}
+}
+</style>
+<?php endif;?>

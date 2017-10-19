@@ -1,0 +1,488 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <iwdall>
+            <label>IWD Extensions</label>
+            <sort_order>210</sort_order>
+            <class>iwd-block</class>
+        </iwdall>
+    </tabs>
+    <sections>
+        <storelocator translate="label" module="contacts">
+            <label>Store Locator</label>
+            <tab>iwdall</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>232</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+             <global translate="label">
+                    <label>Global</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>5</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+
+                        <info>
+                            <label>Version</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>storelocator/system_config_form_fieldset_extensions</frontend_model>
+                        </info>
+                     
+                     
+                        <nfoundmessage translate="label">
+                            <label>Not Found Message</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>                            
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </nfoundmessage>
+                        
+                        <pagetitle translate="label">
+                            <label>Page Title</label>
+                            <comment></comment>
+                             <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>                    
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                          
+                        </pagetitle>
+                        
+                         <blockid translate="label">
+                            <label>CMS Static Block</label>
+                            <comment></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>storelocator/system_block</source_model>                   
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                          
+                        </blockid>
+                        
+                         <route translate="label">
+                            <label>Default Path</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_model>storelocator/system_config_form_fieldset_path</frontend_model>
+                        </route>
+                        
+                        
+                        <placeholder translate="label comment">
+                            <label>Placeholder</label>
+                            <comment>Allowed file types: PNG, GIF, JPG, JPEG, APNG. Not all browsers support all these formats!</comment>
+                             <frontend_type>image</frontend_type>
+                            <backend_model>storelocator/system_marker</backend_model>
+                            <base_url type="media" scope_info="1">gmmarker</base_url>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </placeholder>
+                        
+                        <hide_placeholder translate="label comment">
+                            <label>Hide All Placeholders</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>51</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </hide_placeholder>
+                        
+                         <search_load translate="label">
+                            <label>Do not launch search on load</label>                          
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <validate>required-entry</validate>                    
+                           
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <sort_order>51</sort_order> 
+                                         
+                        </search_load> 
+                        
+                        
+                         <full translate="label">
+                            <label>Disabled Full Width</label>                          
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <validate>required-entry</validate>                    
+                           
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <sort_order>52</sort_order> 
+                                         
+                        </full> 
+                        
+                        <limit_result translate="label">
+                            <label>Stores Per Page</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>                    
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <sort_order>60</sort_order> 
+                            <comment>0 - no limits</comment>                       
+                        </limit_result> 
+                        
+                        
+                        <pagination translate="label">
+                            <label>Enable Pagination</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <validate>required-entry</validate>                    
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>  
+                            <sort_order>70</sort_order>                                          
+                        </pagination> 
+                        
+                        <show_toplink translate="label">
+                            <label>Show Top Link</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <validate>required-entry</validate>                    
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                          
+                        </show_toplink>
+                        
+                        
+                        <hide_radius translate="label">
+                            <label>Hide Radius selection</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <validate>required-entry</validate>                    
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                          
+                        </hide_radius>
+                        
+                      </fields>
+             </global>
+            
+            
+                <gmaps translate="label">
+                    <label>Google Maps</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <apikey translate="label">
+                            <label>Browser API Key</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>                            
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Key for browser applications</comment>
+                        </apikey>
+                        
+                        <serverkey translate="label">
+                            <label>Server API Key</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>                            
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Key for server applications</comment>
+                        </serverkey>
+                        
+                        <marker translate="label comment">
+                            <label>Marker Icon</label>
+                            <comment>Allowed file types: PNG, GIF, JPG, JPEG, APNG. Not all browsers support all these formats!</comment>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>storelocator/system_marker</backend_model>
+                            <base_url type="media" scope_info="1">gmmarker</base_url>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </marker>
+                        
+                        <radius translate="label">
+                            <label>Default Radius</label>
+                            <comment>Default radius must be in Radius List</comment>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>                    
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                          
+                        </radius>
+
+                         <radiuslist translate="label">
+                            <label>Radius List</label>
+                            <comment>separeted by ;</comment>
+                            <frontend_type>text</frontend_type>
+                            <validate>required-entry</validate>                    
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                          
+                        </radiuslist>
+                        
+                        
+                        <metric translate="label">
+                            <label>Metric</label>
+                            <comment></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>storelocator/system_metric</source_model>
+                            <validate>required-entry</validate>                    
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                          
+                        </metric>
+                        
+                        <zoom translate="label">
+                            <label>Default Zoom</label>
+                            <comment>From 1 to 20. Zoom 0 corresponds to a map of the Earth fully zoomed out, and higher zoom levels zoom in at a higher resolution.</comment>
+                            <frontend_type>text</frontend_type>                            
+                            <validate>required-entry</validate>                    
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                          
+                        </zoom>
+                        
+                         <scrollwhell_zooming translate="label">
+                            <label>Scrollwheel Zooming</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>                       
+                            <validate>required-entry</validate>                    
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                          
+                        </scrollwhell_zooming>
+                        
+                        <map_type_control translate="label">
+                            <label>Map Type Control</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>                       
+                            <validate>required-entry</validate>                    
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>     
+                            <comment>The initial enabled/disabled state of the Map type control</comment>                     
+                        </map_type_control>
+                        
+                         <scale_control translate="label">
+                            <label>Scale Control</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>                       
+                            <validate>required-entry</validate>                    
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>     
+                            <comment>The initial enabled/disabled state of the Map Scale control</comment>                     
+                        </scale_control>
+
+                        <enable_group_store translate="label">
+                            <label>Enable Grouping Of Stores</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <validate>required-entry</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>70</sort_order>
+                        </enable_group_store>
+
+                    </fields>
+                </gmaps>
+                
+                <search_result>
+                    <label>Search Result</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>17</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <sort>
+                            <label>Order By</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>storelocator/system_sort</source_model>                     
+                            <validate>required-entry</validate>                    
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>     
+                            <comment></comment>
+                        </sort>
+                    </fields>
+                </search_result>
+                
+                <search_decorator>
+                    <label>Result Decorators</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>18</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <highlight_search translate="label">
+                                <label>Highlight Search Result</label>
+                                <frontend_type>select</frontend_type>
+                                <source_model>adminhtml/system_config_source_yesno</source_model>
+                                <validate>required-entry</validate>
+                                <sort_order>10</sort_order>
+                                <show_in_default>1</show_in_default>
+                                <show_in_website>1</show_in_website>
+                                <show_in_store>1</show_in_store>
+                         </highlight_search>
+
+                         <fill_color translate="label">
+                            <label>Fill color</label>
+                            <comment>All CSS3 colors are supported except for extended named colors.</comment>
+                            <frontend_type>text</frontend_type>                            
+                            <validate>required-entry</validate>                    
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                          
+                        </fill_color>
+                        
+                        <fill_opacity translate="label">
+                            <label>Fill opacity</label>
+                            <comment>The fill opacity between 0.0 and 1.0</comment>
+                            <frontend_type>text</frontend_type>                            
+                            <validate>required-entry</validate>                    
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                          
+                        </fill_opacity>
+                        
+                        <stroke_color translate="label">
+                            <label>Stroke Color</label>
+                            <comment>All CSS3 colors are supported except for extended named colors.</comment>
+                            <frontend_type>text</frontend_type>                            
+                            <validate>required-entry</validate>                    
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                          
+                        </stroke_color>
+                        
+                        
+                        <stroke_opacity translate="label">
+                            <label>Stroke Opacity</label>
+                            <comment>The stroke opacity between 0.0 and 1.0</comment>
+                            <frontend_type>text</frontend_type>                            
+                            <validate>required-entry</validate>                    
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                          
+                        </stroke_opacity>
+                        
+                        <stroke_weight translate="label">
+                            <label>Stroke Weight</label>
+                            <comment>The stroke width in pixels.</comment>
+                            <frontend_type>text</frontend_type>                            
+                            <validate>required-entry</validate>                    
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                          
+                        </stroke_weight>
+                        
+                        
+                        <marker translate="label comment">
+                            <label>Marker Icon</label>
+                            <comment>Allowed file types: PNG, GIF, JPG, JPEG, APNG. Not all browsers support all these formats!</comment>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>storelocator/system_search</backend_model>
+                            <base_url type="media" scope_info="1">gmmarker</base_url>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </marker>
+
+                     </fields>
+                </search_decorator>
+             
+
+            </groups>
+            
+            
+             <groups>
+                <meta translate="label">
+                    <label>Meta data</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>0</expanded>
+                    <fields>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <isrequired>true</isrequired>                           
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                           
+                        </title>
+                        
+                         <description translate="label">
+                            <label>Description</label>
+                            <frontend_type>text</frontend_type>
+                            <isrequired>true</isrequired>                           
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                           
+                        </description>
+                        
+                         <keywords translate="label">
+                            <label>Keywords</label>
+                            <frontend_type>text</frontend_type>
+                            <isrequired>true</isrequired>                           
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                           
+                        </keywords>
+                    </fields>
+                </meta>
+
+            </groups>
+            
+        </storelocator>
+    </sections>
+</config>

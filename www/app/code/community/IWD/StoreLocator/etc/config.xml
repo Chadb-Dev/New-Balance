@@ -1,0 +1,198 @@
+<?xml version="1.0" ?>
+<config>
+    <modules>
+        <IWD_StoreLocator>
+            <version>1.8.8</version>
+        </IWD_StoreLocator>
+    </modules>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <storelocator after="Mage_Adminhtml">IWD_StoreLocator_Adminhtml</storelocator>
+                    </modules>
+                </args>
+
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <storelocator>
+                    <file>iwd_storelocator.xml</file>
+                </storelocator>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <storelocator>
+                    <files>
+                        <default>IWD_StoreLocator.csv</default>
+                    </files>
+                </storelocator>
+            </modules>
+        </translate>
+    </adminhtml>
+
+    <frontend>
+        <layout>
+            <updates>
+                <storelocator>
+                    <file>storelocator.xml</file>
+                </storelocator>
+            </updates>
+        </layout>
+
+        <translate>
+            <modules>
+                <storelocator>
+                    <files>
+                        <default>IWD_StoreLocator.csv</default>
+                    </files>
+                </storelocator>
+            </modules>
+        </translate>
+    </frontend>
+
+    <global>
+        <helpers>
+            <storelocator>
+                <class>IWD_StoreLocator_Helper</class>
+            </storelocator>
+        </helpers>
+
+        <blocks>
+            <storelocator>
+                <class>IWD_StoreLocator_Block</class>
+            </storelocator>
+            <page>
+                <rewrite>
+                    <html_head>IWD_StoreLocator_Block_Page_Html_Head</html_head>
+                </rewrite>
+            </page>
+        </blocks>
+
+        <models>
+            <storelocator>
+                <class>IWD_StoreLocator_Model</class>
+                <resourceModel>storelocator_resource</resourceModel>
+            </storelocator>
+            <storelocator_resource>
+                <class>IWD_StoreLocator_Model_Resource</class>
+                <entities>
+                    <stores>
+                        <table>iwd_storelocator</table>
+                    </stores>
+                    <store>
+                        <table>iwd_storelocator_store</table>
+                    </store>
+
+                </entities>
+            </storelocator_resource>
+        </models>
+
+        <resources>
+            <iwd_storelocator_setup>
+                <setup>
+                    <module>IWD_StoreLocator</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </iwd_storelocator_setup>
+
+            <storelocator_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </storelocator_write>
+
+            <storelocator_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </storelocator_read>
+        </resources>
+
+        <events>
+            <controller_front_init_routers>
+                <observers>
+                    <storelocator>
+                        <class>IWD_StoreLocator_Controller_Router</class>
+                        <method>initControllerRouters</method>
+                    </storelocator>
+                </observers>
+            </controller_front_init_routers>
+        </events>
+    </global>
+
+    <default>
+        <web>
+            <routers>
+                <storelocator_router>
+                    <area>frontend</area>
+                    <class>IWD_StoreLocator_Controller_Router</class>
+                </storelocator_router>
+            </routers>
+        </web>
+
+        <storelocator>
+            <gmaps>
+                <radius>25</radius>
+            </gmaps>
+        </storelocator>
+
+        <storelocator>
+            <gmaps>
+                <radiuslist>1;2;3;4;5;10;15;25</radiuslist>
+            </gmaps>
+        </storelocator>
+
+        <storelocator>
+            <gmaps>
+                <metric>1</metric>
+                <zoom>8</zoom>
+
+                <scrollwhell_zooming>1</scrollwhell_zooming>
+                <map_type_control>0</map_type_control>
+                <scale_control>1</scale_control>
+            </gmaps>
+        </storelocator>
+
+        <storelocator>
+            <global>
+                <nfoundmessage>Sorry, no store were found near this location. Please try your search again.
+                </nfoundmessage>
+                <pagetitle>Store Locator</pagetitle>
+                <route>dealers</route>
+                <limit_result>20</limit_result>
+                <pagination>1</pagination>
+                <hide_radius>0</hide_radius>
+                <show_toplink>1</show_toplink>
+                <hide_placeholder>0</hide_placeholder>
+            </global>
+            <gmaps>
+                <enable_group_store>0</enable_group_store>
+            </gmaps>
+            <search>
+                <bar>1</bar>
+                <result>0</result>
+                <geolocation>1</geolocation>
+            </search>
+            <search_decorator>
+                <highlight_search>0</highlight_search>
+                <fill_color>#cd003a</fill_color>
+                <fill_opacity>0.1</fill_opacity>
+                <stroke_color>#000000</stroke_color>
+                <stroke_opacity>0.3</stroke_opacity>
+                <stroke_weight>1</stroke_weight>
+            </search_decorator>
+            <search_result>
+                <sort>1</sort>
+            </search_result>
+        </storelocator>
+    </default>
+</config>

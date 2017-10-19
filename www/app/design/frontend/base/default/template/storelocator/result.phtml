@@ -1,0 +1,111 @@
+<?php $collection = $this->getCollection(); ?>
+<?php $page = $this->getPage(); ?>
+<?php $pagination = $this->getLoad(); ?>
+<?php
+$option = Mage::getStoreConfig(IWD_StoreLocator_Helper_Data::XML_PATH_METRIC);
+if ($option == 1) {
+    $methic = 'km';
+}
+
+if ($option == 2) {
+    $methic = 'mi';
+}
+?>
+<?php if ($collection->getSize() > 0): ?>
+    <?php if (!$pagination): ?>
+        <div class="result-header">
+            <?php $address = Mage::registry('storelocator_address'); ?>
+            <?php if (is_array($address) && isset($address["error_message"])): ?>
+                <?php echo $address["error_message"] ?>
+            <?php else : ?>
+                <?php if (is_null($address) || $address == false): ?>
+                    <h3><?php echo $this->__('We Found ') ?><?php echo $collection->getSize(); ?><?php echo $this->__(' Locations!') ?></h3>
+                <?php else: ?>
+                    <h3><?php echo $this->__("We've found that you are located at:") ?><?php echo $address; ?></h3>
+                <?php endif; ?>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php $_collectionSize = $collection->count() ?>
+    <?php $_columnCount = 3; ?>
+
+    <?php if (!$pagination): ?>
+        <div class="row">
+    <?php endif; ?>
+    <?php $i = 0;
+    foreach ($collection as $store): ?>
+
+        <div class="item">
+            <?php if (!Mage::getStoreConfig('storelocator/global/hide_placeholder')): ?>
+                <?php $image = $this->prepareImage($store) ?>
+                <?php if ($image): ?>
+                    <div class="image">
+                        <img src="<?php echo $image; ?>"/>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+            <div>
+                <div>
+                    <h4><?php echo $store->getTitle() ?><?php if ($store->getDistance() != 0): ?><span class="distance">
+                            (<?php echo round($store->getDistance(), 2); ?> <?php echo $methic; ?>
+                            )</span><?php endif; ?></h4>
+                </div>
+
+                <div class="phone">
+                    <span><?php echo $store->getPhone() ?></span>
+                </div>
+
+
+                <?php $desc = $store->getDesc() ?>
+                <?php if (!empty($desc)): ?>
+                    <div>
+                        <p><?php echo $desc ?></p>
+                    </div>
+                <?php endif; ?>
+                <div><?php echo $store->getStreet() ?>,</div>
+                <div>
+                    <span><?php echo $store->getCity() ?>,</span>
+                    <span><?php echo $this->prepareState($store->getCountryId(), $store->getRegion(), $store->getRegionId()) ?>
+                        ,</span>
+                </div>
+                <div>
+                    <span><?php echo $this->prepareCountry($store->getCountryId()) ?>,</span>
+                    <span><?php echo $store->getPostalCode() ?></span>
+                </div>
+
+
+                <?php $site = $store->getWebsite() ?>
+
+                <div class="extend-link">
+                    <?php if (!empty($site)): ?>
+                        <a target="_blank" href="<?php echo $store->getWebsite() ?>"
+                           class="website"><?php echo $this->__('Website') ?><span>&gt;</span></a>
+                    <?php endif; ?>
+                    <a class="get-direction" target="_blank"
+                       href="https://maps.google.com/maps?daddr=<?php echo $store->getStreet() ?>+<?php echo $store->getCity() ?>+<?php echo $this->prepareState($store->getCountryId(), $store->getRegion(), $store->getRegionId()) ?>+<?php echo $this->prepareCountry($store->getCountryId()) ?>"><?php echo $this->__('Get Directions') ?>
+                        <span>&gt;</span></a>
+                </div>
+            </div>
+            <div class="divider"></div>
+        </div>
+
+    <?php endforeach; ?>
+    <div class="item item-pagination">
+        <div class="pagination-loader">
+            <div class="loader"></div>
+        </div>
+    </div>
+    <?php if (!$pagination): ?>
+        </div>
+    <?php endif; ?>
+    <?php if (!$pagination): ?>
+        <div class="back-to-top"><a href="#filter"><?php echo $this->__('Back to Top') ?></a></div>
+    <?php endif; ?>
+<?php else: ?>
+    <p class="no-result"><?php echo Mage::getStoreConfig('storelocator/global/nfoundmessage') ?></p>
+<?php endif; ?>
+<script>
+    IWD.StoreLocator.decorate();
+    IWD.StoreLocator.page = <?php echo $page?>;
+</script>

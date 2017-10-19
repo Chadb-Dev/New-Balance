@@ -1,0 +1,38 @@
+<?php $item = $this->getItem();?>
+<?php if (count($item)>0):?>
+
+	<div class="item gm-info-window">
+		<div>
+			<h4><?php if (!empty($item['icon'])):?><img src="<?php echo Mage::getBaseUrl('media') . $item['icon']?>" /><?php endif;?><?php echo htmlentities($item['title'])?></h4>
+		</div>
+		
+		<div class="phone">
+			<span><?php echo $item['phone']?></span>
+		</div>
+		
+		<div><span><?php echo $item['street']?>,</span></div>
+		<div>
+			<span><?php echo $item['city']?>,</span>
+			<span><?php echo $this->prepareState($item['country_id'], $item['region'], $item['region_id'])?>,</span>
+		</div>
+		<div>
+			<span><?php echo $this->prepareCountry($item['country_id'])?></span>,
+			<span><?php echo $item['postal_code']?></span>
+		</div>
+		
+		<?php $site = $item['website']?>
+		<?php 
+		if (!preg_match('/:\/\//i', $site)){
+		    $site = 'http://' . $site;
+		}
+		?>
+		<div class="extend-link">
+		<?php if (!empty($site)):?>
+			<a class="website" target="_blank" href="<?php echo $site?>"><span><span><?php echo __('Website')?></span></span></a>
+		<?php endif;?>
+			
+			<a  class="get-direction" target="_blank" href="https://maps.google.com/maps?daddr=<?php echo $item['street']?>+<?php echo $item['city']?>+ <?php echo $this->prepareState($item['country_id'], $item['region'], $item['region_id'])?>+<?php echo $this->prepareCountry($item['country_id'])?>"><span><span><?php echo $this->__('Get Directions')?></span></span></a>
+		</div>
+	</div>
+
+<?php endif;?>
