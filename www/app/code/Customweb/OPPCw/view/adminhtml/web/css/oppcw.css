@@ -1,0 +1,111 @@
+.oppcw-payment-information-block {
+	margin: 0 0 3rem;
+}
+
+.oppcw-transaction-payment-information-block {
+	margin: 3rem 0;
+	background-color: #f1f1f1;
+	padding: 1rem;
+}
+
+.oppcw-transaction-information .tooltip,
+.oppcw-payment-information-block .tooltip {
+	float: right;
+}
+
+@media (min-width: 768px) {
+	.oppcw-transaction-information,
+	.oppcw-transaction-captures {
+		float: left;
+		width: calc( (100%) * .5 - 30px );
+	}
+	
+	.oppcw-transaction-history,
+	.oppcw-transaction-refunds {
+		float: right;
+		width: calc( (100%) * .5 - 30px );
+	}
+}
+
+.oppcw_form .admin__field .note,
+.oppcw_form .admin__field div.mage-error {
+	clear: both;
+	padding: 5px 0;
+	margin-left: calc( (100%) * .33333333 + 30px );	
+}
+.oppcw_form .admin__field .note {
+	font-size: 12px;
+	color: #303030;
+}
+.oppcw_form .admin__field div.mage-error,
+.oppcw_form td.value div.mage-error {
+	font-size: 12px;
+	color: #e02b27;
+}
+
+.oppcw_form .html-field {
+	line-height: 3.2rem;
+}
+
+.oppcw_form .multi-control:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+.oppcw_form .multi-control > div > div {
+	width: auto;
+	float: left;
+	margin-right: 5px;
+	margin-top: 0;
+}
+
+
+/*** CHECKOUT ***/
+
+.oppcw_form .card-number .multi-control > div > div {
+	width: 100%;
+	float: none;
+	margin: 0;
+}
+
+.oppcw_form .card-brand-image-color.brand-is-deselected {
+	display:none;
+}
+
+.oppcw_form .card-brand-image-grey.brand-is-selected {
+	display:none;
+}
+
+.oppcw_form .card-brand-image-selection {
+	margin-top: 5px;
+}
+
+.oppcw_form .card-brand-image-selection img {
+	width:auto;
+	height: 20px;
+	margin-right: 3px;
+	vertical-align: middle;
+}
+
+.oppcw_form .invalid-card-number,
+.oppcw_form .invalid-cvc-number {
+	border-color: #ed8380;
+	background-image: url(../images/invalid.png) !important;
+	background-position: right 5px center;
+	background-repeat: no-repeat !important;
+}
+
+.oppcw_form .valid-card-number,
+.oppcw_form .valid-cvc-number {
+	background-image: url(../images/valid.png) !important;
+	background-position: right 5px center;
+	background-repeat: no-repeat !important;
+}
+
+.oppcw_form .alias select {
+	width: 100%;
+}
+
+.oppcw_form .alias select option:empty {
+	display: block;
+}

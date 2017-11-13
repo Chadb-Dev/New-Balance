@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:typens="urn:{{var wsdl.name}}"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             name="{{var wsdl.name}}"
+             targetNamespace="urn:{{var wsdl.name}}">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:{{var wsdl.name}}">
+            <xsd:complexType name="oppcwTransactionEntity">
+                <xsd:sequence>
+                    <xsd:element name="transaction_id" type="xsd:int" minOccurs="0" />
+                    <xsd:element name="transaction_external_id" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="order_id" type="xsd:int" minOccurs="0" />
+                    <xsd:element name="order_payment_id" type="xsd:int" minOccurs="0" />
+                    <xsd:element name="alias_for_display" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="alias_active" type="xsd:boolean" minOccurs="0" />
+                    <xsd:element name="payment_method" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="authorization_type" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="customer_id" type="xsd:int" minOccurs="0" />
+                    <xsd:element name="updated_on" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="created_on" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="payment_id" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="authorization_amount" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="authorization_status" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="paid" type="xsd:boolean" minOccurs="0" />
+                    <xsd:element name="currency" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="data" type="typens:associativeArray" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="oppcwTransactionEntityArray">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:oppcwTransactionEntity" />
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:element name="oppcwTransactionListRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="filters" type="typens:filters" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="oppcwTransactionListResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:oppcwTransactionEntityArray" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="oppcwTransactionInfoRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="transactionId" type="xsd:int" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="attributes" type="typens:ArrayOfString" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="oppcwTransactionInfoResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:oppcwTransactionEntity" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="oppcwTransactionInfoByPaymentIdRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="paymentId" type="xsd:int" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="attributes" type="typens:ArrayOfString" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="oppcwTransactionInfoByPaymentIdResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:oppcwTransactionEntity" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="oppcwTransactionListRequest">
+        <wsdl:part name="parameters" element="typens:oppcwTransactionListRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="oppcwTransactionListResponse">
+        <wsdl:part name="parameters" element="typens:oppcwTransactionListResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="oppcwTransactionInfoRequest">
+        <wsdl:part name="parameters" element="typens:oppcwTransactionInfoRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="oppcwTransactionInfoResponse">
+        <wsdl:part name="parameters" element="typens:oppcwTransactionInfoResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="oppcwTransactionInfoByPaymentIdRequest">
+        <wsdl:part name="parameters" element="typens:oppcwTransactionInfoByPaymentIdRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="oppcwTransactionInfoByPaymentIdResponse">
+        <wsdl:part name="parameters" element="typens:oppcwTransactionInfoByPaymentIdResponseParam" />
+    </wsdl:message>
+    <wsdl:portType name="{{var wsdl.handler}}PortType">
+        <wsdl:operation name="oppcwTransactionList">
+            <wsdl:documentation>Retrieve OPPCw Transactions</wsdl:documentation>
+            <wsdl:input message="typens:oppcwTransactionListRequest" />
+            <wsdl:output message="typens:oppcwTransactionListResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="oppcwTransactionInfo">
+            <wsdl:documentation>Retrieve OPPCw Transaction Data By Transaction Id</wsdl:documentation>
+            <wsdl:input message="typens:oppcwTransactionInfoRequest" />
+            <wsdl:output message="typens:oppcwTransactionInfoResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="oppcwTransactionInfoByPaymentId">
+            <wsdl:documentation>Retrieve OPPCw Transaction Data By Payment Id</wsdl:documentation>
+            <wsdl:input message="typens:oppcwTransactionInfoByPaymentIdRequest" />
+            <wsdl:output message="typens:oppcwTransactionInfoByPaymentIdResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="oppcwTransactionList">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="oppcwTransactionInfo">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+         <wsdl:operation name="oppcwTransactionInfoByPaymentId">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

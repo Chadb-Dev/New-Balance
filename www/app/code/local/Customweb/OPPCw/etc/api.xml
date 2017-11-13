@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<api>
+		<resources>
+			<oppcw_transaction translate="title" module="OPPCw">
+				<model>oppcw/transaction_api</model>
+				<title>OPPCw Transaction API</title>
+				<acl>oppcw_transaction</acl>
+				<methods>
+					<list translate="title" module="OPPCw">
+						<title>Retrieve transaction</title>
+						<method>items</method>
+						<acl>oppcw_transaction/list</acl>
+					</list>
+					<info translate="title" module="OPPCw">
+						<title>Retrieve transaction data by transaction id</title>
+						<method>info</method>
+						<acl>oppcw_transaction/info</acl>
+					</info>
+					<infoByPaymentId translate="title" module="OPPCw">
+						<title>Retrieve transaction data by payment id</title>
+						<method>infoByPaymentId</method>
+						<acl>oppcw_transaction/infoByPaymentId</acl>
+					</infoByPaymentId>
+				</methods>
+				<faults module="OPPCw">
+					<filters_invalid>
+						<code>101</code >
+						<message>Invalid filters specified. Details in error message.</message>
+					</filters_invalid>
+					<not_exists>
+						<code>102</code >
+						<message>Transaction doesn't exist.</message>
+					</not_exists>
+				</faults>
+			</oppcw_transaction>
+		</resources>
+		<v2>
+            <resources_function_prefix>
+                <oppcw_transaction>oppcwTransaction</oppcw_transaction>
+            </resources_function_prefix>
+        </v2>
+		<acl>
+			<resources>
+				<oppcw_transaction translate="title" module="OPPCw">
+					<title>OPPCw Transactions</title>
+					<list translate="title" module="OPPCw">
+						<title>View All</title>
+					</list>
+					<info translate="title" module="OPPCw">
+						<title>Get Info By Transaction Id</title>
+					</info>
+					<infoByPaymentId translate="title" module="OPPCw">
+						<title>Get Info By Payment Id</title>
+					</infoByPaymentId>
+				 </oppcw_transaction>
+			</resources>
+		</acl>
+	</api>
+</config>

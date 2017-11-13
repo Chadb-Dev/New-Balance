@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+    	<add id="Customweb_OPPCw::transactions" title="Open Payment Platform Transactions" module="Customweb_OPPCw" sortOrder="10" parent="Customweb_Base::sales_customweb" action="oppcw/transaction" resource="Customweb_OPPCw::transaction" />
+
+        <add id="Customweb_OPPCw::config" title="Open Payment Platform" module="Customweb_OPPCw" sortOrder="100" parent="Customweb_Base::config" action="oppcw/config" resource="Customweb_OPPCw::config"/>
+    </menu>
+</config>

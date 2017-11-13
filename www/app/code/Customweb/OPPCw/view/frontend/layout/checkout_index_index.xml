@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+		<css src="Customweb_OPPCw::css/oppcw.css"/>
+	</head>
+    <body>
+        <referenceBlock name="checkout.root">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="checkout" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="steps" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="billing-step" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+                                                <item name="payment" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="renders" xsi:type="array">
+                                                            <!-- merge payment method renders here -->
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="oppcw-payments" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Customweb_OPPCw/js/view/payment/oppcw-payments</item>
+                                                                    <item name="methods" xsi:type="array">
+                                                                    	
+                                                                    	<item name="oppcw_generic" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_americanexpress" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_boleto" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_cartebleue" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_dankort" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_creditcard" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_diners" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_directdebitssepa" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_discovercard" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_eps" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_giropay" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_ideal" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_jcb" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_klarnainvoice" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_maestro" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_mastercard" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_openinvoice" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_payolutionelv" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_payolutionins" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_paypal" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_paysafecard" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_prepayment" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_skrill" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_sofortueberweisung" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_visa" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_vpay" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_paydirekt" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_bcmc" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_poli" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_entercash" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_afterpaypaylater" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_afterpaydirectdebit" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_paytrail" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_trustly" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_trustpay" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_postfinancecard" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_onecard" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_przelewy24" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_yandex" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_tenpay" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_daopay" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_alipay" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_cashuprepaid" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_debitmastercard" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_debitvisa" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_chinaunionpay" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    	<item name="oppcw_interac" xsi:type="array">
+                                                                    		<item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                                    	</item>
+                                                                    </item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

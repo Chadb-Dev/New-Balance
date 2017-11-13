@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<payment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Payment:etc/payment.xsd">
+    <groups>
+        <group id="oppcw">
+            <label>Open Payment Platform</label>
+        </group>
+    </groups>
+    <methods>
+        <method name="oppcw_generic">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_americanexpress">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_boleto">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_cartebleue">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_dankort">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_creditcard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_diners">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_directdebitssepa">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_discovercard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_eps">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_giropay">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_ideal">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_jcb">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_klarnainvoice">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_maestro">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_mastercard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_openinvoice">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_payolutionelv">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_payolutionins">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_paypal">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_paysafecard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_prepayment">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_skrill">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_sofortueberweisung">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_visa">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_vpay">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_paydirekt">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_bcmc">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_poli">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_entercash">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_afterpaypaylater">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_afterpaydirectdebit">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_paytrail">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_trustly">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_trustpay">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_postfinancecard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_onecard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_przelewy24">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_yandex">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_tenpay">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_daopay">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_alipay">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_cashuprepaid">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_debitmastercard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_debitvisa">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_chinaunionpay">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="oppcw_interac">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method>
+    </methods>
+</payment>

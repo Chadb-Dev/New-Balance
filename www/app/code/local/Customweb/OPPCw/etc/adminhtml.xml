@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+         <system>
+            <children>
+                <oppcw translate="title" module="OPPCw">
+                    <title><![CDATA[Open Payment Platform]]></title>
+                    <action>adminhtml/configoppcw</action>
+                    <sort_order>109</sort_order>
+                </oppcw>
+            </children>
+         </system>
+    </menu>
+    <acl>
+		<resources>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<oppcw>
+                                <title><![CDATA[Open Payment Platform]]></title>
+                                <sort_order>16</sort_order>
+                            </oppcw>
+							<config>
+								<children>
+									<oppcw translate="title" module="OPPCw">
+										<title><![CDATA[Open Payment Platform]]></title>
+									</oppcw>
+								</children>
+							</config>
+						</children>
+					</system>
+					<sales>
+						<children>
+							<oppcw>
+                                <title><![CDATA[Open Payment Platform]]></title>
+                                <sort_order>16</sort_order>
+                                <children>
+                               		
+									<oppcw_alias_manager translate="title" module="OPPCw">
+										<title><![CDATA[Open Payment Platform: Alias Management]]></title>
+									</oppcw_alias_manager>
+									
+									
+									<oppcw_moto translate="title" module="OPPCw">
+										<title><![CDATA[Open Payment Platform: Alias Management]]></title>
+									</oppcw_moto>
+									
+								</children>
+                            </oppcw>
+						</children>
+					</sales>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>
