@@ -198,10 +198,10 @@ abstract class Customweb_OPPCw_Model_Method extends Mage_Payment_Model_Method_Ab
 	public function validate(){
 		
 		$arguments = null;
-		return Customweb_Licensing_OPPCw_License::run('i1bi2ab2buggrfat', $this, $arguments);
+		return Customweb_Licensing_OPPCw_License::run('8f82n58rec9vu218', $this, $arguments);
 	}
 
-	final public function call_umpafhhm4p72h9q0() {
+	final public function call_os4mne98a99vbh0b() {
 		$arguments = func_get_args();
 		$method = $arguments[0];
 		$call = $arguments[1];

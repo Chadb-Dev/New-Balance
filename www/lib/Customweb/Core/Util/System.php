@@ -67,7 +67,7 @@ final class Customweb_Core_Util_System {
 	 * @return string
 	 */
 	public static function getTemporaryDirPath() {
-		return rtrim(sys_get_temp_dir(), '/') . '/';
+		return rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 	}
 
 	/**

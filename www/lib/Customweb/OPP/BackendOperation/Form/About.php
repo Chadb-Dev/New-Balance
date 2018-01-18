@@ -29,12 +29,12 @@ class Customweb_OPP_BackendOperation_Form_About extends Customweb_Payment_Backen
 {
 	protected function getVersion()
 	{
-		return '3.0.216';
+		return '3.0.224';
 	}
 
 	protected function getReleaseDate()
 	{
-		return 'Fri, 03 Nov 2017 16:10:26 +0100';
+		return 'Wed, 17 Jan 2018 17:24:20 +0100';
 	}
 
 	protected function getOrderNumber()

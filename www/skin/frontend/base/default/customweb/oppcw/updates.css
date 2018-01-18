@@ -18,6 +18,11 @@ float: none;
 	margin-left: 0px;
 }
 
+.control-group  > .input-box > .option > label > a {
+        float: unset;
+        margin: 0px;
+}
+
 .checkoutcontainer .payment-methods .expiration-date .multi-control .input-box { 
 	width: auto !important;
 	display: inline-block;

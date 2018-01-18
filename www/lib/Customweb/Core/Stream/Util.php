@@ -60,7 +60,8 @@ final class Customweb_Core_Stream_Util {
 			$fileName = 'd' . $fileName;
 		}
 		
-		$output = new Customweb_Core_Stream_Output_File($tempDir . '/' . $fileName);
+		
+		$output = new Customweb_Core_Stream_Output_File($tempDir . DIRECTORY_SEPARATOR . $fileName);
 		$output->writeStream($inputStream);
 		
 		return $output->getFilePath();

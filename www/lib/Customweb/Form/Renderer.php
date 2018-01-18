@@ -542,8 +542,40 @@ class Customweb_Form_Renderer implements Customweb_Form_IRenderer
 				cwFormValidation'.$postfix.'.validators.push(validatorPair);
 			};';
 
+		$js .= 'cwCallGlobalSuccess'.$postfix.' = function(valid){
+				if (typeof window.cwGlobalSuccessCallback == "function") {
+				  	  window.cwGlobalSuccessCallback (valid);
+					} else if (typeof window.cwGlobalSuccessCallback != "undefined"
+							&& window.cwGlobalSuccessCallback.constructor === Array) {
+	        			    	window.cwGlobalSuccessCallback.forEach(function(cwGlobalSuccess) {
+	        					if (typeof cwGlobalSuccess == "function") {
+	        					    cwGlobalSuccess(valid);
+	        					}
+	        				});
+					}
+
+			};';
+
+		$js .= 'cwCallGlobalFailure'.$postfix.' = function(errors, valid){
+				if (typeof window.cwGlobalFailureCallback == "function") {
+				  	  window.cwGlobalFailureCallback (errors, valid);
+					} else if (typeof window.cwGlobalFailureCallback != "undefined"
+							&& window.cwGlobalFailureCallback.constructor === Array) {
+	        			    	window.cwGlobalFailureCallback.forEach(function(cwGlobalFailure) {
+	        					if (typeof cwGlobalFailure == "function") {
+	        					    cwGlobalFailure(errors, valid);
+	        					}
+	        				});
+					}
+
+			};';
+
 		$js .= 'cwValidateFields'.$postfix.' = function(successCallback, failedCallback) {
-				if(!cwValidationRequired'.$postfix.'){successCallback([]); return}
+				if(!cwValidationRequired'.$postfix.'){
+					cwCallGlobalSuccess'.$postfix.'([]);
+					successCallback([]);
+					return;
+				}
 
 
 				cwClearValidatorObject'.$postfix.'();
@@ -556,9 +588,12 @@ class Customweb_Form_Renderer implements Customweb_Form_IRenderer
 					validator(cwCheckResultAndCallNextValidator'.$postfix.');
 				}
 				else{
+					cwCallGlobalSuccess'.$postfix.'([]);
 					cwFormValidation'.$postfix.'.successCallback([]);
 				}
 			};';
+
+
 
 		$js .= 'cwCheckResultAndCallNextValidator'.$postfix.' = function (result, msg){
 				var elementId = cwFormValidation'.$postfix.'.validators[cwFormValidation'.$postfix.'.position]["id"];
@@ -576,9 +611,11 @@ class Customweb_Form_Renderer implements Customweb_Form_IRenderer
 				}
 				else {
 					if(Object.keys(cwFormValidation'.$postfix.'.errors).length <= 0) {
+						cwCallGlobalSuccess'.$postfix.'(cwFormValidation'.$postfix.'.valid);
 						cwFormValidation'.$postfix.'.successCallback(cwFormValidation'.$postfix.'.valid);
 					}
 					else {
+						cwCallGlobalFailure'.$postfix.'(cwFormValidation'.$postfix.'.errors, cwFormValidation'.$postfix.'.valid);
 						cwFormValidation'.$postfix.'.failedCallback(cwFormValidation'.$postfix.'.errors, cwFormValidation'.$postfix.'.valid);
 					}
 
@@ -653,13 +690,19 @@ class Customweb_Form_Renderer implements Customweb_Form_IRenderer
 		return "function addValidator( id, fn ) {
 			type = 'submit';
 			var element = document.getElementById(id);
-			formObj = getFormElement(element);
-			if ( formObj.attachEvent ) {
-				formObj['e'+type+fn] = fn;
-				formObj[type+fn] = function(){formObj['e'+type+fn]( window.event );}
-				formObj.attachEvent( 'onsubmit', formObj[type+fn] );
+			if (element) {
+				formObj = getFormElement(element);
+				if ( formObj.attachEvent ) {
+					formObj['e'+type+fn] = fn;
+					formObj[type+fn] = function(){formObj['e'+type+fn]( window.event );}
+					formObj.attachEvent( 'onsubmit', formObj[type+fn] );
+				} else {
+					formObj.addEventListener( 'submit', fn, false );
+				}
 			} else {
-				formObj.addEventListener( 'submit', fn, false );
+				setTimeout(function(){
+					addValidator(id, fn);
+				}, 100);
 			}
 		}";
 	}

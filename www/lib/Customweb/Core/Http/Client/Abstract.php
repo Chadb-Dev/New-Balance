@@ -287,7 +287,7 @@ abstract class Customweb_Core_Http_Client_Abstract implements Customweb_Core_Htt
 		
 		$caFileName = 'ca-bundle.crt.php';
 		
-		$baseFile = dirname(__FILE__) . '/' . $caFileName;
+		$baseFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . $caFileName;
 		if (file_exists($baseFile)) {
 			return $baseFile;
 		}
@@ -296,7 +296,7 @@ abstract class Customweb_Core_Http_Client_Abstract implements Customweb_Core_Htt
 		
 		$include_path = explode(PATH_SEPARATOR, get_include_path());
 		foreach ($include_path as $path) {
-			$potentialFileLocation = $path . $classPath . '/' . $caFileName;
+			$potentialFileLocation = $path . $classPath . DIRECTORY_SEPARATOR . $caFileName;
 			if (file_exists($potentialFileLocation)) {
 				return $potentialFileLocation;
 			}

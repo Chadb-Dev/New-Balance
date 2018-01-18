@@ -19,16 +19,16 @@
  *
  * @category	Customweb
  * @package		Customweb_OPPCw
- * 
+ *
  */
 
 class Customweb_OPPCw_Model_PaymentCustomerContext implements Customweb_Payment_Authorization_IPaymentCustomerContext
 {
 	private static $cache = array();
-	
+
 	private $context = null;
 	private $customerId = null;
-	
+
 	public static function getByCustomerId($customerId) {
 		if (!isset(self::$cache[$customerId])) {
 			self::$cache[$customerId] = new self($customerId);
@@ -56,18 +56,26 @@ class Customweb_OPPCw_Model_PaymentCustomerContext implements Customweb_Payment_
 	public function persist()
 	{
 		if ($this->customerId > 0) {
-
-			$loadedContextMap = $this->getContextMapFromDatabase();
-			$updatedMap = array();
-			if ($loadedContextMap !== null) {
-				$updatedMap = $this->getContext()
-					->applyUpdatesOnMapAndReset($loadedContextMap);
-			} else {
-				$updatedMap = $this->getContext()
-					->getMap();
+			$lastException = null;
+			for ($i = 0; $i < 10; $i++) {
+				try {
+					$loadedContextMap = $this->getContextMapFromDatabase();
+					$updatedMap = array();
+					if ($loadedContextMap !== null) {
+						$updatedMap = $this->getContext()
+							->applyUpdatesOnMapAndReset($loadedContextMap);
+					} else {
+						$updatedMap = $this->getContext()
+							->getMap();
+					}
+					$this->updateContextMapInDatabase($updatedMap);
+					return $this;
+				} catch (Customweb_OPPCw_Model_OptimisticLockingException $e) {
+					// Try again.
+					$lastException = $e;
+				}
 			}
-
-			$this->updateContextMapInDatabase($updatedMap);
+			throw $lastException;
 		}
 	}
 

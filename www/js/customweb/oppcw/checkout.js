@@ -1079,7 +1079,7 @@ Customweb.OPPCw = Class.create({
 			var submitelement = $('onestepcheckout-place-order');
             var loaderelement = new Element('div', {'id': 'onestepcheckout-place-order-loading-oppcw'}).
                 addClassName('onestepcheckout-place-order-loading').
-                update('Please wait, processing your order...');
+                update(Translator.translate('Please wait, processing your order...'));
             submitelement.parentNode.appendChild(loaderelement);
             submitelement.removeClassName('orange').addClassName('grey');
             submitelement.disabled = true;

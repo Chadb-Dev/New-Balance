@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
   * You are allowed to use this API in your web application.
  *
@@ -29,16 +29,16 @@
 /**
  * This is a default implementation of the Customweb_Core_Http_IResponse interface. It provide read
  * and write method including the handling of cookies.
- * 
+ *
  * @author Thomas Hunziker
  *
  */
 class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage implements Customweb_Core_Http_IResponse {
 
 	const HEADER_KEY_COOKIE = 'set-cookie';
-	
+
 	const HEADER_KEY_LOCATION = 'location';
-	
+
 	private static $statusCodeMessageMap = array(
 		100 => 'Continue',
 		101 => 'Switching Protocols',
@@ -81,31 +81,31 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 		504 => 'Gateway Time-out',
 		505 => 'HTTP Version not support',
 	);
-	
+
 	/**
 	 * @var int
 	 */
 	private $statusCode = 200;
-	
+
 	/**
 	 * @var string
 	 */
 	private $statusMessage = 'OK';
-	
+
 	/**
 	 * @var Customweb_Core_Http_ICookie[]
 	 */
 	private $cookies = array();
-	
+
 	/**
 	 * @var string
 	 */
 	private $location = null;
 
 	/**
-	 * Constructs a new response object. The input can be either a response object or a 
+	 * Constructs a new response object. The input can be either a response object or a
 	 * raw HTTP message as string.
-	 * 
+	 *
 	 * @param Customweb_Core_Http_IResponse|string $response
 	 */
 	public function __construct($message = null) {
@@ -143,11 +143,11 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 		$response->setBody($body);
 		return $response;
 	}
-	
+
 	/**
 	 * Creates a response with a header redirection to the given
 	 * URL.
-	 * 
+	 *
 	 * @param string $url
 	 * @return Customweb_Core_Http_Response
 	 */
@@ -156,16 +156,16 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 		$response->setLocation($url);
 		return $response;
 	}
-	
+
 	/**
 	 * This method creates a redirect which uses the HTML head for redirection. Most
 	 * HTTP client implementation will not follow this redirection.
-	 * 
+	 *
 	 * @param string $url
 	 * @return Customweb_Core_Http_Response
 	 */
 	public static function htmRedirect($url) {
-		$body = 
+		$body =
 		'<html>
 			<head>
 				<meta http-equiv="refresh" content="0; url=' . $url . '" />
@@ -176,11 +176,11 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 		$response->setBody($body);
 		return $response;
 	}
-	
+
 	public function getStatusLine() {
 		return 'HTTP/' . $this->getProtocolVersion() . ' ' . $this->getStatusCode() . ' ' . $this->getStatusMessage();
 	}
-	
+
 	protected function parseStatusLine($line) {
 		if (empty($line)) {
 			throw new Exception("Empty status line provided.");
@@ -192,21 +192,21 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 			$this->setStatusMessage($result[3]);
 		}
 	}
-	
-	
+
+
 	/**
 	 * Returns a list of cookies defined for this response.
-	 * 
+	 *
 	 * @return multitype:Customweb_Core_Http_ICookie
 	 */
 	public function getCookies() {
 		return $this->cookies;
 	}
-	
+
 	/**
-	 * Returns true when a cookie is set with the given key. The key 
+	 * Returns true when a cookie is set with the given key. The key
 	 * is case sensitive.
-	 * 
+	 *
 	 * @param string $cookieKey
 	 * @return boolean
 	 */
@@ -219,11 +219,11 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Returns the value of the given cookie. The cookie key is case
 	 * sensitive.
-	 * 
+	 *
 	 * @param string $cookieKey
 	 * @throws Exception In case the given cookie key is not defined.
 	 * @return string
@@ -237,11 +237,11 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 			throw new Exception(Customweb_Core_String::_("No cookie for key '@key'.")->format(array('@key' => $cookieKey))->toString());
 		}
 	}
-	
+
 	/**
-	 * Defines a cookie on the response. The method may override those 
+	 * Defines a cookie on the response. The method may override those
 	 * cookies which has the same value.
-	 * 
+	 *
 	 * @param Customweb_Core_Http_ICookie $cookie
 	 * @return Customweb_Core_Http_Response
 	 */
@@ -250,10 +250,10 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 		$this->addHeader($tmp->toHeaderString());
 		return $this;
 	}
-	
+
 	/**
 	 * Removes all cookies in the request.
-	 * 
+	 *
 	 * @return Customweb_Core_Http_Response
 	 */
 	public function removeCookies() {
@@ -267,7 +267,7 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 
 	/**
 	 * Sets the status code.
-	 * 
+	 *
 	 * @param int $statusCode
 	 * @throws Exception
 	 * @return Customweb_Core_Http_Response
@@ -293,9 +293,9 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 	}
 
 	/**
-	 * Sets the status message. By default the status message es determine by the 
+	 * Sets the status message. By default the status message es determine by the
 	 * set status code.
-	 * 
+	 *
 	 * @param string $statusMessage
 	 * @return Customweb_Core_Http_Response
 	 */
@@ -306,20 +306,20 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 		$this->statusMessage = $statusMessage;
 		return $this;
 	}
-	
+
 	/**
-	 * Returns the location header of the response. It can be null in 
+	 * Returns the location header of the response. It can be null in
 	 * case no location header is set.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getLocation() {
 		return $this->location;
 	}
-	
+
 	/**
 	 * The location header URL.
-	 * 
+	 *
 	 * @param string $locationUrl
 	 * @return Customweb_Core_Http_Response
 	 */
@@ -329,7 +329,7 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 		$this->appendHeader(self::HEADER_KEY_LOCATION . ': ' . $locationUrl);
 		return $this;
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @see Customweb_Core_Http_AbstractMessage::setBody()
@@ -338,7 +338,7 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 	public function setBody($body) {
 		return parent::setBody($body);
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @see Customweb_Core_Http_AbstractMessage::appendBody()
@@ -347,7 +347,7 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 	public function appendBody($string) {
 		return parent::appendBody($string);
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @see Customweb_Core_Http_AbstractMessage::prependBody()
@@ -356,7 +356,7 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 	public function prependBody($string) {
 		return parent::prependBody($string);
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @see Customweb_Core_Http_AbstractMessage::setHeaders()
@@ -365,7 +365,7 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 	public function setHeaders(array $headers){
 		parent::setHeaders($headers);
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @see Customweb_Core_Http_AbstractMessage::appendHeader()
@@ -374,7 +374,7 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 	public function appendHeader($header) {
 		return parent::appendHeader($header);
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @see Customweb_Core_Http_AbstractMessage::prependHeader()
@@ -383,7 +383,7 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 	public function prependHeader($header) {
 		return parent::prependHeader($header);
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @see Customweb_Core_Http_AbstractMessage::setProtocolVersion()
@@ -392,7 +392,7 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 	public function setProtocolVersion($protocolVersion) {
 		return parent::setProtocolVersion($protocolVersion);
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @see Customweb_Core_Http_AbstractMessage::setContentType()
@@ -401,7 +401,7 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 	public function setContentType($contentType) {
 		return parent::setContentType($contentType);
 	}
-		
+
 	/**
 	 * (non-PHPdoc)
 	 * @see Customweb_Core_Http_AbstractMessage::setContentEncoding()
@@ -410,23 +410,27 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 	public function setContentEncoding($contentEncoding) {
 		return parent::setContentEncoding($contentEncoding);
 	}
-					
+
 	/**
-	 * This method sends the response as it is to the browser. Means that the 
+	 * This method sends the response as it is to the browser. Means that the
 	 * headers and the body are sent with 'echo' and 'header()' to the browser
-	 * 
+	 *
 	 * @return void
 	 */
 	public function send() {
 		// Send headers
 		header($this->getStatusLine(), true, $this->getStatusCode());
 		foreach ($this->getHeaders() as $header) {
-			header($header);
+			// We do not send the content length when we send the response to prevent sending a header which is wrong
+			// and the webserver eventually compresses it.
+			if (0 !== strpos(strtolower($header), self::HEADER_KEY_CONTENT_LENGTH)) {
+				header($header);
+			}
 		}
-		
+
 		echo $this->getBody();
 	}
-	
+
 	protected function processKeyedHeader($headerKey, $headerValue) {
 		parent::processKeyedHeader($headerKey, $headerValue);
 		if ($headerKey == self::HEADER_KEY_COOKIE) {
@@ -437,16 +441,16 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 			$this->location = $headerValue;
 		}
 	}
-	
+
 	protected function resetHeaders() {
 		parent::resetHeaders();
 		$this->cookies = array();
 		$this->location = null;
 	}
-	
+
 	/**
 	 * Parses the given header value into a set of cookies.
-	 * 
+	 *
 	 * @param string $value
 	 */
 	protected function processCookieHeader($value) {
@@ -494,5 +498,5 @@ class Customweb_Core_Http_Response extends Customweb_Core_Http_AbstractMessage i
 			$this->cookies[$cookie->getName()] = $cookie;
 		}
 	}
-	
+
 }

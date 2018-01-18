@@ -296,7 +296,7 @@
 	<default>
 		<oppcw>
 			<general>
-				<version>3.0.216</version>
+				<version>3.0.224</version>
 				<operation_mode><![CDATA[test]]></operation_mode>
 				<test_mode><![CDATA[internal]]></test_mode>
 				<user_id><![CDATA[]]></user_id>

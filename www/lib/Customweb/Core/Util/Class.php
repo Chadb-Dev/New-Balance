@@ -67,7 +67,7 @@ final class Customweb_Core_Util_Class
 			}
 
 			if (!self::isClassLoaded($className)) {
-				$fileName = str_replace('_', '/', $className);
+				$fileName = str_replace('_', DIRECTORY_SEPARATOR, $className);
 				$fileName .= '.php';
 
 				// In case the class was not loadable also over the callback, then we throw an exception
@@ -180,13 +180,13 @@ final class Customweb_Core_Util_Class
 
 		$packageName = trim($packageName, ' _');
 
-		$packagePath = str_replace('_', '/', $packageName);
+		$packagePath = str_replace('_', DIRECTORY_SEPARATOR, $packageName);
 		$include_path = explode(PATH_SEPARATOR, get_include_path());
 		$classes = array();
 		Customweb_Core_Util_Error::deactivateErrorMessages();
 		foreach($include_path as $path) {
-			$file = realpath($path . '/' . $packagePath);
-			$phpFile = realpath($path . '/' . $packagePath . '.php');
+			$file = realpath($path . DIRECTORY_SEPARATOR . $packagePath);
+			$phpFile = realpath($path . DIRECTORY_SEPARATOR . $packagePath . '.php');
 			if(@file_exists($file)) {
 				if (@is_dir($file)) {
 					$classes = array_merge($classes, self::loadAllClassesOfDirectory($file, $packageName));
@@ -259,12 +259,12 @@ final class Customweb_Core_Util_Class
 				if (strstr($file, '.php') !== false) {
 					$className = $packageName . '_' . substr($file, 0, -4);
 					if (!isset($classes[$className]) && !self::isClassLoaded($className)) {
-						require_once $directory . '/' . $file;
+						require_once $directory . DIRECTORY_SEPARATOR . $file;
 					}
 					$classes[$className] = $className;
 				}
-				else if ($file !== '..' && $file !== '.' && is_dir($directory .  '/' . $file)) {
-					$classes = array_merge($classes, self::loadAllClassesOfDirectory($directory . '/' . $file, $packageName . '_' . $file));
+				else if ($file !== '..' && $file !== '.' && is_dir($directory . DIRECTORY_SEPARATOR . $file)) {
+					$classes = array_merge($classes, self::loadAllClassesOfDirectory($directory . DIRECTORY_SEPARATOR . $file, $packageName . '_' . $file));
 				}
 			}
 			closedir($handle);
@@ -295,7 +295,7 @@ final class Customweb_Core_Util_Class
 			$include_path = explode(PATH_SEPARATOR, get_include_path());
 			Customweb_Core_Util_Error::deactivateErrorMessages();
 			foreach($include_path as $path) {
-				$file = realpath($path . '/' . $fileName);
+				$file = realpath($path . DIRECTORY_SEPARATOR . $fileName);
 				if(@file_exists($file)) {
 					return $file;
 				}

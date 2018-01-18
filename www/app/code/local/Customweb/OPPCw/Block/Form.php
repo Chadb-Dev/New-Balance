@@ -33,10 +33,10 @@ class Customweb_OPPCw_Block_Form extends Mage_Payment_Block_Form {
 	public function getContent(){
 		
 		$arguments = null;
-		return Customweb_Licensing_OPPCw_License::run('mfjb83l5nph0ess4', $this, $arguments);
+		return Customweb_Licensing_OPPCw_License::run('rlb0ctvdm5ah5b8g', $this, $arguments);
 	}
 
-	final public function call_39uhij7utpbi7q4a() {
+	final public function call_8b6mal42jfigo1et() {
 		$arguments = func_get_args();
 		$method = $arguments[0];
 		$call = $arguments[1];
