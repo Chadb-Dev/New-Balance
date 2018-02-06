@@ -89,7 +89,7 @@ if (in_array('email', $billingFields) && $billingFields['email']) {
         <?php
         $addressFields = '';
             for ($_i=0, $_n=$this->helper('customer/address')->getStreetLines()-1; $_i<=$_n; $_i++){
-                    $addressFields .= '<input type="text" title="'.$this->__('Street Address '.($_i+1)).'" name="billing[street]['.$_i.']" id="billing:street'.($_i+1).'" value="'.$dataHelper->clearDash($this->getQuote()->getBillingAddress()->getStreet($_i+1)).'" class="'.(($_i == 0)? 'required-entry ' : '').'input-text onestepcheckout-address-line" />';
+                    $addressFields .= '<input type="text" title="'.$this->__('Street Address '.($_i+1)).'" name="billing[street]['.$_i.']" id="billing:street'.($_i+1).'" value="'.$dataHelper->clearDash($this->getQuote()->getBillingAddress()->getStreet($_i+1)).'" class="'.(($_i == 0)? 'required-entry ' : '').'input-text onestepcheckout-address-line" maxlength="30" />';
                     //$addressFields .= (($_i != $this->helper('customer/address')->getStreetLines()-1) ? '<br/>': '');
             }
 
