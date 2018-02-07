@@ -79,7 +79,7 @@ if (in_array('email', $billingFields) && $billingFields['email']) {
             for ($_i=0, $_n=$this->helper('customer/address')->getStreetLines()-1; $_i<=$_n; $_i++){
                     $addressFields .= '<div class="input-box input-address-short'.((in_array('address', $formErrors)) ? ' input-error' : '').'">
                     <label for="billing:street'.($_i+1).'">'.$this->__('Street Address '. ($_i+1)).(($_i > $requiredCount) ? false : '<span class="required">*</span>').'</label>
-                    <input type="text" title="'.$this->__('Street Address '.$_i).'" name="billing[street]['.$_i.']" id="billing:street'.($_i+1).'" value="'.$dataHelper->clearDash($this->getQuote()->getBillingAddress()->getStreet($_i+1)).'" class="'.(($_i > $requiredCount) ? false : 'required-entry ').'input-text onestepcheckout-address-line" maxlength="50" />
+                    <input type="text" title="'.$this->__('Street Address '.$_i).'" name="billing[street]['.$_i.']" id="billing:street'.($_i+1).'" placeholder="e.g. 1 Main Road" value="'.$dataHelper->clearDash($this->getQuote()->getBillingAddress()->getStreet($_i+1)).'" class="'.(($_i > $requiredCount) ? false : 'required-entry ').'input-text onestepcheckout-address-line" maxlength="50" />
                     </div>';
             }
 
@@ -89,7 +89,14 @@ if (in_array('email', $billingFields) && $billingFields['email']) {
         <?php
         $addressFields = '';
             for ($_i=0, $_n=$this->helper('customer/address')->getStreetLines()-1; $_i<=$_n; $_i++){
-                    $addressFields .= '<input type="text" title="'.$this->__('Street Address '.($_i+1)).'" name="billing[street]['.$_i.']" id="billing:street'.($_i+1).'" value="'.$dataHelper->clearDash($this->getQuote()->getBillingAddress()->getStreet($_i+1)).'" class="'.(($_i == 0)? 'required-entry ' : '').'input-text onestepcheckout-address-line" maxlength="50" />';
+                    if ($_i == 0) {
+                        $addressPlaceholder = "e.g. 1 Main Road";
+                    } elseif ($_i == 1) {
+                        $addressPlaceholder = "e.g. Building Unit A";
+                    } else {
+                        $addressPlaceholder = "";
+                    }
+                    $addressFields .= '<input type="text" title="'.$this->__('Street Address '.($_i+1)).'" name="billing[street]['.$_i.']" id="billing:street'.($_i+1).'" placeholder="'.$addressPlaceholder.'" value="'.$dataHelper->clearDash($this->getQuote()->getBillingAddress()->getStreet($_i+1)).'" class="'.(($_i == 0)? 'required-entry ' : '').'input-text onestepcheckout-address-line" maxlength="50" />';
                     //$addressFields .= (($_i != $this->helper('customer/address')->getStreetLines()-1) ? '<br/>': '');
             }
 
@@ -125,7 +132,7 @@ $billingFields['country_id'] = '
             <script type="text/javascript">
                 $("billing:region_id").setAttribute("defaultValue",  "'.$dataHelper->clearDash($this->getQuote()->getBillingAddress()->getRegionId()).'");
             </script>
-            <input type="text" id="billing:region" name="billing[region]" value="'.$dataHelper->clearDash($this->getQuote()->getBillingAddress()->getRegion()).'"  title="'.$this->__('State/Province').'" class="required-entry input-text" style="display:none" />
+            <input type="text" id="billing:region" name="billing[region]" placeholder="e.g. Cape Town" value="'.$dataHelper->clearDash($this->getQuote()->getBillingAddress()->getRegion()).'"  title="'.$this->__('State/Province').'" class="required-entry input-text" style="display:none" />
         </div>';
     ?>
 <?php endif; ?>
@@ -133,7 +140,7 @@ $billingFields['country_id'] = '
     <?php $billingFields['city'] = '
         <div class="osc-short input-box input-city'.((in_array('city', $formErrors)) ? ' input-error' : '').'">
             <label for="billing:city">'.$this->__('City').' <span class="required">*</span></label><br/>
-            <input type="text" name="billing[city]" value="'.$dataHelper->clearDash($this->getQuote()->getBillingAddress()->getCity()).'" title="'.$this->__('City').'" class="required-entry input-text" id="billing:city" />
+            <input type="text" name="billing[city]" placeholder="e.g. Claremont" value="'.$dataHelper->clearDash($this->getQuote()->getBillingAddress()->getCity()).'" title="'.$this->__('City').'" class="required-entry input-text" id="billing:city" />
         </div>';
     ?>
 <?php endif; ?>

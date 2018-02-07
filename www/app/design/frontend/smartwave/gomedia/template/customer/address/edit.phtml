@@ -47,12 +47,6 @@
             <li class="fields">
                 <?php echo $this->getNameBlockHtml() ?>
             </li>
-            <li class="wide">
-                <label for="company"><?php echo $this->__('Company') ?></label>
-                <div class="input-box">
-                    <input type="text" name="company" id="company" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Company')) ?>" value="<?php echo $this->escapeHtml($this->getAddress()->getCompany()) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('company') ?>" />
-                </div>
-            </li>
             <li class="fields">
                 <div class="field">
                     <label for="telephone" class="required"><em>*</em><?php echo $this->__('Telephone') ?></label>
@@ -76,14 +70,16 @@
             <li class="wide">
                 <label for="street_1" class="required"><em>*</em><?php echo $this->__('Street Address') ?></label>
                 <div class="input-box">
-                    <input type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet(1)) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address')) ?>" id="street_1" class="input-text <?php echo $_streetValidationClass ?>" maxlength="50" />
+                    <input type="text" name="street[]" placeholder="e.g. 1 Main Road" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet(1)) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address')) ?>" id="street_1" class="input-text <?php echo $_streetValidationClass ?>" maxlength="50" />
                 </div>
             </li>
         <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
-        <?php for ($_i = 2, $_n = $this->helper('customer/address')->getStreetLines(); $_i <= $_n; $_i++): ?>
+        <?php for ($_i = 2, $_n = $this->helper('customer/address')->getStreetLines(); $_i <= $_n; $_i++):
+                $addressPlaceholder = ($_i == 2)? "e.g. Building Unit A": "";
+            ?>
             <li class="wide">
                 <div class="input-box">
-                    <input type="text" name="street[]" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet($_i)) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address %s', $_i)) ?>" id="street_<?php echo $_i ?>" class="input-text <?php echo $_streetValidationClass ?>" maxlength="50" />
+                    <input type="text" name="street[]" placeholder="<?php echo $addressPlaceholder; ?>" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet($_i)) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address %s', $_i)) ?>" id="street_<?php echo $_i ?>" class="input-text <?php echo $_streetValidationClass ?>" maxlength="50" />
                 </div>
             </li>
         <?php endfor; ?>
@@ -99,7 +95,7 @@
                 <div class="field">
                     <label for="city" class="required"><em>*</em><?php echo $this->__('City') ?></label>
                     <div class="input-box">
-                        <input type="text" name="city" value="<?php echo $this->escapeHtml($this->getAddress()->getCity()) ?>"  title="<?php echo Mage::helper('core')->quoteEscape($this->__('City')) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="city" />
+                        <input type="text" name="city" placeholder="e.g. Claremont" value="<?php echo $this->escapeHtml($this->getAddress()->getCity()) ?>"  title="<?php echo Mage::helper('core')->quoteEscape($this->__('City')) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('city') ?>" id="city" />
                     </div>
                 </div>
                 <div class="field">
@@ -113,7 +109,7 @@
                             $('region_id').setAttribute('defaultValue',  "<?php echo $this->getAddress()->getRegionId() ?>");
                         //]]>
                         </script>
-                        <input type="text" id="region" name="region" value="<?php echo $this->escapeHtml($this->getAddress()->getRegion()) ?>"  title="<?php echo Mage::helper('core')->quoteEscape($this->__('State/Province')) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>" />
+                        <input type="text" id="region" name="region" placeholder="e.g. Cape Town" value="<?php echo $this->escapeHtml($this->getAddress()->getRegion()) ?>"  title="<?php echo Mage::helper('core')->quoteEscape($this->__('State/Province')) ?>" class="required-entry input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('region') ?>" />
                     </div>
                 </div>
             </li>
@@ -129,6 +125,12 @@
                     <div class="input-box">
                         <?php echo $this->getCountryHtmlSelect() ?>
                     </div>
+                </div>
+            </li>
+            <li class="wide">
+                <label for="company"><?php echo $this->__('Company') ?></label>
+                <div class="input-box">
+                    <input type="text" name="company" id="company" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Company')) ?>" value="<?php echo $this->escapeHtml($this->getAddress()->getCompany()) ?>" class="input-text <?php echo $this->helper('customer/address')->getAttributeValidationClass('company') ?>" />
                 </div>
             </li>
             <li<?php if($this->canSetAsDefaultBilling()) echo ' class="control"' ?>>

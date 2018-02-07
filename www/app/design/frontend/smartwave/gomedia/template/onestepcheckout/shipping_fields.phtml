@@ -53,7 +53,14 @@ $dataHelper = Mage::helper('onestepcheckout');
         <?php
         $addressFields = '';
             for ($_i=0, $_n=$this->helper('customer/address')->getStreetLines()-1; $_i<=$_n; $_i++){
-                    $addressFields .= '<input type="text" title="'.$this->__('Street Address '.$_i).'" name="shipping[street]['.$_i.']" id="shipping:street'.($_i+1).'" value="'.$dataHelper->clearDash($this->getQuote()->getShippingAddress()->getStreet($_i+1)).'" class="'.(($_i == 0)? 'required-entry ' : '').'input-text onestepcheckout-address-line" maxlength="50" />';
+                    if ($_i == 0) {
+                        $addressPlaceholder = "e.g. 1 Main Road";
+                    } elseif ($_i == 1) {
+                        $addressPlaceholder = "e.g. Building Unit A";
+                    } else {
+                        $addressPlaceholder = "";
+                    }
+                    $addressFields .= '<input type="text" title="'.$this->__('Street Address '.$_i).'" name="shipping[street]['.$_i.']" id="shipping:street'.($_i+1).'" placeholder="'.$addressPlaceholder.'" value="'.$dataHelper->clearDash($this->getQuote()->getShippingAddress()->getStreet($_i+1)).'" class="'.(($_i == 0)? 'required-entry ' : '').'input-text onestepcheckout-address-line" maxlength="50" />';
                     //$addressFields .= (($_i != $this->helper('customer/address')->getStreetLines()-1) ? '<br/>': '');
             }
 
@@ -89,7 +96,7 @@ $shippingFields['country_id'] = '
             <script type="text/javascript">
                 $("shipping:region_id").setAttribute("defaultValue",  "'.$dataHelper->clearDash($this->getQuote()->getShippingAddress()->getRegionId()).'");
             </script>
-            <input type="text" id="shipping:region" name="shipping[region]" value="'.$dataHelper->clearDash($this->getQuote()->getShippingAddress()->getRegion()).'"  title="'.$this->__('State/Province').'" class="required-entry input-text" style="display:none" />
+            <input type="text" id="shipping:region" name="shipping[region]" placeholder="e.g. Cape Town" value="'.$dataHelper->clearDash($this->getQuote()->getShippingAddress()->getRegion()).'"  title="'.$this->__('State/Province').'" class="required-entry input-text" style="display:none" />
         </div>';
     ?>
 <?php endif; ?>
@@ -97,7 +104,7 @@ $shippingFields['country_id'] = '
     <?php $shippingFields['city'] = '
         <div class="osc-short input-box input-city'.((in_array('city', $formErrors)) ? ' input-error' : '').'">
             <label for="shipping:city">'.$this->__('City').' <span class="required">*</span></label><br/>
-            <input type="text" name="shipping[city]" value="'.$dataHelper->clearDash($this->getQuote()->getShippingAddress()->getCity()).'" title="'.$this->__('City').'" class="required-entry input-text" id="shipping:city" />
+            <input type="text" name="shipping[city]" placeholder="e.g. Claremont" value="'.$dataHelper->clearDash($this->getQuote()->getShippingAddress()->getCity()).'" title="'.$this->__('City').'" class="required-entry input-text" id="shipping:city" />
         </div>';
     ?>
 <?php endif; ?>
