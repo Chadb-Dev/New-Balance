@@ -80,7 +80,7 @@
 <script>
 
 var enabled_for =  <?php echo json_encode($enabledfor);?>;
-var sMethods = $$('.onestepcheckout-shipping-method').first(); 
+var sMethods = $$('.onestepcheckout-shipping-method').first();
  
 if(sMethods && enabled_for.length > 0) {
   $$('dl.shipment-methods input').invoke('observe', 'click', function(e){

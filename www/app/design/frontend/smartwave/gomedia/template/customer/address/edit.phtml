@@ -70,7 +70,7 @@
             <li class="wide">
                 <label for="street_1" class="required"><em>*</em><?php echo $this->__('Street Address') ?></label>
                 <div class="input-box">
-                    <input type="text" name="street[]" placeholder="e.g. 1 Main Road" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet(1)) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address')) ?>" id="street_1" class="input-text <?php echo $_streetValidationClass ?>" maxlength="50" />
+                    <input type="text" name="street[]" placeholder="e.g. 1 Main Road" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet(1)) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address')) ?>" id="street_1" class="input-text <?php echo $_streetValidationClass ?>" maxlength="35" />
                 </div>
             </li>
         <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
@@ -79,7 +79,7 @@
             ?>
             <li class="wide">
                 <div class="input-box">
-                    <input type="text" name="street[]" placeholder="<?php echo $addressPlaceholder; ?>" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet($_i)) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address %s', $_i)) ?>" id="street_<?php echo $_i ?>" class="input-text <?php echo $_streetValidationClass ?>" maxlength="50" />
+                    <input type="text" name="street[]" placeholder="<?php echo $addressPlaceholder; ?>" value="<?php echo $this->escapeHtml($this->getAddress()->getStreet($_i)) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Street Address %s', $_i)) ?>" id="street_<?php echo $_i ?>" class="input-text <?php echo $_streetValidationClass ?>" maxlength="35" />
                 </div>
             </li>
         <?php endfor; ?>
