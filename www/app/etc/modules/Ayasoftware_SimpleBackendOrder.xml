@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ayasoftware_SimpleBackendOrder>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Ayasoftware_SimpleBackendOrder>
+    </modules>
+</config>

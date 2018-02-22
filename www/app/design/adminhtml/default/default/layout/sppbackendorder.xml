@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<layoutUpdate>
+    <adminhtml_sales_order_create_index>
+        <reference name="head">
+            <action method="addJs">
+                <file>ayasoftware/simple_product_pricing.js</file>
+            </action>
+            <action method="removeItem">
+                <type>js</type>
+                <name>mage/adminhtml/sales.js</name>
+            </action>
+            <action method="addJs">
+                <file>ayasoftware/sales.js</file>
+            </action>
+        </reference>
+    </adminhtml_sales_order_create_index>
+</layoutUpdate>

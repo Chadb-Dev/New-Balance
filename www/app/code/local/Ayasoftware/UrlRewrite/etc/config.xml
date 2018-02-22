@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ayasoftware_UrlRewrite>
+            <version>0.1.0</version>
+        </Ayasoftware_UrlRewrite>
+    </modules>
+    <global>
+        <helpers>
+            <urlrewrite>
+                <class>Ayasoftware_UrlRewrite_Helper</class>
+            </urlrewrite>
+        </helpers>
+        <models>
+            <urlrewrite>
+                <class>Ayasoftware_UrlRewrite_Model</class>
+                <resourceModel>urlrewrite_mysql4</resourceModel>
+            </urlrewrite>
+            <catalog>
+                <rewrite>
+                    <url>Ayasoftware_UrlRewrite_Model_Catalog_Url</url>
+                </rewrite>
+            </catalog>
+        </models>
+    </global>
+    <frontend> 
+        <routers> 
+          <catalog> 
+             <args> 
+             <modules> 
+                <Ayasoftware_UrlRewrite before="Mage_Catalog">Ayasoftware_UrlRewrite</Ayasoftware_UrlRewrite>
+             </modules> 
+             </args> 
+         </catalog> 
+       </routers> 
+   </frontend> 
+    <adminhtml>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <urlrewrite>
+                                            <title>Ayasoftware UrlRewrite Configuration Area</title>
+                                        </urlrewrite>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+</config> 

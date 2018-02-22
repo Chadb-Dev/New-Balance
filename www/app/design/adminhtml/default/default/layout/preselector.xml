@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<layout version="1.0.0">
+    <adminhtml_catalog_product_edit>
+        <reference name="head">
+            <action method="addItem">
+                <type>js</type>
+                <name>ayasoftware/preselector/product-update.js</name>
+            </action>
+        </reference>
+    </adminhtml_catalog_product_edit>
+    <adminhtml_catalog_product_new>
+        <reference name="head">
+            <action method="addItem">
+                <type>js</type>
+                <name>ayasoftware/preselector/product-update.js</name>
+            </action>
+        </reference>
+    </adminhtml_catalog_product_new>
+</layout>

@@ -580,3 +580,25 @@ www/lib/Net/*
 !www/skin/frontend/base/default/customweb/
 !www/skin/frontend/base/default/images/oppcw/
 #END: Open Payment Platform module
+
+# START: Simple Product Pricing module
+!www/app/code/local/Ayasoftware/
+!www/app/design/adminhtml/default/default/layout/preselector.xml
+!www/app/design/adminhtml/default/default/layout/sppbackendorder.xml
+!www/app/design/frontend/base/default/layout/preselector.xml
+!www/app/design/frontend/base/default/layout/spp.xml
+!www/app/design/frontend/base/default/template/catalog/
+www/app/design/frontend/base/default/template/catalog/*
+!www/app/design/frontend/base/default/template/catalog/product/
+www/app/design/frontend/base/default/template/catalog/product/*
+!www/app/design/frontend/base/default/template/catalog/product/view/
+www/app/design/frontend/base/default/template/catalog/product/view/*
+!www/app/design/frontend/base/default/template/catalog/product/view/spptierprices.phtml
+!www/app/etc/modules/Ayasoftware_PreSelector.xml
+!www/app/etc/modules/Ayasoftware_PriceIndex.xml
+!www/app/etc/modules/Ayasoftware_SimpleBackendOrder.xml
+!www/app/etc/modules/Ayasoftware_SimpleProductPricing.xml
+!www/app/etc/modules/Ayasoftware_UrlRewrite.xml
+!www/skin/frontend/base/default/images/spp-ajax-loader.gif
+!www/skin/frontend/base/default/js/simple_product_pricing.js
+# END: Simple Product Pricing module

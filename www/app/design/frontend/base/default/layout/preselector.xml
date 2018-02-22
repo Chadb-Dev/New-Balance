@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layoutUpdate>
+    <PRODUCT_TYPE_configurable>
+        <reference name="head">
+            <action method="addItem">
+                <type>js</type>
+                <name>ayasoftware/preselector/preselected.js</name>
+            </action> 
+        </reference>
+    </PRODUCT_TYPE_configurable>
+</layoutUpdate>
