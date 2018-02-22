@@ -193,8 +193,8 @@ if($enable_addtocart_sticky){
                 <?php endif; ?>
                 <?php endif; ?>
 
-                <?php if ($_product-getSku()): ?>
-                    <p class="product-sku"><?php echo $this->__('SKU:'); ?> <span><?php echo $_product-getSku(); ?></span></p>
+                <?php if ($_product->getSku()): ?>
+                    <p class="product-sku"><?php echo $this->__('SKU:'); ?> <span><?php echo $_product->getSku(); ?></span></p>
                 <?php endif; ?>
 
                 <?php 
