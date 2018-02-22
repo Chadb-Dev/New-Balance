@@ -101,6 +101,11 @@ class Ayasoftware_SimpleProductPricing_Catalog_Block_Product_View_Type_Configura
                     "ProductName" => $product->getName()
                 );
             }
+            if (Mage::getStoreConfig('spp/details/productsku', $this->store_id)) {
+                $ProductSkus[$productId] = array(
+                    "ProductSku" => $product->getSku()
+                );
+            }
             if(Mage::getStoreConfig('spp/details/shortdescription', $this->store_id)) {
                 $shortDescriptions[$productId] = array(
                     "shortDescription" => $this->helper('catalog/output')->productAttribute($product, nl2br($product->getShortDescription()), 'short_description')
@@ -154,6 +159,14 @@ class Ayasoftware_SimpleProductPricing_Catalog_Block_Product_View_Type_Configura
             $config['updateProductName'] = true;
         } else {
             $config['updateProductName'] = false;
+        }
+        if (Mage::getStoreConfig('spp/details/productsku', $this->store_id)) {
+            $config['productSku'] = $this->getProduct()->getSku();
+            $config['ProductSkus'] = $ProductSkus;
+            $config['product_sku_markup'] = Mage::getStoreConfig('spp/markup/product_sku_markup');
+            $config['updateProductSku'] = true;
+        } else {
+            $config['updateProductSku'] = false;
         }
         if(Mage::getStoreConfig('spp/details/shortdescription', $this->store_id)) {
             $config['shortDescription'] = $this->getProduct()->getShortDescription();
