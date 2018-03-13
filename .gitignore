@@ -608,3 +608,10 @@ www/app/design/frontend/base/default/template/catalog/product/view/*
 !www/app/etc/modules/Webshopapps_Matrixrate.xml
 !www/app/locale/en_US/Auctionmaid_Matrixrate.csv
 #END: Matrix Rate module
+
+#START: ShoppingFeeder module
+!www/app/code/community/ShoppingFeeder/
+!www/app/design/frontend/base/default/layout/shoppingfeeder_service.xml
+!www/app/design/frontend/base/default/template/shoppingfeeder
+!www/app/etc/modules/ShoppingFeeder_Service.xml
+#END: ShoppingFeeder module
