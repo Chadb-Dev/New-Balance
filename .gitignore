@@ -615,3 +615,15 @@ www/app/design/frontend/base/default/template/catalog/product/view/*
 !www/app/design/frontend/base/default/template/shoppingfeeder
 !www/app/etc/modules/ShoppingFeeder_Service.xml
 #END: ShoppingFeeder module
+
+#START: Facebook Ads module
+!www/app/code/community/Facebook/
+!www/app/design/adminhtml/default/default/layout/facebook_ads_extension.xml
+!www/app/design/adminhtml/default/default/template/facebook_ads_extension
+!www/app/design/adminhtml/default/default/template/facebook_ads_extension
+!www/app/design/frontend/base/default/layout/facebook_ads_extension.xml
+!www/app/design/frontend/base/default/template/facebook_ads_extension
+!www/app/etc/modules/Facebook_AdsExtension.xml
+!www/js/Facebook/
+!www/skin/adminhtml/base/default/Facebook/
+#END: Facebook Ads module
