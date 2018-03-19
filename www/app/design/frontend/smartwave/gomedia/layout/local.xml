@@ -61,6 +61,9 @@
             <action method="addCss" ifconfig="porto_settings/general/rtl" condition="1"><stylesheet>css/rtl-custom.css</stylesheet></action>
             <action method="addCss"><stylesheet>css/gomedia.css</stylesheet></action>
         </reference>
+        <reference name="after_body_start">
+            <block type="core/template" before="-" template="page/html/after_body_start.phtml"/>
+        </reference>
         <reference name="header">
             <action method="setTemplate" ifconfig="porto_settings/header/type" condition="0"><template>page/html/header_type1.phtml</template></action>
             <action method="setTemplate" ifconfig="porto_settings/header/type" condition="1"><template>page/html/header_type2.phtml</template></action>
