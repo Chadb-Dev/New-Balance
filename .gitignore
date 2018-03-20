@@ -381,7 +381,7 @@ www/var/*
 !www/var/connect/
 www/var/connect/*
 !www/var/connect/Aoe_Scheduler.xml
-www/.htaccess
+#www/.htaccess
 www/lib/Net/
 www/lib/Unserialize/
 .idea

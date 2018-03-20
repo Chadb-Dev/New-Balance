@@ -1,0 +1,401 @@
+############################################
+## uncomment these lines for CGI mode
+## make sure to specify the correct cgi php binary file name
+## it might be /cgi-bin/php-cgi
+
+#    Action php5-cgi /cgi-bin/php5-cgi
+#    AddHandler php5-cgi .php
+
+############################################
+## GoDaddy specific options
+
+#   Options -MultiViews
+
+## you might also need to add this line to php.ini
+##     cgi.fix_pathinfo = 1
+## if it still doesn't work, rename php.ini to php5.ini
+
+############################################
+## this line is specific for 1and1 hosting
+
+    #AddType x-mapp-php5 .php
+    #AddHandler x-mapp-php5 .php
+
+############################################
+## default index file
+
+    DirectoryIndex index.php
+
+<IfModule mod_php5.c>
+
+############################################
+## adjust memory limit
+
+#    php_value memory_limit 64M
+    php_value memory_limit 256M
+    php_value max_execution_time 18000
+
+############################################
+## disable magic quotes for php request vars
+
+    php_flag magic_quotes_gpc off
+
+############################################
+## disable automatic session start
+## before autoload was initialized
+
+    php_flag session.auto_start off
+
+############################################
+## enable resulting html compression
+
+    #php_flag zlib.output_compression on
+
+###########################################
+# disable user agent verification to not break multiple image upload
+
+    php_flag suhosin.session.cryptua off
+
+###########################################
+# turn off compatibility with PHP4 when dealing with objects
+
+    php_flag zend.ze1_compatibility_mode Off
+
+</IfModule>
+
+<IfModule mod_security.c>
+###########################################
+# disable POST processing to not break multiple image upload
+
+    SecFilterEngine Off
+    SecFilterScanPOST Off
+</IfModule>
+
+<IfModule mod_deflate.c>
+
+############################################
+## enable apache served files compression
+## http://developer.yahoo.com/performance/rules.html#gzip
+
+    # Insert filter on all content
+    ###SetOutputFilter DEFLATE
+    # Insert filter on selected content types only
+    #AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+
+    # Netscape 4.x has some problems...
+    #BrowserMatch ^Mozilla/4 gzip-only-text/html
+
+    # Netscape 4.06-4.08 have some more problems
+    #BrowserMatch ^Mozilla/4\.0[678] no-gzip
+
+    # MSIE masquerades as Netscape, but it is fine
+    #BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+
+    # Don't compress images
+    #SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+
+    # Make sure proxies don't deliver the wrong content
+    #Header append Vary User-Agent env=!dont-vary
+
+</IfModule>
+
+<IfModule mod_ssl.c>
+
+############################################
+## make HTTPS env vars available for CGI mode
+
+    SSLOptions StdEnvVars
+
+</IfModule>
+
+<IfModule mod_rewrite.c>
+
+############################################
+## enable rewrites
+
+    Options +FollowSymLinks
+    RewriteEngine on
+
+############################################
+## START: CUSTOM REDIRECTS
+RewriteRule ^sitemap\.xml /sitemap/sitemap.xml [L,NC]
+
+Redirect 301 /contact-us.php /contacts
+Redirect 301 /apparel-sizing.php /sizing
+Redirect 301 /newsletter-signup.php /newsletter
+Redirect 301 /faq.php /faq
+Redirect 301 /terms-conditions.php /terms-conditions
+Redirect 301 /shoe-sizing.php /sizing
+Redirect 301 /privacy-policy.php /privacy-policy
+Redirect 301 /about-us.php /about-us
+Redirect 301 /store-locator.php /dealers
+
+# Mens > Shoes
+RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=103$
+RewriteRule ^products\.php$ /men/shoes/running
+
+RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=102$
+RewriteRule ^products\.php$ /men/shoes/lifestyle? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=99$
+RewriteRule ^products\.php$ /men/shoes/training? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=100$
+RewriteRule ^products\.php$ /men/shoes/cricket? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=104$
+RewriteRule ^products\.php$ /men/shoes/tennis? [L,R=301]
+
+#Mens > Apperal
+RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=114$
+RewriteRule ^products\.php$ /men/apparel/jackets-hoodies? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=111$
+RewriteRule ^products\.php$ /men/apparel/shorts? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=204$
+RewriteRule ^products\.php$ /men/apparel/singlets? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=110$
+RewriteRule ^products\.php$ /men/apparel/t-shirts? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=112$
+RewriteRule ^products\.php$ /men/apparel/trousers-tights? [L,R=301]
+
+#Mens > Accessories
+RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=107$
+RewriteRule ^products\.php$ /men/accessories/caps? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=105$
+RewriteRule ^products\.php$ /men/accessories/other? [L,R=301]
+
+#Mens > Sport
+RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=109$
+RewriteRule ^products\.php$ /men/sport/cricket? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=108$
+RewriteRule ^products\.php$ /men/sport/football? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=117$
+RewriteRule ^products\.php$ /men/sport/liverpool-fc? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=116$
+RewriteRule ^products\.php$ /men/sport/proteas? [L,R=301]
+
+#Women > Shoes
+RewriteCond %{QUERY_STRING} ^department_id=2&subcategory_id=118$
+RewriteRule ^products\.php$ /women/shoes/running? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=2&subcategory_id=121$
+RewriteRule ^products\.php$ /women/shoes/lifestyle? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=2&subcategory_id=203$
+RewriteRule ^products\.php$ /women/shoes/training? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=2&subcategory_id=119$
+RewriteRule ^products\.php$ /women/shoes/tennis? [L,R=301]
+
+#Women > Apperal
+RewriteCond %{QUERY_STRING} ^department_id=2&subcategory_id=122$
+RewriteRule ^products\.php$ /women/apparel/jacket-hoodies? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=2&subcategory_id=125$
+RewriteRule ^products\.php$ /women/apparel/pants-and-capris? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=2&subcategory_id=127$
+RewriteRule ^products\.php$ /women/apparel/shorts-and-skirts? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=2&subcategory_id=126$
+RewriteRule ^products\.php$ /women/apparel/sports-bras? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=2&subcategory_id=213$
+RewriteRule ^products\.php$ /women/apparel/tank-tops? [L,R=301]
+
+#Womens > Accessories
+RewriteCond %{QUERY_STRING} ^department_id=2&subcategory_id=129$
+RewriteRule ^products\.php$ /women/accessories/socks? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=2&subcategory_id=130$
+RewriteRule ^products\.php$ /women/accessories/other? [L,R=301]
+
+#Women > Sports
+RewriteCond %{QUERY_STRING} ^department_id=2&subcategory_id=132$
+RewriteRule ^products\.php$ /women/sport/liverpool-fc? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=2&subcategory_id=131$
+RewriteRule ^products\.php$ /women/sport/proteas? [L,R=301]
+
+#Boys > Shoes
+RewriteCond %{QUERY_STRING} ^department_id=3&subcategory_id=134$
+RewriteRule ^products\.php$ /boys/shoes/lifestyle? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=3&subcategory_id=133$
+RewriteRule ^products\.php$ /boys/shoes/running? [L,R=301]
+
+#Boys > Accessories
+RewriteCond %{QUERY_STRING} ^department_id=3&subcategory_id=125$
+RewriteRule ^products\.php$ /boys/accessories/socks? [L,R=301]
+
+#Boys > Sport
+RewriteCond %{QUERY_STRING} ^department_id=3&subcategory_id=209$
+RewriteRule ^products\.php$ /boys/sport/liverpool-fc? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=3&subcategory_id=211$
+RewriteRule ^products\.php$ /boys/sport/proteas? [L,R=301]
+
+#Girls > Shoes
+RewriteCond %{QUERY_STRING} ^department_id=4&subcategory_id=201$
+RewriteRule ^products\.php$ /girls/shoes/lifestyle? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=4&subcategory_id=200$
+RewriteRule ^products\.php$ /girls/shoes/running? [L,R=301]
+
+#Girls > Accessories
+RewriteCond %{QUERY_STRING} ^department_id=4&subcategory_id=216$
+RewriteRule ^products\.php$ /girls/accessories/socks? [L,R=301]
+
+#Girls > Sport
+RewriteCond %{QUERY_STRING} ^department_id=4&subcategory_id=210$
+RewriteRule ^products\.php$ /girls/sport/liverpool-fc? [L,R=301]
+
+RewriteCond %{QUERY_STRING} ^department_id=4&subcategory_id=212$
+RewriteRule ^products\.php$ /girls/sport/proteas? [L,R=301]
+
+## END: CUSTOM REDIRECTS
+############################################
+
+############################################
+## you can put here your magento root folder
+## path relative to web root
+
+    #RewriteBase /magento/
+
+############################################
+## uncomment next line to enable light API calls processing
+
+#    RewriteRule ^api/([a-z][0-9a-z_]+)/?$ api.php?type=$1 [QSA,L]
+
+############################################
+## rewrite API2 calls to api.php (by now it is REST only)
+
+    RewriteRule ^api/rest api.php?type=rest [QSA,L]
+
+############################################
+## workaround for HTTP authorization
+## in CGI environment
+
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+############################################
+## TRACE and TRACK HTTP methods disabled to prevent XSS attacks
+
+    RewriteCond %{REQUEST_METHOD} ^TRAC[EK]
+    RewriteRule .* - [L,R=405]
+
+<IfModule mod_setenvif.c>
+    <IfModule mod_headers.c>
+
+        ############################################
+        # X-Content-Type-Options: nosniff disable content-type sniffing on some browsers.
+        Header set X-Content-Type-Options: nosniff
+
+        ############################################
+        # This header forces to enables the Cross-site scripting (XSS) filter in browsers (if disabled)
+        BrowserMatch \bMSIE\s8 ie8
+        Header set X-XSS-Protection: "1; mode=block" env=!ie8
+
+    </IfModule>
+</IfModule>
+
+############################################
+## redirect for mobile user agents
+
+    #RewriteCond %{REQUEST_URI} !^/mobiledirectoryhere/.*$
+    #RewriteCond %{HTTP_USER_AGENT} "android|blackberry|ipad|iphone|ipod|iemobile|opera mobile|palmos|webos|googlebot-mobile" [NC]
+    #RewriteRule ^(.*)$ /mobiledirectoryhere/ [L,R=302]
+
+############################################
+## always send 404 on missing files in these folders
+
+    RewriteCond %{REQUEST_URI} !^/(media|skin|js)/
+
+############################################
+## never rewrite for existing files, directories and links
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-l
+
+############################################
+## rewrite everything else to index.php
+
+    RewriteRule .* index.php [L]
+
+</IfModule>
+
+
+############################################
+## Prevent character encoding issues from server overrides
+## If you still have problems, use the second line instead
+
+    AddDefaultCharset Off
+    #AddDefaultCharset UTF-8
+
+<IfModule mod_expires.c>
+
+############################################
+## Add default Expires header
+## http://developer.yahoo.com/performance/rules.html#expires
+
+    ExpiresDefault "access plus 1 year"
+
+</IfModule>
+
+############################################
+## By default allow all access
+
+    Order allow,deny
+    Deny from 151.80.39.162 # hrefs bot
+    Deny from 180.76.15.144 # baidu
+    Deny from wcbau2.i11.co
+    Deny from 41.215.238.222 #xenu sleuth bot
+    Allow from all
+
+###########################################
+## Deny access to release notes to prevent disclosure of the installed Magento version
+
+    <Files RELEASE_NOTES.txt>
+        order allow,deny
+        deny from all
+    </Files>
+
+############################################
+## If running in cluster environment, uncomment this
+## http://developer.yahoo.com/performance/rules.html#etags
+
+    #FileETag none
+
+###########################################
+## Deny access to cron.php
+    <Files cron.php>
+
+############################################
+## uncomment next lines to enable cron access with base HTTP authorization
+## http://httpd.apache.org/docs/2.2/howto/auth.html
+##
+## Warning: .htpasswd file should be placed somewhere not accessible from the web.
+## This is so that folks cannot download the password file.
+## For example, if your documents are served out of /usr/local/apache/htdocs
+## you might want to put the password file(s) in /usr/local/apache/.
+
+        #AuthName "Cron auth"
+        #AuthUserFile ../.htpasswd
+        #AuthType basic
+        #Require valid-user
+
+############################################
+
+        Order allow,deny
+        Deny from all
+
+    </Files>
