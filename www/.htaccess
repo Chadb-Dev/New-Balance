@@ -120,6 +120,10 @@
 ## START: CUSTOM REDIRECTS
 RewriteRule ^sitemap\.xml /sitemap/sitemap.xml [L,NC]
 
+# Redirect all traffic to HTTPS first
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 Redirect 301 /contact-us.php /contacts
 Redirect 301 /apparel-sizing.php /sizing
 Redirect 301 /newsletter-signup.php /newsletter
@@ -132,7 +136,7 @@ Redirect 301 /store-locator.php /dealers
 
 # Mens > Shoes
 RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=103$
-RewriteRule ^products\.php$ /men/shoes/running
+RewriteRule ^products\.php$ /men/shoes/running? [L,R=301]
 
 RewriteCond %{QUERY_STRING} ^department_id=1&subcategory_id=102$
 RewriteRule ^products\.php$ /men/shoes/lifestyle? [L,R=301]
