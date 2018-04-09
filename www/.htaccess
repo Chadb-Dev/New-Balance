@@ -120,6 +120,10 @@
 ## START: CUSTOM REDIRECTS
 RewriteRule ^sitemap\.xml /sitemap/sitemap.xml [L,NC]
 
+# Force www
+RewriteCond %{HTTP_HOST} ^newbalance.co.za [NC]
+RewriteRule ^(.*)$ https://www.newbalance.com/$1 [L,R=301,NC]
+
 # Redirect all traffic to HTTPS first
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
