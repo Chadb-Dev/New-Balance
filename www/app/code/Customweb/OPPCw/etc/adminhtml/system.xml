@@ -701,7 +701,7 @@
 					<comment><![CDATA[The alias manager allows the customer to select from a credit card previously stored. The sensitive data is stored by Open Payment Platform.]]></comment>
 					<source_model>Customweb\OPPCw\Model\Config\Source\AliasManager</source_model>
 				</field>
-			</group><group id="oppcw_creditcard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label">
+			</group><!--<group id="oppcw_creditcard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label">
 				<label>Open Payment Platform Credit Card</label>
 				<field id="model"/>
 				<field id="active" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="0" translate="label" type="select">
@@ -1892,7 +1892,7 @@
 					<comment><![CDATA[The alias manager allows the customer to select from a credit card previously stored. The sensitive data is stored by Open Payment Platform.]]></comment>
 					<source_model>Customweb\OPPCw\Model\Config\Source\AliasManager</source_model>
 				</field>
-			</group><group id="oppcw_mastercard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label">
+			</group>--><group id="oppcw_mastercard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label">
 				<label>Open Payment Platform MasterCard</label>
 				<field id="model"/>
 				<field id="active" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="0" translate="label" type="select">
