@@ -166,6 +166,15 @@
     color: #a9a7a7;
 }
 
+/*CATALOG*/
+.category-products button.addtocart {
+    height: 32px;
+    line-height: 30px;
+}
+.category-products button.addtocart span {
+    line-height: 32px;
+}
+
 /*CHECKOUT*/
 .input-box label {
     color: #777;
