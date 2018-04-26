@@ -627,3 +627,19 @@ www/app/design/frontend/base/default/template/catalog/product/view/*
 !www/js/Facebook/
 !www/skin/adminhtml/base/default/Facebook/
 #END: Facebook Ads module
+
+#START: Amasty PreOrder module
+!www/app/code/local/Amasty/
+!www/app/etc/modules/Amasty_Base.xml
+!www/app/etc/modules/Amasty_Preorder.xml
+!www/app/design/adminhtml/default/default/layout/amasty/
+!www/app/design/adminhtml/default/default/template/amasty/
+!www/app/design/frontend/base/default/layout/amasty/
+!www/app/design/frontend/base/default/template/amasty/
+!www/app/locale/en_US/Amasty_Base.xml
+!www/app/locale/en_US/Amasty_Preorder.xml
+!www/js/amasty/
+!www/skin/adminhtml/default/default/css/amasty/
+!www/skin/adminhtml/default/default/images/amasty/
+!www/skin/frontend/base/default/css/amasty/
+#END: Amasty PreOrder module
