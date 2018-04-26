@@ -3,7 +3,7 @@
 /**
  *  * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -33,10 +33,10 @@ class Customweb_OPPCw_Block_Form extends Mage_Payment_Block_Form {
 	public function getContent(){
 		
 		$arguments = null;
-		return Customweb_Licensing_OPPCw_License::run('rlb0ctvdm5ah5b8g', $this, $arguments);
+		return Customweb_Licensing_OPPCw_License::run('ekrdscpjqef6b2cn', $this, $arguments);
 	}
 
-	final public function call_8b6mal42jfigo1et() {
+	final public function call_pju4lbpe1bi0ho79() {
 		$arguments = func_get_args();
 		$method = $arguments[0];
 		$call = $arguments[1];

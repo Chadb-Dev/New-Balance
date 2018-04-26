@@ -2,7 +2,7 @@
 /**
   * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -221,7 +221,7 @@ abstract class Customweb_Core_DateTimeAbstract extends DateTime {
 	}
 }
 
-if(version_compare(PHP_VERSION, 7.1) < 0){
+if(version_compare(PHP_VERSION, '7.1') < 0){
 	
 	class Customweb_Core_DateTime extends Customweb_Core_DateTimeAbstract {
 		

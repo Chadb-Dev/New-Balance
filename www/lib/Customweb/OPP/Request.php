@@ -3,7 +3,7 @@
 /**
  *  * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -120,7 +120,6 @@ final class Customweb_OPP_Request {
 		$client = Customweb_Core_Http_Client_Factory::createClient();
 		$response = new Customweb_Core_Http_Response($client->send($request));
 		$headers = array_change_key_case($response->getParsedHeaders(), CASE_LOWER);
-
 		if (isset($headers['content-type'])) {
 			if (strpos(end($headers['content-type']), 'application/json') !== false) {
 				return json_decode(trim($response->getBody()));
@@ -128,4 +127,5 @@ final class Customweb_OPP_Request {
 		}
 		return $response->getParsedBody();
 	}
+	
 }

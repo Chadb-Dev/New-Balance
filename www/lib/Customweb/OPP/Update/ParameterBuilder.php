@@ -2,7 +2,7 @@
 /**
   * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -26,10 +26,22 @@ class Customweb_OPP_Update_ParameterBuilder extends Customweb_OPP_AbstractParame
 	/**
 	 * @return array
 	 */
-	public function buildParameters()
-	{
-		return array_merge(
-				$this->getAuthenticationParameters()
-		);
+	/**
+	 * @return array
+	 */
+	public function buildStatusParameters(){
+		return $this->getAuthenticationParameters();
+	}
+	
+	
+	
+	/**
+	 * @return array
+	 */
+	public function buildStatusParametersMerchantId(){
+		return array_merge($this->getAuthenticationParameters(),
+				array(
+					'merchantTransactionId' => $this->getPaymentMethod()->getMerchantTransactionId($this->getTransaction())
+				));
 	}
 }

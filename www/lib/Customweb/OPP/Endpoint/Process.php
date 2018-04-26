@@ -3,7 +3,7 @@
 /**
   * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -35,7 +35,7 @@ class Customweb_OPP_Endpoint_Process extends Customweb_Payment_Endpoint_Controll
 	 * @var Customweb_Core_ILogger
 	 */
 	private $logger;
-	
+
 	/**
 	 * @param Customweb_DependencyInjection_IContainer $container
 	 */
@@ -43,7 +43,7 @@ class Customweb_OPP_Endpoint_Process extends Customweb_Payment_Endpoint_Controll
 		parent::__construct($container);
 		$this->logger = Customweb_Core_Logger_Factory::getLogger(get_class());
 	}
-	
+
 	/**
 	 *
 	 * @Action("index")
@@ -51,22 +51,27 @@ class Customweb_OPP_Endpoint_Process extends Customweb_Payment_Endpoint_Controll
 	public function process(Customweb_Core_Http_IRequest $request){
 		$idMap = $this->getTransactionId($request);
 		$response = null;
-		try {
-			$this->getTransactionHandler()->beginTransaction();
-			$transaction = $this->getTransactionHandler()->findTransactionByTransactionExternalId($idMap['id']);
-			$this->logger->logInfo("The return process has been started for the transaction " . $transaction->getTransactionId() . ".");
-			$adapter = $this->getAdapterFactory()->getAuthorizationAdapterByName($transaction->getAuthorizationMethod());
-			$parameters = $request->getParameters();
-			$response = $adapter->processAuthorization($transaction, $parameters);
-			$this->getTransactionHandler()->persistTransactionObject($transaction);
-			$this->getTransactionHandler()->commitTransaction();
-			$this->logger->logInfo("The return process has been finished for the transaction " . $transaction->getTransactionId() . ".");
-			return $response;
-		}
-		catch (Customweb_Payment_Exception_OptimisticLockingException $lockingException) {
-			$this->logger->logInfo("The return process has been rolledback for the transaction " . $idMap['id'] . ".");
-			$this->getTransactionHandler()->rollbackTransaction();
-			return $response;
+		$this->logger->logInfo("The return process has been started for the transaction with external id " . $idMap['id'] . ".");
+		for ($i = 0; $i < 5; $i++) {
+			try {
+				$this->getTransactionHandler()->beginTransaction();
+				$transaction = $this->getTransactionHandler()->findTransactionByTransactionExternalId($idMap['id']);
+				$adapter = $this->getAdapterFactory()->getAuthorizationAdapterByName($transaction->getAuthorizationMethod());
+				$parameters = $request->getParameters();
+				$response = $adapter->processAuthorization($transaction, $parameters);
+				$this->getTransactionHandler()->persistTransactionObject($transaction);
+				$this->getTransactionHandler()->commitTransaction();
+				$this->logger->logInfo("The return process has been finished for the transaction " . $transaction->getTransactionId() . ".");
+				return $response;
+			}
+			catch (Customweb_Payment_Exception_OptimisticLockingException $lockingException) {
+				$this->getTransactionHandler()->rollbackTransaction();
+				if($i == 4){
+					$this->logger->logError("Optimistic locking exception while processing the transaction external id" . $idMap['id'] . ".");
+					return $response;
+				}
+				sleep(1);
+			}
 		}
 	}
 
@@ -77,7 +82,7 @@ class Customweb_OPP_Endpoint_Process extends Customweb_Payment_Endpoint_Controll
 	public function processAlias(Customweb_Core_Http_IRequest $request){
 		$idMap = $this->getTransactionId($request);
 		$response = null;
-		
+
 		try {
 			$this->getTransactionHandler()->beginTransaction();
 			$transaction = $this->getTransactionHandler()->findTransactionByTransactionExternalId($idMap['id']);
@@ -91,11 +96,11 @@ class Customweb_OPP_Endpoint_Process extends Customweb_Payment_Endpoint_Controll
 			return $response;
 		}
 		catch (Customweb_Payment_Exception_OptimisticLockingException $lockingException) {
-			$this->logger->logInfo("The alias process has been rolledback for the transaction " . $idMap['id'] . ".");
+			$this->logger->logError("The alias process has been rolledback for the transaction " . $idMap['id'] . ".");
 			$this->getTransactionHandler()->rollbackTransaction();
 			return $response;
 		}
-		
+
 	}
 
 	/**
@@ -105,7 +110,7 @@ class Customweb_OPP_Endpoint_Process extends Customweb_Payment_Endpoint_Controll
 	public function processAsync(Customweb_Core_Http_IRequest $request){
 		$idMap = $this->getTransactionId($request);
 		$response = null;
-		
+
 		try {
 			$this->getTransactionHandler()->beginTransaction();
 			$transaction = $this->getTransactionHandler()->findTransactionByTransactionExternalId($idMap['id']);
@@ -120,7 +125,7 @@ class Customweb_OPP_Endpoint_Process extends Customweb_Payment_Endpoint_Controll
 		}
 		catch (Customweb_Payment_Exception_OptimisticLockingException $lockingException) {
 			$this->getTransactionHandler()->rollbackTransaction();
-			$this->logger->logInfo("The async process has been rolledback for the transaction " . $idMap['id'] . ".");
+			$this->logger->logError("The async process has been rolledback for the transaction " . $idMap['id'] . ".");
 			return $response;
 		}
 	}
@@ -138,22 +143,26 @@ class Customweb_OPP_Endpoint_Process extends Customweb_Payment_Endpoint_Controll
 			$initializationVector = $headers['x-initialization-vector'];
 			$authenticationTag = $headers['x-authentication-tag'];
 			$body = $request->getBody();
-			
-			$decrypted = Customweb_OPP_AESGCM::decrypt(hex2bin($secretKey), hex2bin($initializationVector), hex2bin($body), null, 
+
+			$decrypted = Customweb_OPP_AESGCM::decrypt(hex2bin($secretKey), hex2bin($initializationVector), hex2bin($body), null,
 					hex2bin($authenticationTag));
 			$decoded = json_decode($decrypted);
-			
-			if (!isset($decoded->payload->customParameters->cwExternalId) || !isset($decoded->type)) {
+			if($decode == null){
 				$this->logger->logInfo("The webhook process could not decrypt the message.");
-				return Customweb_Core_Http_Response::_("");
+				return Customweb_Core_Http_Response::_("The webhook process could not decrypt the message.")->setStatusCode(500);
 			}
-			
+
+			if (!isset($decoded->payload->customParameters->cwExternalId) || !isset($decoded->type)) {
+				$this->logger->logInfo("The webhook could not extract external id from the custom parameters.");
+				return Customweb_Core_Http_Response::_("The webhook could not extract external id from the custom parameters.")->setStatusCode(500);
+			}
+
 			$externalTransactionId = $decoded->payload->customParameters->cwExternalId;
 			$this->logger->logInfo("The webhook process has been started for the transaction with external id " . $externalTransactionId . ".");
 			for ($i = 0; $i < 5; $i++) {
 				try {
 					$this->getTransactionHandler()->beginTransaction();
-					$transaction = $this->getTransactionHandler()->findTransactionByTransactionExternalId($externalTransactionId);					
+					$transaction = $this->getTransactionHandler()->findTransactionByTransactionExternalId($externalTransactionId);
 					if ($decoded->type == 'PAYMENT') {
 						if (!isset($decoded->payload->paymentType) ||
 								($decoded->payload->paymentType != 'PA' && $decoded->payload->paymentType != 'DB' && $decoded->payload->paymentType != 'RC')) {
@@ -161,10 +170,16 @@ class Customweb_OPP_Endpoint_Process extends Customweb_Payment_Endpoint_Controll
 							$paymentType = "Not Set";
 							if(isset($decoded->payload->paymentType)){
 								$paymentType  = (string) $decoded->payload->paymentType;
-							}							
+							}
 							$this->logger->logInfo("The webhook process has been finished for the transaction with external id " . $externalTransactionId . ". Unhandled Payment Type: ".$paymentType);
 							return Customweb_Core_Http_Response::_("");
 						}
+						if ($decoded->payload->result->code == '800.400.500') {
+							$this->getTransactionHandler()->commitTransaction();
+							$this->logger->logInfo("The webhook process has been finished for the transaction with external id " . $externalTransactionId . ". Waiting for confirmation (800.400.500)");
+							return Customweb_Core_Http_Response::_("");
+						}
+						$this->logger->logInfo("Start finalizing the transaction with external id " . $externalTransactionId );
 						$adapter = $this->getAdapterFactory()->getAuthorizationAdapterByName($transaction->getAuthorizationMethod());
 						$adapter->finalizeAuthorization($transaction, $decoded->payload);
 					}
@@ -175,14 +190,20 @@ class Customweb_OPP_Endpoint_Process extends Customweb_Payment_Endpoint_Controll
 							if(isset($decoded->action)){
 								$action  = (string) $decoded->action;
 							}
-							$this->logger->logInfo("The webhook process has been finished for the transaction with external id " . $externalTransactionId . ". Unhandled Registration Action: ".$action);
-							return Customweb_Core_Http_Response::_("");
+							$this->getTransactionHandler()->commitTransaction();
+							$error = "The webhook process has been finished for the transaction with external id " . $externalTransactionId . ". Unhandled Registration Action: ".$action;
+							$this->logger->logInfo($error);
+							return Customweb_Core_Http_Response::_($error)->setStatusCode(500);
 						}
+						$this->logger->logInfo("Updating alias parameter for transaction with external id " . $externalTransactionId );
 						$transaction->setRegistrationId($decoded->payload->id);
 						$transaction->registerAliasDisplay($decoded->payload);
 					}
 					else{
-						$this->logger->logInfo("The webhook has been called with unkown type for the transaction with external id " . $externalTransactionId . ". Unhandled Type: ".$decoded->type);
+						$this->getTransactionHandler()->commitTransaction();
+						$error = "The webhook has been called with unkown type for the transaction with external id " . $externalTransactionId . ". Unhandled Type: ".$decoded->type;
+						$this->logger->logInfo($error);
+						return Customweb_Core_Http_Response::_($error)->setStatusCode(500);
 					}
 					$this->getTransactionHandler()->persistTransactionObject($transaction);
 					$this->getTransactionHandler()->commitTransaction();
@@ -202,7 +223,7 @@ class Customweb_OPP_Endpoint_Process extends Customweb_Payment_Endpoint_Controll
 			$errorMessage = $e->getMessage();
 			$this->logger->logException($e);
 			return Customweb_Core_Http_Response::_($errorMessage)->setStatusCode(500);
-		}		
+		}
 
 	}
 }

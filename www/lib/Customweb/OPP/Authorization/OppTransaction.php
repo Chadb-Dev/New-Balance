@@ -3,7 +3,7 @@
 /**
  *  * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -99,6 +99,14 @@ class Customweb_OPP_Authorization_OppTransaction extends Customweb_Payment_Autho
 		$this->updateRetryCounter++;
 		return $this;
 	}
+	
+	/**
+	 * @return Customweb_OPP_Authorization_OppTransaction
+	 */
+	public function resetUpdateRetryCounter(){
+		$this->updateRetryCounter = 0;
+		return $this;
+	}
 
 	/**
 	 * @return int
@@ -147,7 +155,6 @@ class Customweb_OPP_Authorization_OppTransaction extends Customweb_Payment_Autho
 	 */
 	public function approveUncertainAuthorization(){
 		$this->setAuthorizationUncertain(false);
-		$this->statusAfterUncertain = 'approved';
 		$historyMessage = Customweb_I18n_Translation::__("The authorization is approved.");
 		$this->createHistoryItem($historyMessage, Customweb_Payment_Authorization_ITransactionHistoryItem::ACTION_AUTHORIZATION);
 		return $this;
@@ -159,7 +166,6 @@ class Customweb_OPP_Authorization_OppTransaction extends Customweb_Payment_Autho
 	 * @return Customweb_OPP_Authorization_OppTransaction
 	 */
 	public function declineUncertainAuthorization($errorMessage){
-		$this->statusAfterUncertain = 'denied';
 		$this->setUncertainTransactionFinallyDeclined();
 		$historyMessage = Customweb_I18n_Translation::__("The authorization is denied: !errorMessage", 
 				array(

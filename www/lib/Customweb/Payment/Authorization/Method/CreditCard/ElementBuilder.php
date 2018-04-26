@@ -2,7 +2,7 @@
 /**
   * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -653,9 +653,10 @@ class Customweb_Payment_Authorization_Method_CreditCard_ElementBuilder {
 				Customweb_I18n_Translation::__('Card Expiration'),
 				$control,
 				Customweb_I18n_Translation::__('Enter the date on which your card expires.') . 
-				Customweb_I18n_Translation::__(
-						" <span class='card-expiry-format-note'>The expected format is '!format' where the 'MM' means the month number and 'YY' the year number.</span>", 
-						array('!format' => $this->getExpiryFieldFormat())
+				"<span class='card-expiry-format-note'>" .
+					Customweb_I18n_Translation::__("The expected format is '!format' where the 'MM' means the month number and 'YY' the year number.", 
+						array('!format' => $this->getExpiryFieldFormat()) .
+				"</span>"
 				)
 		);
 		$this->expiryElement

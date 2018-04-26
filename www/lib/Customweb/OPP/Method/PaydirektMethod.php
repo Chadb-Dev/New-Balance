@@ -3,7 +3,7 @@
 /**
  *  * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -38,9 +38,14 @@ class Customweb_OPP_Method_PaydirektMethod extends Customweb_OPP_Method_DefaultM
 	 */
 	public function getAuthorizationParameters(Customweb_OPP_Authorization_OppTransaction $transaction, array $formData){
 		$parameters = parent::getAuthorizationParameters($transaction, $formData);
-		$merchantTransactionId = Customweb_Payment_Util::applyOrderSchema($this->getGlobalConfiguration()->getTransactionIdSchema(), 
-				$transaction->getExternalTransactionId(), 255);
-		$parameters['merchantTransactionId'] = Customweb_Core_String::_($merchantTransactionId)->replace('_', '-')->replace(' ', '')->toString();
+		$parameters['merchantTransactionId'] = $this->getMerchantTransactionId($transaction);
 		return $parameters;
+	}
+	
+	
+	public function getMerchantTransactionId(Customweb_OPP_Authorization_OppTransaction $transaction){
+		$merchantTransactionId = Customweb_Payment_Util::applyOrderSchema($this->getGlobalConfiguration()->getTransactionIdSchema(),
+				$transaction->getExternalTransactionId(), 255);
+		return Customweb_Core_String::_($merchantTransactionId)->replace('_', '-')->replace(' ', '')->toString();
 	}
 }

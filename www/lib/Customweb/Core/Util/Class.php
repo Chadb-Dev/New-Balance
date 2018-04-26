@@ -2,7 +2,7 @@
 /**
   * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -39,9 +39,6 @@ final class Customweb_Core_Util_Class
 	private static $classLoaderCallbacks = array();
 
 	private static $resourceResolverCallbacks = array();
-
-	private static $loadedClassesCache = array();
-	
 
 	private function __construct() {
 
@@ -130,27 +127,7 @@ final class Customweb_Core_Util_Class
 	 * @return boolean
 	 */
 	public static function isClassLoaded($className) {
-		if (isset(self::$loadedClassesCache[strtolower($className)])) {
-			return true;
-		}
-		if (self::inArray($className, get_declared_classes()) || self::inArray($className, get_declared_interfaces())) {
-			self::$loadedClassesCache[strtolower($className)] = 1;
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	/**
-	 * Case insensitive in_array implementation.
-	 *
-	 * @param string $needle
-	 * @param array $haystack
-	 * @return boolean
-	 */
-	private static function inArray($needle, array $haystack) {
-		return in_array(strtolower($needle), array_map('strtolower', $haystack));
+		return class_exists($className, false) || interface_exists($className, false);
 	}
 
 	/**
@@ -246,17 +223,17 @@ final class Customweb_Core_Util_Class
 	}
 
 	private static function loadAllClassesOfDirectory($directory, $packageName) {
-		
+
 		// Prevent reading of SVN directories. SVN may place in each folder a sub folder
 		// with PHP files in it. This can cause issues by loading classes twice.
 		if (strpos($directory, '.svn') !== false) {
 			return array();
 		}
-		
+
 		$classes = array();
 		if ($handle = opendir($directory)) {
 			while (false !== ($file = readdir($handle))) {
-				if (strstr($file, '.php') !== false) {
+				if (substr($file, -4) === '.php') {
 					$className = $packageName . '_' . substr($file, 0, -4);
 					if (!isset($classes[$className]) && !self::isClassLoaded($className)) {
 						require_once $directory . DIRECTORY_SEPARATOR . $file;
@@ -349,12 +326,12 @@ final class Customweb_Core_Util_Class
 		}
 		return self::$classHierarchies[$key];
 	}
-	
+
 	/**
 	 * This method returns the root class name. The root class is the class which does not inherit from
-	 * another class in the class hierarchy. In case the given class name is the root class this method 
+	 * another class in the class hierarchy. In case the given class name is the root class this method
 	 * will return the given class name.
-	 * 
+	 *
 	 * @param string $className
 	 * @return string
 	 */

@@ -296,7 +296,7 @@
 	<default>
 		<oppcw>
 			<general>
-				<version>3.0.224</version>
+				<version>3.0.248</version>
 				<operation_mode><![CDATA[test]]></operation_mode>
 				<test_mode><![CDATA[internal]]></test_mode>
 				<user_id><![CDATA[]]></user_id>
@@ -1019,6 +1019,7 @@
 				<settlement><![CDATA[settlement_direct]]></settlement>
 				<invoice_send_email><![CDATA[0]]></invoice_send_email>
 				
+				<status_finallydeclined><![CDATA[no_status_change]]></status_finallydeclined>
 				<capturing><![CDATA[direct]]></capturing>
 				<channel_id><![CDATA[]]></channel_id>
 				<channel_conditions><![CDATA[]]></channel_conditions>

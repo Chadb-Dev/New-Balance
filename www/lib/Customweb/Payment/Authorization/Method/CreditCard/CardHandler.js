@@ -18,20 +18,22 @@ var ____cardHandlerNameSpace____ = {
 	forceCvcOptional: ____forceCvcOptional____,
 	expiryFieldFormat: '____expiryFieldFormat____',
 	expiryControlId: '____expiryControlId____',
-	
+
 	init: function() {
 		this.jQuery = ____jQueryNameSpace____;
 		this.cardNumberControl = this.jQuery("#" + this.creditCardControlId);
 		this.hiddenCardNumberField = this.createHiddenControlCopy(this.cardNumberControl);
 		this.cvcControl = this.jQuery('#' + this.cvcControlId);
 		this.imageBrandSelectionWrapper = this.jQuery("#" + this.imageBrandControlId);
-		
+
 		this.attachObservers();
 		this.handleImageBrandSelection();
-		
+
 		this.handleExpiryField();
+
+		this.jQuery(document).trigger('customweb.ready');
 	},
-	
+
 	createHiddenControlCopy: function(original) {
 		if (typeof original.attr('data-cloned-element-id') === "undefined") {
 			var copy = this.jQuery('<input type="hidden" />');
@@ -54,14 +56,14 @@ var ____cardHandlerNameSpace____ = {
 			return this.jQuery("#" + elementId);
 		}
 	},
-	
+
 	attachObservers: function() {
 		this.cardNumberControl.keyup(this.jQuery.proxy(this.onCardNumberUpdate, this));
 		this.cvcControl.keyup(this.jQuery.proxy(this.onCvcNumberUpdate, this));
 		this.cardNumberControl.change(this.jQuery.proxy(this.onCardNumberUpdate, this));
 		this.cvcControl.change(this.jQuery.proxy(this.onCvcNumberUpdate, this));
 	},
-	
+
 	handleExpiryField: function() {
 		if (this.expiryControlId != '') {
 			this.expiryControl = this.jQuery('#' + this.expiryControlId);
@@ -75,35 +77,35 @@ var ____cardHandlerNameSpace____ = {
 			this.expiryMonthControl.change(this.jQuery.proxy(this.onExpiryUpdate, this));
 		}
 	},
-	
+
 	handleImageBrandSelection: function() {
 		if (this.brandSelectionActive) {
 			if (this.imageBrandSelectionActive) {
 				this.imageBrandSelectionWrapper.show();
 				this.jQuery("#" + this.brandDropDownControlId).hide();
 				this.jQuery("#" + this.brandDropDownControlId + "-wrapper").hide();
-				
+
 				if (!this.autoBrandSelectionActive) {
 					this.cvcControl.click(this.jQuery.proxy(this.onImageBrandSelection, this));
 				}
 			}
 		}
 	},
-	
+
 	onImageBrandSelection: function(event) {
 		var brandSelected = this.jQuery(event.target).parents("card-brand-image-box");
 		var brand = brandSelect.attr('data-brand');
 		this.setBrand(brand);
 		this.selectImageBrand();
 	},
-	
+
 	onExpiryUpdate: function(event) {
 		var month = this.expiryMonthControl.val();
 		var year = this.expiryYearControl.val();
 		var newValue = this.expiryFieldFormat.replace('MM', month).replace('YY', year);
 		this.expiryControl.val(newValue);
 	},
-	
+
 	onCardNumberUpdate: function(event) {
 		var cardNumber = this.getCardNumber();
 		if (cardNumber.length > 0) {
@@ -112,16 +114,16 @@ var ____cardHandlerNameSpace____ = {
 		}
 		this.updateHiddenCardNumber();
 	},
-	
+
 	updateHiddenCardNumber: function() {
 		this.hiddenCardNumberField.val(this.getCardNumber());
 	},
-	
+
 	updateBrandSelection: function() {
 		if (this.autoBrandSelectionActive) {
 			this.selectImageBrand();
 			var brand = this.getBrand();
-			
+
 			// Set the dropdown value
 			if (this.brandDropDownControlId !== '') {
 				var brandOption = this.jQuery('#' + this.brandDropDownControlId + ' option[value="' + this.mapBrand(brand) + '"]');
@@ -131,7 +133,7 @@ var ____cardHandlerNameSpace____ = {
 			}
 		}
 	},
-	
+
 	selectImageBrand: function() {
 		if (this.imageBrandSelectionActive) {
 			var brand = this.getBrand();
@@ -142,19 +144,19 @@ var ____cardHandlerNameSpace____ = {
 			selectedBrandBox.find("img").addClass("brand-is-selected");
 		}
 	},
-	
+
 	validateCardNumber: function() {
 		var cardNumber = this.getCardNumber();
 		var brand = this.getBrand();
 		var data = this.cardInformation[brand];
-		
+
 		if (brand !== null && typeof data !== "undefined") {
-			
+
 			var brandFromCardNumber = this.getBrandNameByCardNumber(cardNumber);
 			if (brandFromCardNumber != brand) {
 				return false;
 			}
-			
+
 			var valid = true;
 			var backup = this;
 			this.jQuery.each(data.validators, function(key, value) {
@@ -164,11 +166,11 @@ var ____cardHandlerNameSpace____ = {
 					}
 				}
 			});
-			
+
 			if (valid == false) {
 				return false;
 			}
-			
+
 			// Check length
 			var cardNumberLength = cardNumber.length;
 			var lengthMatch = false;
@@ -177,18 +179,18 @@ var ____cardHandlerNameSpace____ = {
 					lengthMatch = true;
 				}
 			});
-			
+
 			return lengthMatch;
 		}
 		else {
 			return false;
 		}
 	},
-	
+
 	onCvcNumberUpdate: function(event) {
 		this.handleInlineValidation();
 	},
-	
+
 	handleInlineValidation: function() {
 		if (this.enhancedWithJavaScript) {
 			// Handle card
@@ -200,7 +202,7 @@ var ____cardHandlerNameSpace____ = {
 				this.cardNumberControl.removeClass("valid-card-number");
 				this.cardNumberControl.addClass("invalid-card-number");
 			}
-			
+
 			// Handle CVC
 			if (this.validateCvcNumber()) {
 				this.cvcControl.removeClass("invalid-cvc-number");
@@ -212,18 +214,18 @@ var ____cardHandlerNameSpace____ = {
 			}
 		}
 	},
-	
+
 	validateCvcNumber: function() {
 		var cvc = this.getCvcNumber();
 		if (this.forceCvcOptional && cvc.length == 0) {
 			return true;
 		}
-		
+
 		var brand = this.getBrand();
 		var data = this.cardInformation[brand];
-		
+
 		if (brand !== null && typeof data !== "undefined") {
-			
+
 			var cvcLength = data.cvv_length;
 			var cvcRequired = data.cvv_required;
 			var cvcIsRequired = false;
@@ -232,7 +234,7 @@ var ____cardHandlerNameSpace____ = {
 					cvcIsRequired = true;
 				}
 			}
-			
+
 			if (cvc.length == 0 && cvcIsRequired) {
 				return false;
 			}
@@ -248,11 +250,11 @@ var ____cardHandlerNameSpace____ = {
 				return false;
 			}
 		}
-		
+
 		// By default, we accept the CVC.
 		return true;
 	},
-	
+
 	mapBrand: function (brand) {
 		var mapped = this.brandMapping[brand];
 		if (typeof mapped !== "undefined") {
@@ -262,11 +264,11 @@ var ____cardHandlerNameSpace____ = {
 			return brand;
 		}
 	},
-	
+
 	sanatizeNumber: function(number) {
 		return String(number).replace(/[ ]/g, "");
 	},
-	
+
 	getCardNumber: function() {
 		return this.sanatizeNumber(this.cardNumberControl.val());
 	},
@@ -274,7 +276,7 @@ var ____cardHandlerNameSpace____ = {
 	getCvcNumber: function () {
 		return this.sanatizeNumber(this.cvcControl.val());
 	},
-	
+
 	getBrand: function() {
 		if (this.autoBrandSelectionActive) {
 			var cardNumber = this.getCardNumber();
@@ -289,11 +291,11 @@ var ____cardHandlerNameSpace____ = {
 			}
 		}
 	},
-	
+
 	setBrand: function (brand) {
 		this.selectedBrand = brand;
 	},
-	
+
 	getBrandNameByCardNumber: function(cardNumber) {
 		var brand = null;
 		this.jQuery.each(this.cardPrefixMap, function(key, value) {
@@ -302,10 +304,10 @@ var ____cardHandlerNameSpace____ = {
 				return false;
 			}
 		});
-		
+
 		return brand;
 	},
-	
+
 	luhnCheck: function(cardNumber) {
 		var counter = 0;
 		var incNum;
@@ -314,7 +316,7 @@ var ____cardHandlerNameSpace____ = {
 		if (temp.length == 0) {
 			return false;
 		}
-		
+
 		for (var i = temp.length-1; i >= 0; --i)
 		{
 			incNum = parseInt(temp.charAt(i), 10);
@@ -322,7 +324,7 @@ var ____cardHandlerNameSpace____ = {
 		}
 		return (counter%10 == 0);
 	}
-	
+
 };
 
 

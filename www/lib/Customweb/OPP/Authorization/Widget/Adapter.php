@@ -3,7 +3,7 @@
 /**
  *  * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -21,10 +21,12 @@
 
 //require_once 'Customweb/OPP/Authorization/AbstractAdapter.php';
 //require_once 'Customweb/Payment/Authorization/Widget/IAdapter.php';
+//require_once 'Customweb/I18n/LocalizableString.php';
 //require_once 'Customweb/OPP/Authorization/Widget/ParameterBuilder.php';
 //require_once 'Customweb/I18n/Translation.php';
 //require_once 'Customweb/OPP/Request.php';
 //require_once 'Customweb/Payment/Authorization/ITransaction.php';
+//require_once 'Customweb/Core/Logger/Factory.php';
 
 
 
@@ -61,7 +63,7 @@ class Customweb_OPP_Authorization_Widget_Adapter extends Customweb_OPP_Authoriza
 				$checkoutId = $this->generateCheckout($transaction, $formData);
 				$transaction->setCheckoutId($checkoutId);
 			}
-
+			$cssUrl = $this->getContainer()->getBean('Customweb_Asset_IResolver')->resolveAssetUrl('widget.css');
 			$responseUrl = $this->getEndpointAdapter()->getUrl('process', 'index',
 					array(
 						'cw_transaction_id' => $transaction->getExternalTransactionId()
@@ -75,6 +77,17 @@ class Customweb_OPP_Authorization_Widget_Adapter extends Customweb_OPP_Authoriza
 			$html .= '<form action="' . $responseUrl . '" class="paymentWidgets">';
 			$html .= $this->getPaymentMethod($transaction->getPaymentMethod())->getPaymentMethodBrand();
 			$html .= '</form>';
+			$html .= '<script>
+						if (!document.getElementById("_opp_-widget-style")) {
+							var head = document.getElementsByTagName("head")[0];
+							var cssLink = document.createElement("link");
+							cssLink.href = "'.$cssUrl.'";
+							cssLink.id="_opp_-widget-style";
+							cssLink.type="text/css";
+	 						cssLink.rel = "stylesheet";	
+							head.appendChild(cssLink);
+						}	
+					</script>';
 			return $html;
 		}
 		catch(Exception $e){
@@ -84,17 +97,49 @@ class Customweb_OPP_Authorization_Widget_Adapter extends Customweb_OPP_Authoriza
 	}
 
 	public function processAuthorization(Customweb_Payment_Authorization_ITransaction $transaction, array $parameters){
-		$response = null;
+		$logger = Customweb_Core_Logger_Factory::getLogger(get_class());
 		try {
+			//This request is required, but it can executed only once reliably, so we make the call
+			$logger->logInfo('Requesting Status for checkoutId: '.$transaction->getCheckoutId());
 			$request = new Customweb_OPP_Request($this->getCheckoutStatusUrl($transaction->getCheckoutId()));
 			$request->setMethod(Customweb_OPP_Request::METHOD_GET);
 			$request->setData($this->getParameterBuilder($transaction)->buildStatusParameters());
+			
 			$response = $request->send();
+			if($response != null && ($response->result->code != '200.300.404' || stripos($response->result->description, 'No payment session found for the requested id') === false)){
+				return $this->finalizeAuthorization($transaction, $response);
+			}
 		}
 		catch (Exception $e) {
-			$transaction->setAuthorizationFailed(Customweb_I18n_Translation::__($e->getMessage()));
 		}
-		return $this->finalizeAuthorization($transaction, $response);
+		$response = null;
+		
+		try {
+			$logger->logInfo('Requesting Status for transactionExternalId: '.$this->getPaymentMethod($transaction->getPaymentMethod())->getMerchantTransactionId($transaction));
+			$request = new Customweb_OPP_Request($this->getPaymentStatusUrlMerchantId());
+			$request->setMethod(Customweb_OPP_Request::METHOD_GET);
+			$request->setData($this->getParameterBuilder($transaction)->buildStatusParametersMerchantId());
+			$response = $request->send();
+			if($response->result->code == '700.400.580'){
+				$transaction->setAuthorizationFailed(new Customweb_I18n_LocalizableString("The transaction with external Id ".$this->getPaymentMethod($transaction->getPaymentMethod())->getMerchantTransactionId($transaction)." ist not available in the remote system"));
+				return $this->redirect($transaction);
+			}
+			if($response->result->code != '000.000.100'){
+				throw new Exception("Received unexpected result code for transaction status request. Code: ".$response->result->code);
+			}				
+			$paymentResponses = $response->payments;
+			foreach($paymentResponses as $paymentResponse){
+				if($paymentResponse->paymentType == 'PA' || $paymentResponse->paymentType == 'DB' || $paymentResponse->paymentType == 'PA.CP'){
+					return $this->finalizeAuthorization($transaction, $paymentResponse);
+				}
+			}
+			$logger->logError('No valid payment in the status response.' , $response);
+			return $this->redirect($transaction);
+		}
+		catch (Exception $e) {
+			Customweb_Core_Logger_Factory::getLogger(get_class())->logInfo("Error quering transaction status.", $e->getMessage());
+		}
+		return $this->redirect($transaction);
 	}
 
 	/**

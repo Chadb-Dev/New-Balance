@@ -2,7 +2,7 @@
 /**
   * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -47,6 +47,9 @@ class Customweb_Storage_Backend_Database implements Customweb_Storage_IBackend {
 	 */
 	private $entityClassName;
 	
+	
+	private $lockedKeys = array();
+	private $started = false;
 	/**
 	 *
 	 * @param Customweb_Database_Entity_IManager $manager
@@ -60,7 +63,9 @@ class Customweb_Storage_Backend_Database implements Customweb_Storage_IBackend {
 	}
 
 	public function lock($space, $key, $type){
+		$this->lockedKeys[$space.'-'.$key] = true;
 		if (!$this->driver->isTransactionRunning()) {
+			$this->started = true;
 			$this->driver->beginTransaction();
 			register_shutdown_function(array($this, 'commit'));
 		}
@@ -82,7 +87,11 @@ class Customweb_Storage_Backend_Database implements Customweb_Storage_IBackend {
 	}
 
 	public function unlock($space, $key){
-		
+		unset($this->lockedKeys[$space.'-'.$key]);
+		if(empty($this->lockedKeys) && $this->started){
+			$this->started = false;
+			$this->driver->commit();
+		}
 	}
 
 	public function read($space, $key){

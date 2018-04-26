@@ -2,7 +2,7 @@
 /**
  * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -346,6 +346,7 @@ class Customweb_OPPCw_Helper_Data extends Mage_Core_Helper_Abstract
 	public function getFailUrl($transaction)
 	{
 		$frontentId =  'checkout/onepage/';
+		$parameters = array();
 
 		// If the onestep checkout module is enabled redirect there        	    	 	     	 
 		if(Mage::helper('core')->isModuleEnabled('Idev_OneStepCheckout') && Mage::getStoreConfig('onestepcheckout/general/rewrite_checkout_links')) {
@@ -362,9 +363,18 @@ class Customweb_OPPCw_Helper_Data extends Mage_Core_Helper_Abstract
 			$frontentId =  'onestepcheckout';
 		}
 
+		if ($transaction->getOrder()->getCustomerId() != null) {
+			$customer = Mage::getModel('customer/customer')->load($transaction->getOrder()->getCustomerId());
+			if ($customer->getConfirmation() && $customer->isConfirmationRequired()) {
+				// Cannot move to the checkout payment step directly as the customer account is not confirmed yet.
+			} else {
+				$parameters['loadFailed'] = 'true';
+			}
+		}
+
 		$redirectionUrl = Customweb_Util_Url::appendParameters(
 			Mage::getUrl($frontentId, array('_secure' => true)),
-			array('loadFailed' => 'true')
+			$parameters
 		);
 
 		$result = new StdClass;

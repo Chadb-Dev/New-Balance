@@ -3,7 +3,7 @@
 /**
  *  * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -47,7 +47,7 @@ class Customweb_Core_Logger_Listener_FileWriter implements Customweb_Core_Logger
 	}
 	/**
 	 * @see Customweb_Core_Logger_IListener::addLogEntry()
-	 * @throws Customweb_Core_Logger_Exceptions_FileWriteException In case content could not be written to file
+	 * @throws Customweb_Core_Logger_Exception_FileWriteException In case content could not be written to file
 	 */
 	public function addLogEntry($loggerName, $level, $message, Exception $e = null, $object = null){
 		$content = '[' . $level . '] ' . $loggerName . ': ' . $message . "\n";

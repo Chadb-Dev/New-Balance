@@ -2,7 +2,7 @@
 /**
   * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -49,26 +49,34 @@ class Customweb_Payment_Update_PullProcessor extends Customweb_Payment_Update_Ab
 			return;
 		}
 		$this->getTransactionHandler()->beginTransaction();
-		$transactionObject = $this->getTransactionHandler()->findTransactionByTransactionId($this->transactionId);
-		if ($transactionObject == null) {
-			$this->getHandler()->log(Customweb_Util_String::formatString("No transaction found for transaction id '!id'.", array('!id' => $this->transactionId)), Customweb_Payment_Update_IHandler::LOG_TYPE_ERROR);
-		}
-		else {
-			try {
-				$this->getUpdateAdapter()->updateTransaction($transactionObject);
-				$this->getHandler()->log(
-					Customweb_Util_String::formatString(
-						"Transaction with id '!id' successful updated.",
-						array('!id' => $this->transactionId)
-					),
-					Customweb_Payment_Update_IHandler::LOG_TYPE_INFO
-				);
+		try{
+			
+			$transactionObject = $this->getTransactionHandler()->findTransactionByTransactionId($this->transactionId);
+			if ($transactionObject == null) {
+				$this->getHandler()->log(Customweb_Util_String::formatString("No transaction found for transaction id '!id'.", array('!id' => $this->transactionId)), Customweb_Payment_Update_IHandler::LOG_TYPE_ERROR);
 			}
-			catch(Exception $e) {
-				$this->getHandler()->log($e->getMessage(), Customweb_Payment_Update_IHandler::LOG_TYPE_ERROR);
+			else {
+				try {
+					$this->getUpdateAdapter()->updateTransaction($transactionObject);
+					$this->getHandler()->log(
+						Customweb_Util_String::formatString(
+							"Transaction with id '!id' successful updated.",
+							array('!id' => $this->transactionId)
+						),
+						Customweb_Payment_Update_IHandler::LOG_TYPE_INFO
+					);
+				}
+				catch(Exception $e) {
+					$this->getHandler()->log($e->getMessage(), Customweb_Payment_Update_IHandler::LOG_TYPE_ERROR);
+				}
+				$this->getTransactionHandler()->persistTransactionObject($transactionObject);
 			}
-			$this->getTransactionHandler()->persistTransactionObject($transactionObject);
+			$this->getTransactionHandler()->commitTransaction();
 		}
-		$this->getTransactionHandler()->commitTransaction();
+		catch(Exception $e){
+			$this->getTransactionHandler()->rollbackTransaction();
+			$this->getHandler()->log(Customweb_Util_String::formatString("Error updating transaction '!id'. Excpetion: !exc", array('!id' => $this->transactionId, '!exc' => $e->getMessage())), Customweb_Payment_Update_IHandler::LOG_TYPE_ERROR);
+		
+		}
 	}
 }

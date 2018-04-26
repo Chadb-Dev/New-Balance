@@ -2,7 +2,7 @@
 /**
   * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -18,7 +18,6 @@
  *
  */
 
-//require_once 'Customweb/Util/Currency.php';
 //require_once 'Customweb/OPP/AbstractParameterBuilder.php';
 //require_once 'Customweb/Util/Invoice.php';
 
@@ -75,7 +74,8 @@ class Customweb_OPP_BackendOperation_Adapter_ParameterBuilder extends Customweb_
 	protected function getBackofficeParameters($amount, $paymentType)
 	{
 		$parameters = array();
-		$parameters['amount']					= Customweb_Util_Currency::formatAmount($amount, $this->getOrderContext()->getCurrencyCode());
+		//The amount has to always have to decimal places, according to documentation
+		$parameters['amount']					= number_format($amount, 2, '.', '');
 		$parameters['currency']					= $this->getOrderContext()->getCurrencyCode();
 		$parameters['paymentType']				= $paymentType;
 		return $parameters;

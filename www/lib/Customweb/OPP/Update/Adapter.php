@@ -2,7 +2,7 @@
 /**
   * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -20,6 +20,7 @@
 
 //require_once 'Customweb/Core/DateTime.php';
 //require_once 'Customweb/Core/Exception/CastException.php';
+//require_once 'Customweb/I18n/LocalizableString.php';
 //require_once 'Customweb/Payment/Update/IAdapter.php';
 //require_once 'Customweb/OPP/Authorization/OppTransaction.php';
 //require_once 'Customweb/Payment/Authorization/ErrorMessage.php';
@@ -38,11 +39,44 @@ class Customweb_OPP_Update_Adapter extends Customweb_OPP_AbstractAdapter impleme
 		if (!($transaction instanceof Customweb_OPP_Authorization_OppTransaction)) {
 			throw new Customweb_Core_Exception_CastException('Customweb_OPP_Authorization_OppTransaction');
 		}
+		$transaction->setUpdateExecutionDate(null);
+		if(!$transaction->isAuthorizationFailed() && !$transaction->isAuthorized()){
+			try {
+				$request = new Customweb_OPP_Request($this->getPaymentStatusUrlMerchantId());
+				$request->setMethod(Customweb_OPP_Request::METHOD_GET);
+				$request->setData($this->getParameterBuilder($transaction)->buildStatusParametersMerchantId());
+				$response = $request->send();
+				if($response->result->code == '700.400.580'){
+					$transaction->setAuthorizationFailed(new Customweb_I18n_LocalizableString("The transaction with external Id ".$this->getPaymentMethod($transaction)->getMerchantTransactionId($transaction)." ist not available in the remote system"));
+					return;
+				}
+				if($response->result->code != '000.000.100'){
+					throw new Exception("Received unexpected result code for transaction status request. Code: ".$response->result->code);
+				}
+				$paymentResponses = $response->payments;
+				foreach($paymentResponses as $paymentResponse){
+					if($paymentResponse->paymentType == 'PA' || $paymentResponse->paymentType == 'DB' || $paymentResponse->paymentType == 'PA.CP'){
+						$this->finalizeAuthorization($transaction, $response);
+						break;
+					}
+				}
+			} catch (Exception $e) {
+				$transaction->addErrorMessage(new Customweb_Payment_Authorization_ErrorMessage(Customweb_I18n_Translation::__('Could not execute scheduled update. ').$e->getMessage()));
+			}
+			if(!$transaction->isAuthorizationFailed() && !$transaction->isAuthorized() && $transaction->getUpdateRetryCounter() < 10) {
+				$transaction->increaseUpdateRetryCounter();
+				$transaction->setUpdateExecutionDate(Customweb_Core_DateTime::_()->addMinutes(10));
+			}
+			else{
+				$transaction->resetUpdateRetryCounter();
+			}
+			return;
+		}		
 		if ($transaction->isAuthorized() && $transaction->isAuthorizationUncertain() && !$transaction->isUncertainTransactionFinallyDeclined()) {
 			try {
 				$request = new Customweb_OPP_Request($this->getPaymentStatusUrl($transaction->getPaymentId()));
 				$request->setMethod(Customweb_OPP_Request::METHOD_GET);
-				$request->setData($this->getParameterBuilder($transaction)->buildParameters());
+				$request->setData($this->getParameterBuilder($transaction)->buildStatusParameters());
 				$response = $request->send();
 				$this->finalizeAuthorization($transaction, $response);
 				$transaction->setUpdateExecutionDate(null);
@@ -78,11 +112,19 @@ class Customweb_OPP_Update_Adapter extends Customweb_OPP_AbstractAdapter impleme
 	}
 
 	/**
+	 *
 	 * @return string
 	 */
-	protected function getPaymentStatusUrl($paymentId)
-	{
+	protected function getPaymentStatusUrl($paymentId){
 		return $this->getConfiguration()->getBaseUrl() . '/v1/payments/' . $paymentId;
+	}
+	
+	/**
+	 *
+	 * @return string
+	 */
+	protected function getPaymentStatusUrlMerchantId(){
+		return $this->getConfiguration()->getBaseUrl() . '/v1/payments' ;
 	}
 
 	/**
@@ -104,6 +146,10 @@ class Customweb_OPP_Update_Adapter extends Customweb_OPP_AbstractAdapter impleme
 			return Customweb_I18n_Translation::__($response->resultDetails->faultString);
 		}
 		return Customweb_I18n_Translation::__($response->result->description);
+	}
+	
+	public function getPaymentMethod(Customweb_Payment_Authorization_ITransaction $transaction){
+		return $this->getMethodFactory()->getPaymentMethod($transaction->getPaymentMethod(), $transaction->getAuthorizationMethod());
 	}
 
 }

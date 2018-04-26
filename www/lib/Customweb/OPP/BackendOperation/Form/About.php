@@ -2,7 +2,7 @@
 /**
   * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -29,12 +29,12 @@ class Customweb_OPP_BackendOperation_Form_About extends Customweb_Payment_Backen
 {
 	protected function getVersion()
 	{
-		return '3.0.224';
+		return '3.0.248';
 	}
 
 	protected function getReleaseDate()
 	{
-		return 'Wed, 17 Jan 2018 17:24:20 +0100';
+		return 'Mon, 16 Apr 2018 16:12:11 +0200';
 	}
 
 	protected function getOrderNumber()

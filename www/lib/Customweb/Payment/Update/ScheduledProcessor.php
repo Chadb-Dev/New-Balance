@@ -3,7 +3,7 @@
 /**
  *  * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -40,8 +40,8 @@ class Customweb_Payment_Update_ScheduledProcessor extends Customweb_Payment_Upda
 	private $transactionId = null;
 
 	/**
-	 *
-	 * @see Customweb_Payment_Update_AbstractProcessor::process() @Cron()
+	 * @Cron()
+	 * @see Customweb_Payment_Update_AbstractProcessor::process() 
 	 */
 	public function process(){
 		if ($this->getUpdateAdapter() === null) {
@@ -69,7 +69,7 @@ class Customweb_Payment_Update_ScheduledProcessor extends Customweb_Payment_Upda
 			}
 		}
 		catch (Exception $e) {
-			$this->getHandler()->log("Failed to load scheduled transactions: " . $e->getMessage(), Customweb_Payment_Update_IHandler::LOG_TYPE_ERROR);
+			$this->getHandler()->log("Failed to load scheduled transactions: " . $e->getMessage().$e->getTraceAsString(), Customweb_Payment_Update_IHandler::LOG_TYPE_ERROR);
 		}
 		
 		$this->unlockUpdate();
@@ -80,11 +80,8 @@ class Customweb_Payment_Update_ScheduledProcessor extends Customweb_Payment_Upda
 	}
 
 	private function executeUpdate($transactionId){
+		$this->getTransactionHandler()->beginTransaction();
 		try {
-			if (!$this->getTransactionHandler()->isTransactionRunning()) {
-				$this->getTransactionHandler()->beginTransaction();
-			}
-			
 			$transactionObject = $this->getTransactionHandler()->findTransactionByTransactionId($transactionId);
 			if ($transactionObject == null) {
 				$this->getHandler()->log(
@@ -116,6 +113,7 @@ class Customweb_Payment_Update_ScheduledProcessor extends Customweb_Payment_Upda
 			$this->getTransactionHandler()->commitTransaction();
 		}
 		catch (Exception $e) {
+			$this->getTransactionHandler()->rollbackTransaction();
 			$this->getHandler()->log(
 					Customweb_Util_String::formatString("Unexpected error while updating the transaction with id '!id'. Error: !e", array(
 						'!id' => $transactionId, '!e' => $e->getMessage()

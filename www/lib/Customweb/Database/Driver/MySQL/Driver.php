@@ -30,7 +30,7 @@ class Customweb_Database_Driver_MySQL_Driver extends Customweb_Database_Driver_A
 
 	public function beginTransaction(){
 		if ($result = mysql_query("SELECT @@autocommit", $this->getLink())) {
-			$row = mysql_fetch_assoc($result);
+			$row = mysql_fetch_row($result);
 			$this->autoCommitActive = $row[0];
 			mysql_free_result($result);
 		}
@@ -50,7 +50,7 @@ class Customweb_Database_Driver_MySQL_Driver extends Customweb_Database_Driver_A
 
 	public function rollBack(){
 		mysql_query("ROLLBACK;", $this->getLink());
-		mysql_query(sprintf("SET autocommit = %d;", $this->autoCommitActive), $this->getLink());		
+		mysql_query(sprintf("SET autocommit = %d;", $this->autoCommitActive), $this->getLink());
 		$this->setTransactionRunning(false);
 	}
 

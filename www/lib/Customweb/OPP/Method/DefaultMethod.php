@@ -3,7 +3,7 @@
 /**
  *  * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -1331,11 +1331,15 @@ class Customweb_OPP_Method_DefaultMethod extends Customweb_Payment_Authorization
 	 */
 	public function getAuthorizationParameters(Customweb_OPP_Authorization_OppTransaction $transaction, array $formData){
 		$parameters = array();
-		$parameters['merchantTransactionId'] = Customweb_Payment_Util::applyOrderSchema($this->getGlobalConfiguration()->getTransactionIdSchema(),
-				$transaction->getExternalTransactionId(), 255);
+		$parameters['merchantTransactionId'] = $this->getMerchantTransactionId($transaction);
 		return $parameters;
 	}
 
+	public function getMerchantTransactionId(Customweb_OPP_Authorization_OppTransaction $transaction){
+		return Customweb_Payment_Util::applyOrderSchema($this->getGlobalConfiguration()->getTransactionIdSchema(),
+				$transaction->getExternalTransactionId(), 255);
+	}
+	
 	/**
 	 *
 	 * @param Customweb_OPP_Authorization_OppTransaction $transaction

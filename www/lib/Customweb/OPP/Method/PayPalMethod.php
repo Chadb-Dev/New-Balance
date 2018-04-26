@@ -2,7 +2,7 @@
 /**
   * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -80,30 +80,30 @@ class Customweb_OPP_Method_PayPalMethod extends Customweb_OPP_Method_DefaultMeth
 			$parameters['cart.items[' . $i . '].merchantItemId'] = Customweb_Filter_Input_String::_($item->getSku(), 255)->filter();
 			$parameters['cart.items[' . $i . '].quantity'] = round($item->getQuantity());
 			$parameters['cart.items[' . $i . '].type'] = 'physical';
-			
-			$itemTotalAmount += Customweb_Util_Currency::roundAmount($price, $orderContext->getCurrencyCode()) * round($item->getQuantity());
-			$parameters['cart.items[' . $i . '].price'] = Customweb_Util_Currency::formatAmount($price, $orderContext->getCurrencyCode());
+			$itemTotalAmount += round($price, 2) * round($item->getQuantity());
+			$parameters['cart.items[' . $i . '].price'] = number_format($price, 2, '.', '');
 			$parameters['cart.items[' . $i . '].currency'] = $orderContext->getCurrencyCode();
 			$parameters['cart.items[' . $i . '].tax'] = number_format($item->getTaxRate(), 1);
 			$i++;
 		}
 		
-		$expectedAmount = Customweb_Util_Currency::roundAmount($orderContext->getOrderAmountInDecimals(), $orderContext->getCurrencyCode());
+		$expectedAmount = round($orderContext->getOrderAmountInDecimals(), 2);
+		$itemTotalAmount = round($itemTotalAmount, 2);
 		$diff = Customweb_Util_Currency::compareAmount($itemTotalAmount, $expectedAmount, $orderContext->getCurrencyCode());
-		if ($diff > 0) {
+		if ($itemTotalAmount > $expectedAmount) {
 			$parameters['cart.items[' . $i . '].name'] = Customweb_Filter_Input_String::_(Customweb_I18n_Translation::__("Rounding Adjustment")->toString(), 255)->filter();
 			$parameters['cart.items[' . $i . '].merchantItemId'] = Customweb_Filter_Input_String::_('rounding-adjustment', 255)->filter();
 			$parameters['cart.items[' . $i . '].quantity'] = 1;
 			$parameters['cart.items[' . $i . '].type'] = 'physical';
-			$parameters['cart.items[' . $i . '].price'] = Customweb_Util_Currency::formatAmount($expectedAmount - $itemTotalAmount, $orderContext->getCurrencyCode());
+			$parameters['cart.items[' . $i . '].price'] = number_format($expectedAmount - $itemTotalAmount, 2, '.', '');
 			$parameters['cart.items[' . $i . '].currency'] = $orderContext->getCurrencyCode();
 			$parameters['cart.items[' . $i . '].tax'] = number_format(0, 1);
-		} elseif ($diff < 0) {
+		} elseif ($itemTotalAmount < $expectedAmount) {
 			$parameters['cart.items[' . $i . '].name'] = Customweb_Filter_Input_String::_(Customweb_I18n_Translation::__("Rounding Adjustment")->toString(), 255)->filter();
 			$parameters['cart.items[' . $i . '].merchantItemId'] = Customweb_Filter_Input_String::_('rounding-adjustment', 255)->filter();
 			$parameters['cart.items[' . $i . '].quantity'] = 1;
 			$parameters['cart.items[' . $i . '].type'] = 'physical';
-			$parameters['cart.items[' . $i . '].price'] = Customweb_Util_Currency::formatAmount($itemTotalAmount - $expectedAmount, $orderContext->getCurrencyCode());
+			$parameters['cart.items[' . $i . '].price'] = number_format($itemTotalAmount - $expectedAmount, 2, '.', '');
 			$parameters['cart.items[' . $i . '].currency'] = $orderContext->getCurrencyCode();
 			$parameters['cart.items[' . $i . '].tax'] = number_format(0, 1);
 		}

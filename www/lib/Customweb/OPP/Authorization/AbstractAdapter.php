@@ -3,7 +3,7 @@
 /**
  *  * You are allowed to use this API in your web application.
  *
- * Copyright (C) 2016 by customweb GmbH
+ * Copyright (C) 2018 by customweb GmbH
  *
  * This program is licenced under the customweb software licence. With the
  * purchase or the installation of the software in your application you
@@ -26,6 +26,7 @@
 //require_once 'Customweb/OPP/AbstractAdapter.php';
 //require_once 'Customweb/OPP/Request.php';
 //require_once 'Customweb/OPP/IConstants.php';
+//require_once 'Customweb/Core/Logger/Factory.php';
 
 abstract class Customweb_OPP_Authorization_AbstractAdapter extends Customweb_OPP_AbstractAdapter implements
 		Customweb_Payment_Authorization_IAdapter {
@@ -72,27 +73,24 @@ abstract class Customweb_OPP_Authorization_AbstractAdapter extends Customweb_OPP
 		catch (Exception $e) {
 			$transaction->setAuthorizationFailed(Customweb_I18n_Translation::__($e->getMessage()));
 		}
-
 		return $this->finalizeAuthorization($transaction, $response);
 	}
 
 	public function processAsynchronousAuthorization(Customweb_Payment_Authorization_ITransaction $transaction, array $parameters){
-		$response = null;
 		try {
 			$request = new Customweb_OPP_Request($this->getPaymentStatusUrl($parameters['id']));
 			$request->setMethod(Customweb_OPP_Request::METHOD_GET);
 			$request->setData($this->getParameterBuilder($transaction)->buildStatusParameters());
 			$response = $request->send();
+			return $this->finalizeAuthorization($transaction, $response);
 		}
 		catch (Exception $e) {
-			$transaction->setAuthorizationFailed(Customweb_I18n_Translation::__($e->getMessage()));
+			Customweb_Core_Logger_Factory::getLogger(get_class())->logInfo("Error quering transaction status.", $e);
 		}
-
-		return $this->finalizeAuthorization($transaction, $response);
+		return $this->redirect($transaction);
 	}
 
 	/**
-	 *
 	 * @param Customweb_Payment_Authorization_ITransactionContext $transactionContext
 	 * @param unknown $failedTransaction
 	 */
@@ -100,17 +98,18 @@ abstract class Customweb_OPP_Authorization_AbstractAdapter extends Customweb_OPP
 		$transaction = new Customweb_OPP_Authorization_OppTransaction($transactionContext);
 		$transaction->setAuthorizationMethod($this->getAuthorizationMethodName());
 		$transaction->setLiveTransaction(!$this->getConfiguration()->isTestMode());
+		$transaction->setUpdateExecutionDate(Customweb_Core_DateTime::_()->addMinutes(45));
 		return $transaction;
 	}
 
 	/**
-	 *
 	 * @param Customweb_Payment_Authorization_ITransaction $transaction
 	 * @param stdClass $response
 	 * @return string
 	 * @throws Exception
 	 */
 	public function finalizeAuthorization(Customweb_Payment_Authorization_ITransaction $transaction, $response){
+		$logger = Customweb_Core_Logger_Factory::getLogger(get_class());
 		if (!$transaction->isAuthorizationFailed() && !$transaction->isAuthorized()) {
 			if ($response == null) {
 				$transaction->setAuthorizationFailed(Customweb_I18n_Translation::__('No response has been received.'));
@@ -120,59 +119,53 @@ abstract class Customweb_OPP_Authorization_AbstractAdapter extends Customweb_OPP
 				$transaction->setAuthorizationParameters($this->flattenObject($response));
 			}
 			else {
+				$transaction->setUpdateExecutionDate(null);
 				$transaction->setPaymentId($response->id);
+				$logger->logInfo('Finalize tranasction using payment id '.$response->id);
 				if ($response->result->code == '000.200.000') {
 					if (isset($response->redirect)) {
 						return $this->getRedirectionForm($response);
 					}
 					else {
-						$transaction->setAuthorizationFailed(
-								Customweb_I18n_Translation::__(
-										"The transaction reaches an invalid state, because the response of Open Payment Platform does corresponds to the specification. Most likely your account is misconfigured (e.g. wrong entity ID)."));
+						$logger->logInfo("Received Code: 000.200.000 Pending. External id: " . $transaction->getExternalTransactionId());
+						//Can be ideal pending state do nothing
 						$transaction->setAuthorizationParameters($this->flattenObject($response));
 					}
 				}
 				elseif ($response->result->code == '900.100.300') {
+					$logger->logInfo("Received Code: 900.100.300 Still Pending. External id: " . $transaction->getExternalTransactionId());
 					//Ideal uncertain result, will be updated later
 					return $this->redirect($transaction);
 				}
 				elseif ($response->result->code == '000.000.000' || $response->result->code == '000.600.000' ||
 						 strpos($response->result->code, '000.100.1') === 0) {
-					try {
-						$this->validateResponse($transaction, $response);
-
-						if ($response->paymentType == Customweb_OPP_IConstants::PAYMENT_TYPE_DEBIT ||
-								 (isset($response->workflow) && $response->workflow == 'PA.CP')) {
-							$transaction->authorize(Customweb_I18n_Translation::__($response->result->description));
-							$captureItem = $transaction->capture();
-							$captureItem->setCaptureId($response->id);
-						}
-						else {
-							$transaction->authorize(Customweb_I18n_Translation::__($response->result->description));
-						}
+					
+					if ($response->paymentType == Customweb_OPP_IConstants::PAYMENT_TYPE_DEBIT ||
+							 (isset($response->workflow) && $response->workflow == 'PA.CP')) {
+						$logger->logInfo("Recevied successful status. Authorize Transaction and internal capture. External id: " . $transaction->getExternalTransactionId());
+						$transaction->authorize(Customweb_I18n_Translation::__($response->result->description));
+						$captureItem = $transaction->capture();
+						$captureItem->setCaptureId($response->id);
 					}
-					catch (Customweb_Payment_Exception_PaymentErrorException $e) {
-						$transaction->setAuthorizationFailed($e->getErrorMessage());
+					else{
+						$logger->logInfo("Recevied successful status. Authorize Transaction. External id: " . $transaction->getExternalTransactionId());
+						$transaction->authorize(Customweb_I18n_Translation::__($response->result->description));
 					}
+						
 					$transaction->setAuthorizationParameters($this->flattenObject($response));
 				}
 				elseif (strpos($response->result->code, '000.400.') === 0 || $response->result->code == '800.400.500') {
-					try {
-						$this->validateResponse($transaction, $response);
-
-						$transaction->authorize(Customweb_I18n_Translation::__($response->result->description));
-						$transaction->setAuthorizationUncertain();
-						$transaction->setUpdateExecutionDate(Customweb_Core_DateTime::_()->addMinutes(15));
-					} catch (Customweb_Payment_Exception_PaymentErrorException $e) {
-						$transaction->setAuthorizationFailed($e->getErrorMessage());
-					}
+					$logger->logInfo("Recevied successful code. Authorize Transaction, Mark Uncertain. External id: " . $transaction->getExternalTransactionId());
+					$transaction->authorize(Customweb_I18n_Translation::__($response->result->description));
+					$transaction->setAuthorizationUncertain();
+					$transaction->setUpdateExecutionDate(Customweb_Core_DateTime::_()->addMinutes(60));
 					$transaction->setAuthorizationParameters($this->flattenObject($response));
 				}
 				else {
+					$logger->logInfo("Received failure code ". $response->result->code. " External id: " . $transaction->getExternalTransactionId());
 					$transaction->setAuthorizationFailed($this->getErrorMessage($transaction, $response));
 					$transaction->setAuthorizationParameters($this->flattenObject($response));
 				}
-
 				if (isset($response->registrationId)) {
 					$transaction->setRegistrationId($response->registrationId);
 					$transaction->registerAliasDisplay($response);
@@ -278,6 +271,14 @@ abstract class Customweb_OPP_Authorization_AbstractAdapter extends Customweb_OPP
 	 */
 	protected function getPaymentStatusUrl($paymentId){
 		return $this->getConfiguration()->getBaseUrl() . '/v1/payments/' . $paymentId;
+	}
+	
+	/**
+	 *
+	 * @return string
+	 */
+	protected function getPaymentStatusUrlMerchantId(){
+		return $this->getConfiguration()->getBaseUrl() . '/v1/payments' ;
 	}
 
 	/**
