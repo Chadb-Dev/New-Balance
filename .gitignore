@@ -639,7 +639,11 @@ www/app/design/frontend/base/default/template/catalog/product/view/*
 !www/app/locale/en_US/Amasty_Base.xml
 !www/app/locale/en_US/Amasty_Preorder.xml
 !www/js/amasty/
+!www/skin/adminhtml/default/default/css/
+www/skin/adminhtml/default/default/css/*
 !www/skin/adminhtml/default/default/css/amasty/
-!www/skin/adminhtml/default/default/images/amasty/
+!www/skin/adminhtml/default/default/images/
+www/skin/adminhtml/default/default/images/*
+!www/skin/adminhtml/default/default/images/ambase/
 !www/skin/frontend/base/default/css/amasty/
 #END: Amasty PreOrder module
