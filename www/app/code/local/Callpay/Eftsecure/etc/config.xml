@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Callpay_Eftsecure>
+            <version>1.0.0.0</version>
+        </Callpay_Eftsecure>
+    </modules>
+
+    <global>
+        <helpers>
+            <eftsecure>
+                <class>Callpay_Eftsecure_Helper</class>
+            </eftsecure>
+        </helpers>
+
+        <blocks>
+            <eftsecure>
+                <class>Callpay_Eftsecure_Block</class>
+            </eftsecure>
+        </blocks>
+
+        <models>
+            <eftsecure>
+                <class>Callpay_Eftsecure_Model</class>
+            </eftsecure>
+        </models>
+
+        <resources>
+            <eftsecure_setup>
+                <setup>
+                    <module>Callpay_Eftsecure</module>
+                </setup>
+            </eftsecure_setup>
+        </resources>
+    </global>
+
+    <default>
+        <payment>
+            <eftsecure>
+                <active>1</active>
+                <model>eftsecure/paymentmethod</model>
+                <order_status>pending</order_status>
+                <title>Eftsecure</title>
+                <allowspecific>0</allowspecific>
+                <payment_action>sale</payment_action>
+            </eftsecure>
+        </payment>
+    </default>
+
+    <frontend>
+        <routers>
+            <eftsecure>
+                <use>standard</use>
+                <args>
+                    <module>Callpay_Eftsecure</module>
+                    <frontName>eftsecure</frontName>
+                </args>
+            </eftsecure>
+        </routers>
+    </frontend>
+</config>
