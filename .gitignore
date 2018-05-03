@@ -647,3 +647,8 @@ www/skin/adminhtml/default/default/images/*
 !www/skin/adminhtml/default/default/images/ambase/
 !www/skin/frontend/base/default/css/amasty/
 #END: Amasty PreOrder module
+
+#START: CustomFormSend module
+!www/app/code/local/GoMedia/
+!www/app/etc/modules/GoMedia_*.xml
+#END: CustomFormSend module
