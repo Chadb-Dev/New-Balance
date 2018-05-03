@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Callpay_Eftsecure>
+            <active>true</active>
+            <codePool>local</codePool>
+
+            <depends>
+                <Mage_Payment />
+            </depends>
+        </Callpay_Eftsecure>
+    </modules>
+</config>
