@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <GoMedia_Newsletter>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                Mage_Newsletter
+            </depends>
+        </GoMedia_Newsletter>
+    </modules>
+</config>
