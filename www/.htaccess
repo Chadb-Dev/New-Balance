@@ -367,7 +367,10 @@ RewriteRule ^products\.php$ /girls/sport/proteas? [L,R=301]
     Deny from 180.76.15.144 # baidu
     Deny from wcbau2.i11.co
     Deny from wcbau4.i11.co
+    Deny from crawl-66-249-76-47.googlebot.com
+    Deny from quadaenterprises.com
     Deny from host5.universodohost.com.br
+    Deny from ns343263.ip-91-121-157.eu
     #Deny from 41.215.238.222 #xenu sleuth bot
     Allow from all
 
