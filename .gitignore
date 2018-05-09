@@ -620,7 +620,6 @@ www/app/design/frontend/base/default/template/catalog/product/view/*
 !www/app/code/community/Facebook/
 !www/app/design/adminhtml/default/default/layout/facebook_ads_extension.xml
 !www/app/design/adminhtml/default/default/template/facebook_ads_extension
-!www/app/design/adminhtml/default/default/template/facebook_ads_extension
 !www/app/design/frontend/base/default/layout/facebook_ads_extension.xml
 !www/app/design/frontend/base/default/template/facebook_ads_extension
 !www/app/etc/modules/Facebook_AdsExtension.xml
@@ -652,3 +651,12 @@ www/skin/adminhtml/default/default/images/*
 !www/app/code/local/GoMedia/
 !www/app/etc/modules/GoMedia_*.xml
 #END: CustomFormSend module
+
+#START: Turpentine module
+!www/app/code/community/Nexcessnet/
+!www/app/design/adminhtml/default/default/layout/turpentine.xml
+!www/app/design/adminhtml/default/default/template/turpentine/
+!www/app/design/frontend/base/default/layout/turpentine_esi.xml
+!www/app/design/frontend/base/default/template/turpentine/
+!www/app/etc/modules/Nexcessnet_Turpentine.xml
+#END: Turpentine module
