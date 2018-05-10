@@ -104,6 +104,10 @@
                 <block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml"/>
             </block>
             <action method="unsetChild" ifconfig="porto_settings/header/type" condition="9"><name>mobile.nav</name></action>
+            <remove name="top.search"/>
+            <reference name="top.search">
+                <block type="searchautocomplete/form" name="top.search.autocomplete" as="topSearchAutocomplete" template="mst_searchautocomplete/default.phtml"/>
+            </reference>
         </reference>
         <reference name="top.links">
             <remove name="checkout_cart_link"/>
