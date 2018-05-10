@@ -1,0 +1,6 @@
+keyword,url,url_title,url_target,is_nofollow,sort_order,max_replacements,occurence,is_active,store_id
+keyword,http://site.com,Url title,_self,0,0,0,0,1,0
+keyword2,/,Url title2,_self,0,1,0,0,1,1
+keyword3,/category,Url title3,_blank,1,2,0,0,1,2
+keyword4,/product,Url title4,_blank,1,3,0,0,1,3
+keyword5,/about,Url title5,_blank,1,4,0,0,1,"1,3"

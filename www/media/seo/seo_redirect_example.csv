@@ -1,0 +1,5 @@
+url_from,url_to,is_redirect_only_error_page,redirect_type,sort_order,comments,is_active,store_id
+old,new,0,301,10,redirect,1,1
+old1,new1,1,302,20,"redirect, redirect1",1,2
+old2,new2,1,307,30,redirect2,0,3
+old3,new3,0,301,10,multiple store views,0,"1,3"
