@@ -652,3 +652,10 @@ www/skin/adminhtml/default/default/images/*
 !www/app/code/local/GoMedia/
 !www/app/etc/modules/GoMedia_*.xml
 #END: CustomFormSend module
+
+#START:  Google Tag Manager
+!www/app/code/community/Chapagain
+!www/app/design/frontend/base/default/layout/chapagain
+!www/app/design/frontend/base/default/template/chapagain
+!www/app/etc/modules/Chapagain_GoogleTagManager.xml
+#End:  Google Tag Manager
