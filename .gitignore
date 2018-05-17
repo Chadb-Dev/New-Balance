@@ -659,3 +659,10 @@ www/skin/adminhtml/default/default/images/*
 !www/app/design/frontend/base/default/template/chapagain
 !www/app/etc/modules/Chapagain_GoogleTagManager.xml
 #End:  Google Tag Manager
+
+#START: Tatvic_Google_Analytics_eCom-2.1.2
+!www/app/code/community/Tatvic/
+!www/app/design/frontend/base/default/layout/tatvic_uaee.xml
+!www/app/design/frontend/base/default/template/tatvic/
+!www/app/etc/modules/Tatvic_Uaee.xml
+#End: Tatvic_Google_Analytics_eCom-2.1.2
