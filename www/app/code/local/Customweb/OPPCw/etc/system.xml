@@ -175,6 +175,7 @@
 		</oppcw>
 		<payment>
 			<groups>
+				<!--
 				<oppcw_generic translate="label comment" module="OPPCw">
 					<label>Open Payment Platform Generic</label>
 					<frontend_type>text</frontend_type>
@@ -3812,7 +3813,9 @@
 							<show_in_store>1</show_in_store>
 						</alias_manager>
 					</fields>
-				</oppcw_maestro><oppcw_mastercard translate="label comment" module="OPPCw">
+				</oppcw_maestro>
+				-->
+				<oppcw_mastercard translate="label comment" module="OPPCw">
 					<label>Open Payment Platform MasterCard</label>
 					<frontend_type>text</frontend_type>
 					<sort_order>1</sort_order>
@@ -4056,7 +4059,9 @@
 							<show_in_store>1</show_in_store>
 						</alias_manager>
 					</fields>
-				</oppcw_mastercard><oppcw_openinvoice translate="label comment" module="OPPCw">
+				</oppcw_mastercard>
+				<!--
+				<oppcw_openinvoice translate="label comment" module="OPPCw">
 					<label>Open Payment Platform Open Invoice</label>
 					<frontend_type>text</frontend_type>
 					<sort_order>1</sort_order>
@@ -5919,7 +5924,9 @@
 							<show_in_store>1</show_in_store>
 						</authorizationMethod>
 					</fields>
-				</oppcw_sofortueberweisung><oppcw_visa translate="label comment" module="OPPCw">
+				</oppcw_sofortueberweisung>
+				-->
+				<oppcw_visa translate="label comment" module="OPPCw">
 					<label>Open Payment Platform Visa</label>
 					<frontend_type>text</frontend_type>
 					<sort_order>1</sort_order>
@@ -6163,7 +6170,9 @@
 							<show_in_store>1</show_in_store>
 						</alias_manager>
 					</fields>
-				</oppcw_visa><oppcw_vpay translate="label comment" module="OPPCw">
+				</oppcw_visa>
+				<!--
+				<oppcw_vpay translate="label comment" module="OPPCw">
 					<label>Open Payment Platform V PAY</label>
 					<frontend_type>text</frontend_type>
 					<sort_order>1</sort_order>
@@ -11059,6 +11068,7 @@
 						</authorizationMethod>
 					</fields>
 				</oppcw_interac>
+				-->
 			</groups>
 		</payment>
 	</sections>
