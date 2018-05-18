@@ -666,3 +666,12 @@ www/skin/adminhtml/default/default/images/*
 !www/app/design/frontend/base/default/template/tatvic/
 !www/app/etc/modules/Tatvic_Uaee.xml
 #End: Tatvic_Google_Analytics_eCom-2.1.2
+
+
+#START: Lesti FullPageCache module
+!www/app/code/community/Lesti/
+!www/app/design/frontend/base/default/layout/fpc.xml
+!www/app/design/frontend/base/default/template/fpc
+!www/app/etc/fpc.xml.sample
+!www/app/etc/modules/Lesti_Fpc.xml
+#END: Lesti FullPageCache module
