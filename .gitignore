@@ -674,4 +674,6 @@ www/skin/adminhtml/default/default/images/*
 !www/app/design/frontend/base/default/template/fpc
 !www/app/etc/fpc.xml.sample
 !www/app/etc/modules/Lesti_Fpc.xml
+!www/shell/MageCacheWarmer.php
+!www/shell/wfpc
 #END: Lesti FullPageCache module
