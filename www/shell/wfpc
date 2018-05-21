@@ -1,0 +1,148 @@
+#!/usr/bin/php
+<?php
+/**
+ * Warm a Magento Full Page Cache.
+ * This assumes you have an FPC installed on the target site.
+ * If you don't all it will do is create undue load on your server.
+ * All the script does is download your sitemap.xml file and hit every url in the list.
+ * 
+ * In reality this script will work on any site that provides a sitemap.xml file.
+ * Please don't use the script to attack websites! Frankly, it won't even work well as
+ * a DOS attack, because it executes each request synchronously.
+ *
+ * Copyright Nathan Nobbe 2015.
+ */
+
+// Load the backend class
+require __DIR__ . '/MageCacheWarmer.php';
+
+define('MINARGC', 2);
+define('MAXARGC', 5);
+
+if($argc < MINARGC) {
+    usage();
+}
+
+$sMode  = $argv[1];
+$sFunc  = 'warm';
+$iDelay = 0;
+$iUnsecure = 0;
+// echo "ARGC=$argc\n";
+switch($argv[1]) {
+    case '-h' : usage(); break;
+    case '-t' :
+        if($argc > MINARGC+1) {
+            usage();
+        }
+
+        $sFunc = 'test';
+        $sUrl  = $argv[2];
+        break;
+    case '-w':
+        if($argc < MINARGC+1 || $argc > MAXARGC) {
+            usage();
+        }
+
+        if(MINARGC+1 == $argc) {
+            $sUrl = $argv[2];
+        } elseif(MAXARGC == $argc - 1) {
+            list($option, $seconds) = explode('=', $argv[2]);
+            if($option != '-d' || (int)$seconds < 1) {
+                echo 'Warning: Unrecognized option ' . $argv[3] . PHP_EOL;
+            } else {
+                $iDelay = $seconds;
+                $sUrl = $argv[2];
+            }
+        } else {
+            usage();
+        }
+        break;
+    case '-k':
+        $iUnsecure = 1;
+        switch($argv[2]) {
+            case '-t' :
+                if($argc > MINARGC+2) {
+                    usage();
+                }
+
+                $sFunc = 'test';
+                $sUrl = $argv[3];
+                break;
+            case '-w':
+                if($argc < MINARGC+2 || $argc > MAXARGC) {
+                    usage();
+                }
+    
+                if(MINARGC+2 == $argc) {
+                    $sUrl = $argv[3];
+                } elseif(MAXARGC == $argc) {
+                    list($option, $seconds) = explode('=', $argv[3]);
+                    if($option != '-d' || (int)$seconds < 1) {
+                        echo 'Warning: Unrecognized option ' . $argv[4] . PHP_EOL;
+                    } else {
+                        $iDelay = $seconds;
+                        $sUrl = $argv[4];
+                    }
+                } else {
+                    usage();
+                }
+                break;
+                default:
+                    usage();
+            }
+            break;
+        default:
+            usage();
+    }
+
+try {
+    $oMageCacheWarmer = new MageCacheWarmer($sUrl, 'echoCallback', $iDelay, $iUnsecure);
+    $fSpeedup         = $oMageCacheWarmer->loadSitemap()->$sFunc();
+
+    if($sFunc == 'test') {
+        reportResults($oMageCacheWarmer->getAvgDownloadTime(), true);
+    } else {
+        reportResults($oMageCacheWarmer->getAvgDownloadTime());
+        echo 'Speedup is ' . $fSpeedup . '%' . PHP_EOL; 
+    }
+} catch(Exception $e) {
+    echo "Cache warmer crashed with error: " . PHP_EOL;
+    echo $e->getMessage();
+    exit(1);
+}
+
+/**
+ * echo messages from the underlying class.
+ */
+function echoCallback($sMsg)
+{
+    echo $sMsg;
+}
+
+/**
+ * Report the results
+ */
+function reportResults($fAvgTime, $bTest=false)
+{
+    $sFinishType = $bTest ? 'testing' : 'warming';
+
+    echo "Finished $sFinishType your Magento site performance" . PHP_EOL;
+    echo 'Average page time (in milliseconds): ' . $fAvgTime . PHP_EOL;
+}
+
+/**
+ * Print the script usage and exit.
+ */
+function usage()
+{
+    echo '-------------------------------------' . PHP_EOL;
+    echo 'wfpc - Magento full page cache warmer' . PHP_EOL;
+    echo '-------------------------------------' . PHP_EOL . PHP_EOL;
+    echo 'wfpc [-k] <-h|-t|-w> [-d=delay] <sitemap url>' . PHP_EOL . PHP_EOL;
+    echo 'Run help to see the usage options                       : wfpc -h' . PHP_EOL;
+    echo 'Run wfpc in test mode to get an idea of page performance: wfpc -t <sitemap url>' . PHP_EOL;
+    echo 'Warm the Magento cache                                  : wfpc -w [-d=delay] <sitemap url>' . PHP_EOL ;
+    echo 'Force to continue on unsecure https urls                : wfpc -k -w <sitemap url>'.PHP_EOL. PHP_EOL;
+    echo 'The last form of the command allows a -d option to place a pause of X number of seconds between request' . PHP_EOL;
+    exit();
+}
