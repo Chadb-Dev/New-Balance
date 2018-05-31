@@ -678,4 +678,4 @@ www/skin/adminhtml/default/default/images/*
 !www/shell/wfpc
 #END: Lesti FullPageCache module
 
-bi/config.php
+scripts/bi/config.php
