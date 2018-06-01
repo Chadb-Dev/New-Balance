@@ -678,4 +678,9 @@ www/skin/adminhtml/default/default/images/*
 !www/shell/wfpc
 #END: Lesti FullPageCache module
 
+#START:
+!www/app/etc/modules/Ayasoftware_PriceIndex.xml-1
+!www/app/etc/modules/Ayasoftware_SimpleProductPricing.xml-1
+#END:
+
 scripts/bi/config.php
