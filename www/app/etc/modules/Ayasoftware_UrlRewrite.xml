@@ -2,7 +2,7 @@
 <config>
   <modules>
     <Ayasoftware_UrlRewrite>
-      <active>true</active>
+      <active>false</active>
       <codePool>local</codePool>
       <version>0.1.0</version>
     </Ayasoftware_UrlRewrite>

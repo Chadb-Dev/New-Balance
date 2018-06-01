@@ -2,7 +2,7 @@
 <config>
   <modules>
     <Ayasoftware_PreSelector>
-      <active>true</active>
+      <active>false</active>
       <codePool>local</codePool>
       <version>1.11.9</version>
     </Ayasoftware_PreSelector>
